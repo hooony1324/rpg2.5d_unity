@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private CameraController _cam;
+
+    public CameraController Cam
     {
-        
+        get
+        {
+            if (_cam == null)
+            {
+                _cam = Object.FindObjectOfType<CameraController>();
+            }
+
+            return _cam;
+        }
     }
 }

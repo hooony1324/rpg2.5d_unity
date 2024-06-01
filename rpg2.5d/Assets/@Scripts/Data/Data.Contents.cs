@@ -25,4 +25,29 @@ namespace Data
         }
     }
     #endregion
+
+    #region SkillData
+    [Serializable]
+    public class SkillData
+    {
+        public int TemplateId;
+        public string Name;
+        public string NameTextId;
+        public string ClassName;
+    }
+
+    [Serializable]
+    public class SkillDataLoader : ILoader<int, SkillData>
+    {
+        public List<SkillData> skills = new List<SkillData>();
+
+        public Dictionary<int, SkillData> MakeDict()
+        {
+            Dictionary<int, SkillData> dict = new Dictionary<int, SkillData>();
+            foreach (SkillData skill in skills)
+                dict.Add(skill.TemplateId, skill);
+            return dict;
+        }
+    }
+    #endregion
 }

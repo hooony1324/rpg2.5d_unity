@@ -11,4 +11,9 @@ public class TitleScene : BaseScene
 
         return true;
     }
+
+    public override void Clear()
+    {
+        
+    }
 }

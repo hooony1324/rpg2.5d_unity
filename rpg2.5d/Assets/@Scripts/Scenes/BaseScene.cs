@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static Define;
 
-public class BaseScene : InitBase
+public abstract class BaseScene : InitBase
 {
     public Define.EScene SceneType { get; protected set; } = Define.EScene.Unknown;
 
@@ -22,4 +22,6 @@ public class BaseScene : InitBase
 
         return true;
     }
+    public abstract void Clear();
+
 }

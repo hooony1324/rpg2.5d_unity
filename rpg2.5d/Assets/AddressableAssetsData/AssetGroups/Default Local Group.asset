@@ -16,7 +16,31 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 1b5f70f4aa591ad47a97a06bbf4c0689
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6e3996a681593d349a36f7b497370d53
+    m_Address: HeroPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e44df07d6be1b84ab17a4ffce2b9596
+    m_Address: TestMap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6feda878aac0dcf428b879b25c60a9b7
+    m_Address: Martial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72bcb684e79dca0439ec4faf3e04f248
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6b7e383d8e2b32440b13d68a15608bde, type: 2}
   m_SchemaSet:
