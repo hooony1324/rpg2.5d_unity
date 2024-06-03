@@ -11,10 +11,11 @@ public class TestScene : BaseScene
 
 
         Hero hero = GameObject.Find("HeroPrefab").GetComponent<Hero>();
-
+        
         Managers.Game.Cam.transform.position = hero.transform.position;
         Managers.Game.Cam.Target = hero;
 
+        Managers.Game.PlayerHero = hero;
 
         return true;
     }

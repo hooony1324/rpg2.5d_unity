@@ -95,7 +95,7 @@ public class Define
         Cooltime,
         Skill,
         OnDamaged,
-        Dead,
+        Death,
     }
     public enum EHeroMoveState
     {
@@ -145,8 +145,10 @@ public class Define
         public static readonly int JUMP = Animator.StringToHash("Jump");
         public static readonly int FALL = Animator.StringToHash("Fall");
         public static readonly int TAKE_HIT = Animator.StringToHash("TakeHit");
-        public static readonly int DEAD = Animator.StringToHash("Dead");
+        public static readonly int DEATH = Animator.StringToHash("Death");
         public static readonly int DODGE = Animator.StringToHash("Dodge");
+
+        public static readonly int ATTACK = Animator.StringToHash("Attack_1");
 
         //public static int ATTACK = 10;
     }

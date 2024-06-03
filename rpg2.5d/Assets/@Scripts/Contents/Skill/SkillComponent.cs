@@ -50,8 +50,19 @@ public class SkillComponent : MonoBehaviour
 
     public void RegisterSkill(int skillId)
     {
-        //string className = Managers.Data.SkillDic[skillId].ClassName;
-        string className = "NormalJump";
+        string className = Managers.Data.SkillDic[skillId].ClassName;
+        SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
+
+        if (!skill)
+            return;
+
+        skill.SetInfo(0);
+        ReadySkills[className] = skill;
+    }
+
+    // 임시, DataSheet나오면 없어질 예정
+    public void RegisterSkill(string className)
+    {
         SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
 
         if (!skill)

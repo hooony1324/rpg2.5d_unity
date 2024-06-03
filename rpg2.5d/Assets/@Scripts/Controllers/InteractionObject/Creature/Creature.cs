@@ -1,23 +1,34 @@
+using BehaviorTree;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using static Define;
 
 public class Creature : InteractionObject
 {
-    public float MoveSpeed { get; set; } = 5.0f;
-    public SkillComponent Skills { get; set; }
-
-    [Header("AI")][SerializeField] private InteractionObject _target;
+    [SerializeField] private InteractionObject _target;
     public InteractionObject Target
     {
         get => _target;
         set { _target = value; }
     }
+
+
+    protected NavMeshAgent _agent;
+    protected IBTNode _root;
+    protected float _attackRange = 1.5f;
+    protected float _chaseRange = 8.0f;
+
+    public float MoveSpeed { get; set; } = 5.0f;
+    public SkillComponent Skills { get; set; }
     protected Vector3 InitPos { get; set; }
     public Vector3 MoveDir { get; set; } = Vector3.zero;
     [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
+    public NavMeshAgent Agent => _agent;
+
     public virtual ECreatureState CreatureState
     {
         get => _creatureState;
@@ -35,6 +46,9 @@ public class Creature : InteractionObject
 
     private Rigidbody _rigidbody;
 
+    //Test
+    protected TextMeshPro _tmpDebug;
+
     protected override bool Init()
     {
         if (base.Init() == false)
@@ -42,6 +56,12 @@ public class Creature : InteractionObject
 
         Skills = gameObject.GetOrAddComponent<SkillComponent>();
         _rigidbody = GetComponent<Rigidbody>();
+
+        _agent = Util.GetOrAddComponent<NavMeshAgent>(gameObject);
+
+
+        //Test
+        _tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
 
         return true;
     }
@@ -51,7 +71,7 @@ public class Creature : InteractionObject
 
         UpdateAnimation();
 
-        StartCoroutine(CoUpdateState());
+
     }
 
     protected virtual void UpdateAnimation()
@@ -69,8 +89,8 @@ public class Creature : InteractionObject
             case ECreatureState.OnDamaged:
                 PlayAnimation(AnimName.TAKE_HIT);
                 break;
-            case ECreatureState.Dead:
-                PlayAnimation(AnimName.DEAD);
+            case ECreatureState.Death:
+                PlayAnimation(AnimName.DEATH);
                 break;
             case ECreatureState.Skill:
                 break;
@@ -102,7 +122,7 @@ public class Creature : InteractionObject
                 case ECreatureState.Skill:
                     UpdateSkill();
                     break;
-                case ECreatureState.Dead:
+                case ECreatureState.Death:
                     UpdateDead();
                     break;
             }
@@ -180,26 +200,44 @@ public class Creature : InteractionObject
 
     #endregion
 
-    public bool IsGrounded = false;
+    public bool IsGrounded { get; private set; }
     public bool IsFalling => _rigidbody.velocity.y <= 0;
-    public float JumpForce = 10.0f;
+    public float JumpForce = 5.0f;
     public void Launch(Vector3 launchDir, float launchForce)
     {
-        _rigidbody.velocity = launchDir * launchForce;
+        IsGrounded = false;
+
+        if (Agent.enabled)
+        {
+            Agent.updatePosition = false;
+            Agent.updateRotation = false;
+            Agent.isStopped = true;
+        }
+        _rigidbody.isKinematic = false;
+        _rigidbody.useGravity = true;
+
+        _rigidbody.AddRelativeForce(launchDir * launchForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            IsGrounded = true;
+            if (IsGrounded == false)
+            {
+                if (Agent.enabled)
+                {
+                    Agent.nextPosition = Position;
+                    Agent.updatePosition = true;
+                    Agent.updateRotation = true;
+                    Agent.isStopped = false;
+                }
+                _rigidbody.isKinematic = true;
+                _rigidbody.useGravity = false;
+                IsGrounded = true;
+            }
         }
     }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            IsGrounded = false;
-        }
-    }
+
+
 }

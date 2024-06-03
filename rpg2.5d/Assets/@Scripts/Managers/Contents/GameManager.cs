@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class GameManager
 {
+    private Hero _playerHero;
+    public Hero PlayerHero
+    {
+        get => _playerHero;
+        set { _playerHero = value; }
+    }
+
     public void Init()
     {
 

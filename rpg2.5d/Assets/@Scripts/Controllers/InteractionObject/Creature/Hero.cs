@@ -15,8 +15,6 @@ public class Hero : Creature
 {
 
     [SerializeField] private EHeroMoveState _heroMoveState = EHeroMoveState.None;
-
-    StringBuilder sb = new StringBuilder();
     public EHeroMoveState HeroMoveState
     {
         get => _heroMoveState;
@@ -40,16 +38,10 @@ public class Hero : Creature
                 //    break;
             }
 
-
-            sb.Clear();
-            sb.AppendLine(Enum.GetName(typeof(ECreatureState), CreatureState));
-            sb.AppendLine(Enum.GetName(typeof(EHeroMoveState), value));
-            _tmpDebug.text = sb.ToString();
         }
     }
 
-    //Test
-    TextMeshPro _tmpDebug;
+
 
     protected override bool Init()
     {
@@ -58,8 +50,8 @@ public class Hero : Creature
 
 
         SetInfo(0);
+        Agent.isStopped = true;
 
-        _tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
 
         return true;
     }
@@ -71,11 +63,6 @@ public class Hero : Creature
         set
         {
             base.CreatureState = value;
-
-            sb.Clear();
-            sb.AppendLine(Enum.GetName(typeof(ECreatureState), value));
-            sb.AppendLine(Enum.GetName(typeof(EHeroMoveState), HeroMoveState));
-            _tmpDebug.text = sb.ToString();
         }
     }
 
@@ -83,6 +70,7 @@ public class Hero : Creature
     public void SetInfo(int templateId)
     {
         base.SetInfo(0);
+
 
         Managers.Resource.LoadAsync<RuntimeAnimatorController>("Knight", (result) =>
         {
@@ -94,19 +82,20 @@ public class Hero : Creature
         });
 
         SetSkill();
+        StartCoroutine(CoUpdateState());
 
     }
 
     private void SetSkill()
     {
-        Skills.RegisterSkill(0);
+        Skills.RegisterSkill("Jump");
     }
 
     private void Update()
     {
         HandleInput();
 
-
+        _tmpDebug.text = $"IsGrounded: {IsGrounded.ToString()}";
     }
 
     void HandleInput()
@@ -135,7 +124,8 @@ public class Hero : Creature
 
         if (Input.GetKey(KeyCode.Space) && IsGrounded)
         {
-            if (Skills.SetCurrentSkill("NormalJump"))
+            //TODO: KeyCode <-> InputManager <-> SetCurrentSkill
+            if (Skills.SetCurrentSkill("Jump"))
             {
                 CreatureState = ECreatureState.Skill;
             }
@@ -186,7 +176,7 @@ public class Hero : Creature
                 break;
             case ECreatureState.OnDamaged:
                 break;
-            case ECreatureState.Dead:
+            case ECreatureState.Death:
                 break;
             default:
                 break;
@@ -225,6 +215,4 @@ public class Hero : Creature
             return;
         }
     }
-
-    
 }

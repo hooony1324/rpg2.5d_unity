@@ -12,10 +12,12 @@ public interface ILoader<Key, Value>
 public class DataManager
 {
     public Dictionary<string, Data.TextData> TextDic { get; private set; } = new Dictionary<string, Data.TextData>();
+    public Dictionary<int, Data.SkillData> SkillDic { get; private set; } = new Dictionary<int, Data.SkillData>();
 
     public void Init()
     {
         //TextDic = LoadJson<Data.TextDataLoader, string, Data.TextData>("TextData").MakeDict();
+        SkillDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>("SkillData").MakeDict();
     }
 
     private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
@@ -51,4 +53,5 @@ public class DataManager
     //    }
     //}
     #endregion
+
 }
