@@ -11,11 +11,14 @@ public class GameScene : BaseScene
         if (base.Init() == false)
             return false;
 
-        GameObject playerStart = GameObject.Find("@PlayerStart");
-        if (playerStart == null)
-            GameObject.Instantiate(new GameObject{ name = "@PlayerStart" });
+        //LoadMap
 
-        Hero hero = Managers.Object.Spawn<Hero>(playerStart.transform.position);
+
+        
+       
+        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero);
+
+        Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 30);
 
         Managers.Game.Cam.transform.position = hero.transform.position;
         Managers.Game.Cam.Target = hero;

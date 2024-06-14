@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public static class Extension
 {
@@ -20,24 +21,23 @@ public static class Extension
         return go != null && go.activeSelf;
     }
 
-    //public static bool IsValid(this BaseObject bc)
-    //{
-    //    if (bc == null || bc.isActiveAndEnabled == false)
-    //        return false;
+    public static bool IsValid(this BaseObject bc)
+    {
+        if (bc == null || bc.isActiveAndEnabled == false)
+            return false;
 
-    //    switch (bc.ObjectType)
-    //    {
-    //        case Define.EObjectType.Monster:
-    //        case Define.EObjectType.Hero:
-    //            return ((Creature)bc).CreatureState != Define.ECreatureState.Dead;
+        switch (bc.ObjectType)
+        {
+            case Define.EObjectType.Monster:
+            case Define.EObjectType.Hero:
+                return ((Creature)bc).CreatureState != Define.ECreatureState.Death;
 
-    //        case Define.EObjectType.Env:
-    //            return ((Env)bc).EnvState != Define.EEnvState.Dead;
-    //            // case Define.EObjectType.Camp:
-    //            //     return true;
-    //    }
-    //    return true;
-    //}
+            case Define.EObjectType.Env:
+                return ((Env)bc).EnvState != Define.EEnvState.Dead;
+
+        }
+        return true;
+    }
 
     public static void MakeMask(this ref LayerMask mask, List<Define.ELayer> list)
     {
@@ -80,4 +80,25 @@ public static class Extension
             (list[k], list[n]) = (list[n], list[k]);//swap
         }
     }
+
+    public static bool EqualsEx(this Vector3 origin, Vector3 dest)
+    {
+        return origin.IsTargetInRange(dest, float.Epsilon);
+    }
+    public static bool IsTargetInRange(this Vector3 origin, Vector3 dest, float range)
+    {// 일정 거리 안에 있나
+        return Vector3.SqrMagnitude(dest - origin) <= range * range;
+    }
+
+    public static void Initialize<T>(this T[,] array, T initVal)
+    {
+        for (int j = 0; j < array.GetLength(0); j++)
+        {
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                array[j, i] = initVal;
+            }
+        }
+    }
+
 }

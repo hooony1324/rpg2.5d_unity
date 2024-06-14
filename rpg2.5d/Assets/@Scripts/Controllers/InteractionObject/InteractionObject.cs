@@ -8,7 +8,7 @@ public class InteractionObject : BaseObject
 
     public event Action<InteractionObject> EventOnDead;
 
-    protected virtual void OnDamaged(InteractionObject attacker, float value)
+    public virtual void OnDamage(InteractionObject attacker, float value)
     {
         
     }

@@ -24,16 +24,16 @@ public class SkillComponent : MonoBehaviour
     //public SkillBase AttackSkill_B { get; private set; }
     public SkillBase CurrentSkill;
     private Creature _owner;
-
+    private GameObject _animator;
     public void Awake()
     {
         _owner = GetComponent<Creature>();
 
-        
-            
+        _animator = Util.FindChild(gameObject, "Animator");
+
     }
 
-    public bool SetCurrentSkill(string skillName)
+    public bool TryActivateSkill(string skillName)
     {
         CurrentSkill = GetActivatedSkill(skillName);
         return CurrentSkill != null;
@@ -48,22 +48,23 @@ public class SkillComponent : MonoBehaviour
     // Skill List : 배운 스킬들
     // Registered Skills : 스킬 슬롯 등록(당장 사용가능한 스킬)
 
-    public void RegisterSkill(int skillId)
-    {
-        string className = Managers.Data.SkillDic[skillId].ClassName;
-        SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
+    //public void RegisterSkill(int skillId)
+    //{
+    //    string className = Managers.Data.SkillDic[skillId].ClassName;
+    //    SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
 
-        if (!skill)
-            return;
+    //    if (!skill)
+    //        return;
 
-        skill.SetInfo(0);
-        ReadySkills[className] = skill;
-    }
+    //    skill.SetInfo(0);
+    //    ReadySkills[className] = skill;
+    //}
 
     // 임시, DataSheet나오면 없어질 예정
     public void RegisterSkill(string className)
     {
-        SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
+        // Animatinor와 같은 자식에 있어야 EventTrigger의 Receiver로 인식함
+        SkillBase skill = _animator.AddComponent(Type.GetType(className)) as SkillBase;
 
         if (!skill)
             return;

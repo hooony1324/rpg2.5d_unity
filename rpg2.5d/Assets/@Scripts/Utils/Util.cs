@@ -134,16 +134,6 @@ public static class Util
         return (T)Enum.Parse(typeof(T), value, true);
     }
 
-    public static Vector2 GenerateRandomPositionOnCircle(Vector2 center, float radius)
-    {
-        int randomUnit = Random.Range(0, 10);
-        float randomAngle = randomUnit * 36f;
-        float radians = Mathf.Deg2Rad * randomAngle;
-        float x = center.x + radius * Mathf.Cos(radians);
-        float y = center.y + radius * Mathf.Sin(radians);
-
-        return new Vector2(x, y);
-    }
 
     //public static EObjectType DetermineTargetType(EObjectType ownerObjectType, bool isAllies)
     //{
@@ -191,12 +181,43 @@ public static class Util
     //        return 90;
     //    }
     //}
+    #region Math
+    public static Vector2 GetRandomPointInRange(float range = 5.0f)
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2);
+
+        float distance = Mathf.Sqrt(Random.Range(0, 1f)) * range;
+
+        float x = distance * Mathf.Cos(angle);
+        float y = distance * Mathf.Sin(angle);
+
+        return new Vector2(x, y);
+    }
+
+    public static Vector3 GetRandomPoint(float range = 5.0f)
+    {
+        Vector2 point = GetRandomPointInRange(range);
+        return new Vector3(point.x, 0, point.y);
+    }
 
     public static bool CheckProbability(float probability)
     {
         float randomValue = Random.Range(0.0f, 1.0f);
         return randomValue <= probability;
     }
+
+    public static Vector2 GenerateRandomPositionOnCircle(Vector2 center, float radius)
+    {
+        int randomUnit = Random.Range(0, 10);
+        float randomAngle = randomUnit * 36f;
+        float radians = Mathf.Deg2Rad * randomAngle;
+        float x = center.x + radius * Mathf.Cos(radians);
+        float y = center.y + radius * Mathf.Sin(radians);
+
+        return new Vector2(x, y);
+    }
+
+    #endregion
 
     #region ParseText For UI
 

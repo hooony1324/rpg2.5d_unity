@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Define
 {
+    public const char MAP_TOOL_WALL = '0';
+    public const char MAP_TOOL_WALKABLE = '1';
+    //public const char MAP_TOOL_SEMI_WALL = '2';
+
+
     public static readonly Dictionary<Type, Array> _enumDict = new Dictionary<Type, Array>();
 
     public enum EScene
@@ -84,7 +89,7 @@ public class Define
         public const int PROJECTILE = 310;
         public const int DROP_ITEM = 310;
         public const int SKILL_EFFECT = 315;
-        public const int DAMAGE_FONT = 410;
+        public const int WROLD_FONT = 410;
     }
 
     public enum ECreatureState
@@ -106,7 +111,12 @@ public class Define
         ForceMove,
         //ForcePath,
     }
-
+    public enum EEnvState
+    {
+        Idle,
+        OnDamaged,
+        Dead
+    }
     public enum ESkillSlot
     {
         None,
@@ -123,11 +133,26 @@ public class Define
         None,
         Normal,
         //AreaSkill,
-        //ComboSkill,
+        ComboSkill,
         //ProjectileSkill,
         //SingleTargetSkill,
         //SupportSkill,
         PassiveSkill
+    }
+    public enum EObjectType
+    {
+        None,
+        Hero,
+        Monster,
+        Env,
+        ItemHolder,
+        Npc,
+        Projectile,
+    }
+    public enum ECellCollisionType
+    {
+        None,
+        Wall,
     }
 
     public static class AnimName
@@ -147,10 +172,8 @@ public class Define
         public static readonly int TAKE_HIT = Animator.StringToHash("TakeHit");
         public static readonly int DEATH = Animator.StringToHash("Death");
         public static readonly int DODGE = Animator.StringToHash("Dodge");
+        public static readonly int MELEEATTACK = Animator.StringToHash("MeleeAttack");
 
-        public static readonly int ATTACK = Animator.StringToHash("Attack_1");
-
-        //public static int ATTACK = 10;
     }
 
     public static class DirVec

@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using Unity.AI.Navigation;
+using Unity.Services.Analytics.Internal;
 using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using static Define;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Hero : Creature
 {
-
     [SerializeField] private EHeroMoveState _heroMoveState = EHeroMoveState.None;
     public EHeroMoveState HeroMoveState
     {
@@ -40,23 +41,16 @@ public class Hero : Creature
 
         }
     }
-
-
-
     protected override bool Init()
     {
         if (base.Init() == false)
             return false;
 
 
-        SetInfo(0);
-        Agent.isStopped = true;
-
-
         return true;
     }
 
-    //Test
+
     public override ECreatureState CreatureState
     {
         get => _creatureState;
@@ -69,33 +63,27 @@ public class Hero : Creature
 
     public void SetInfo(int templateId)
     {
-        base.SetInfo(0);
+        base.SetInfo(templateId);
 
+        ObjectType = EObjectType.Hero;
 
-        Managers.Resource.LoadAsync<RuntimeAnimatorController>("Knight", (result) =>
-        {
-            RuntimeAnimatorController animController = Managers.Resource.Load<RuntimeAnimatorController>("Knight");
-            
-            Anim.runtimeAnimatorController = animController;
-
-            
-        });
-
-        SetSkill();
-        StartCoroutine(CoUpdateState());
-
+        SetupBasicSkills();
     }
 
-    private void SetSkill()
+    public void SetupBasicSkills()
     {
-        Skills.RegisterSkill("Jump");
+        //Skills.RegisterSkill("Jump");
+        Skills.RegisterSkill("ComboAttack");
     }
 
     private void Update()
     {
         HandleInput();
+    }
 
-        _tmpDebug.text = $"IsGrounded: {IsGrounded.ToString()}";
+    public void HandleMovement()
+    {
+        Agent.nextPosition = Position + MoveDir * MoveSpeed * Time.deltaTime;
     }
 
     void HandleInput()
@@ -122,57 +110,70 @@ public class Hero : Creature
             inputDir.x -= 1;
         }
 
-        if (Input.GetKey(KeyCode.Space) && IsGrounded)
-        {
-            //TODO: KeyCode <-> InputManager <-> SetCurrentSkill
-            if (Skills.SetCurrentSkill("Jump"))
-            {
-                CreatureState = ECreatureState.Skill;
-            }
-        }
-
         if (!(inputDir.sqrMagnitude > 0))
         {
             HeroMoveState = EHeroMoveState.None;
-            return;
+        }
+        else
+        {
+            HeroMoveState = EHeroMoveState.ForceMove;
+            float angle = Mathf.Atan2(inputDir.x, inputDir.y) * 180 / Mathf.PI;
+            if (angle > 15f && angle <= 75f)
+                MoveDir = DirVec.UP_LEFT;
+            else if (angle > 75f && angle <= 105f)
+                MoveDir = DirVec.LEFT;
+            else if (angle > 105f && angle <= 160f)
+                MoveDir = DirVec.DOWN_LEFT;
+            else if (angle > 160f || angle <= -160f)
+                MoveDir = DirVec.DOWN;
+            else if (angle < -15f && angle >= -75f)
+                MoveDir = DirVec.UP_RIGHT;
+            else if (angle < -75f && angle >= -105f)
+                MoveDir = DirVec.RIGHT;
+            else if (angle < -105f && angle >= -160f)
+                MoveDir = DirVec.DOWN_RIGHT;
+            else
+                MoveDir = DirVec.UP;
         }
 
-        // Set Direction
-        HeroMoveState = EHeroMoveState.ForceMove;
-        float angle = Mathf.Atan2(inputDir.x, inputDir.y) * 180 / Mathf.PI;
-        if (angle > 15f && angle <= 75f)
-            MoveDir = DirVec.UP_LEFT;
-        else if (angle > 75f && angle <= 105f)
-            MoveDir = DirVec.LEFT;
-        else if (angle > 105f && angle <= 160f)
-            MoveDir = DirVec.DOWN_LEFT;
-        else if (angle > 160f || angle <= -160f)
-            MoveDir = DirVec.DOWN;
-        else if (angle < -15f && angle >= -75f)
-            MoveDir = DirVec.UP_RIGHT;
-        else if (angle < -75f && angle >= -105f)
-            MoveDir = DirVec.RIGHT;
-        else if (angle < -105f && angle >= -160f)
-            MoveDir = DirVec.DOWN_RIGHT;
-        else
-            MoveDir = DirVec.UP;
 
-        if (!(MoveDir == DirVec.UP || MoveDir == DirVec.DOWN))
-            LookLeft = MoveDir.x < 0;
+        //if (!(MoveDir == DirVec.UP || MoveDir == DirVec.DOWN))
+
+        if (Input.GetMouseButtonDown((int)MouseButton.Left))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                Debug.Log(hit.transform.gameObject.layer);
+            }
+
+            //if (Skills.TryActivateSkill("ComboAttack"))
+            //{
+            //    CreatureState = ECreatureState.Skill;
+            //    return;
+            //}
+        }
+
     }
 
     protected override void UpdateAnimation()
     {
-        base.UpdateAnimation();
+        //base.UpdateAnimation();
         switch (CreatureState)
         {
             case ECreatureState.Idle:
                 HeroMoveState = EHeroMoveState.None;
+                Anim.SetFloat("MoveSpeed", 0);
+                Anim.SetTrigger("Locomotion");
                 break;
             case ECreatureState.Skill:
                 HeroMoveState = EHeroMoveState.None;
                 break;
             case ECreatureState.Move:
+                Anim.SetFloat("MoveSpeed", 1);
+                Anim.SetTrigger("Locomotion");
                 break;
             case ECreatureState.OnDamaged:
                 break;
@@ -197,7 +198,9 @@ public class Hero : Creature
         // TODO: ForceMove관련 체크하고 이동
         if (HeroMoveState == EHeroMoveState.ForceMove)
         {
-            transform.position += MoveDir * MoveSpeed * Time.deltaTime;
+            //transform.position += MoveDir * MoveSpeed * Time.deltaTime;
+            LookLeft = MoveDir.x < 0;
+            Agent.nextPosition = Position + MoveDir * MoveSpeed * Time.deltaTime;
             return;
         }
 
@@ -205,14 +208,11 @@ public class Hero : Creature
             CreatureState = ECreatureState.Idle;
     }
 
+
     protected override void UpdateSkill()
     {
         base.UpdateSkill();
 
-        if (HeroMoveState == EHeroMoveState.ForceMove && !IsGrounded)
-        {
-            transform.position += MoveDir * MoveSpeed * 0.5f * Time.deltaTime;
-            return;
-        }
+        
     }
 }

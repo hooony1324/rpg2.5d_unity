@@ -23,12 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5e44df07d6be1b84ab17a4ffce2b9596
-    m_Address: TestMap
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6feda878aac0dcf428b879b25c60a9b7
     m_Address: Martial
     m_ReadOnly: 0
@@ -37,6 +31,24 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 72bcb684e79dca0439ec4faf3e04f248
     m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e5e983071cfe544792ca19db2edb3e8
+    m_Address: UI_ComboBar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42470713826f70a4db4b42367852af5a
+    m_Address: MonsterPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0711ee928be08b42b3ace7ac6f603cf
+    m_Address: DamageFont
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4108258992752252911}
   - component: {fileID: 552880298791903018}
   - component: {fileID: 291427162335172202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HeroPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,9 +58,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &552880298791903018
 BoxCollider:
@@ -97,8 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   _creatureState: 0
-  IsGrounded: 0
-  _jumpForce: 6
+  JumpForce: 5
   _heroMoveState: 0
 --- !u!1 &3344470552053618486
 GameObject:
@@ -111,8 +110,8 @@ GameObject:
   - component: {fileID: 3278647097977376165}
   - component: {fileID: 4888512027437274146}
   - component: {fileID: 8571342072102428397}
-  m_Layer: 0
-  m_Name: Animation
+  m_Layer: 6
+  m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +194,7 @@ Animator:
   m_GameObject: {fileID: 3344470552053618486}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6feda878aac0dcf428b879b25c60a9b7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 72bcb684e79dca0439ec4faf3e04f248, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

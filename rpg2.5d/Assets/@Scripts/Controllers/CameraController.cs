@@ -39,6 +39,8 @@ public class CameraController : MonoBehaviour
             return;
 
         Vector3 targetPosition = new Vector3(Target.Position.x, Target.Position.y + 4.5f, Target.Position.z - 8.0f);
+
+
         targetPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.fixedDeltaTime);
 
         transform.SetPositionAndRotation(targetPosition, _angle);

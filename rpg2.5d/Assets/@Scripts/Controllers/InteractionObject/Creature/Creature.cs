@@ -1,11 +1,13 @@
-using BehaviorTree;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using static Define;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Creature : InteractionObject
 {
@@ -17,12 +19,13 @@ public class Creature : InteractionObject
     }
 
 
-    protected NavMeshAgent _agent;
-    protected IBTNode _root;
-    protected float _attackRange = 1.5f;
-    protected float _chaseRange = 8.0f;
-
+    private NavMeshAgent _agent;
+    public Rigidbody Rigid => _rigidbody;
+    
+    protected float AttackRange = 1.5f;
     public float MoveSpeed { get; set; } = 5.0f;
+    public float AttackSpeedRate { get; set; } = 1.0f;
+
     public SkillComponent Skills { get; set; }
     protected Vector3 InitPos { get; set; }
     public Vector3 MoveDir { get; set; } = Vector3.zero;
@@ -40,6 +43,7 @@ public class Creature : InteractionObject
                 CancelWait();
 
                 UpdateAnimation();
+                OnStateBegin();
             }
         }
     }
@@ -59,9 +63,15 @@ public class Creature : InteractionObject
 
         _agent = Util.GetOrAddComponent<NavMeshAgent>(gameObject);
 
+        _agent.speed = 3.5f;
+        _agent.angularSpeed = 0;
+        _agent.acceleration = 20f;
+        _agent.stoppingDistance = 1.5f;
 
         //Test
-        _tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
+        //_tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
+        
+
 
         return true;
     }
@@ -71,7 +81,7 @@ public class Creature : InteractionObject
 
         UpdateAnimation();
 
-
+        StartCoroutine(CoUpdateState());
     }
 
     protected virtual void UpdateAnimation()
@@ -93,6 +103,32 @@ public class Creature : InteractionObject
                 PlayAnimation(AnimName.DEATH);
                 break;
             case ECreatureState.Skill:
+                break;
+            default:
+                break;
+        }
+    }
+    protected virtual void OnStateBegin()
+    {
+        switch (CreatureState)
+        {
+            case ECreatureState.Idle:
+                BeginIdle();
+                break;
+            case ECreatureState.Cooltime:
+                BeginCooltime();
+                break;
+            case ECreatureState.Move:
+                BeginMove();
+                break;
+            case ECreatureState.OnDamaged:
+                BeginDamaged();
+                break;
+            case ECreatureState.Death:
+                BeginDeath();
+                break;
+            case ECreatureState.Skill:
+                BeginSkill();
                 break;
             default:
                 break;
@@ -123,7 +159,7 @@ public class Creature : InteractionObject
                     UpdateSkill();
                     break;
                 case ECreatureState.Death:
-                    UpdateDead();
+                    UpdateDeath();
                     break;
             }
 
@@ -131,45 +167,67 @@ public class Creature : InteractionObject
         }
     }
 
+    protected virtual void BeginIdle() { }
     protected virtual void UpdateIdle()
     {
-
+        UnityEngine.Debug.Log("idle");
     }
+    protected virtual void BeginMove() { }
     protected virtual void UpdateMove()
     {
 
     }
+    protected virtual void BeginCooltime() { }
     protected virtual void UpdateCooltime()
     {
 
     }
+
+    protected virtual void BeginSkill() 
+    {
+        if (Skills.CurrentSkill == null)
+        {
+            CreatureState = ECreatureState.Idle;
+            return;
+        }
+        Skills.CurrentSkill.DoSkill();
+    }
     protected virtual void UpdateSkill()
     {
 
+        //TEST
+        //°ø¼Ó
+        //AttackSpeedRate = 2.0f;
+        //Anim.speed = AttackSpeedRate;
 
-        Skills.CurrentSkill?.DoSkill();
 
-        //float animDuration;
-        //animDuration = Skills.CurrentSkill.SkillAnimDuration;
 
-        //float delay = animDuration;
-        //StartWait(animDuration);
     }
 
-    protected virtual void UpdateDead()
+    protected virtual void BeginDeath() { }
+    protected virtual void UpdateDeath()
     {
 
     }
 
-    protected override void OnDamaged(InteractionObject attacker, float value)
-    {
-        base.OnDamaged(attacker, value);
+    protected virtual void BeginDamaged() { }
+    protected virtual void UpdateDamaged() { }
 
+    public override void OnDamage(InteractionObject attacker, float value)
+    {
+        if (attacker.IsValid() == false)
+            return;
+
+        Creature creatureAttacker = attacker as Creature;
+        if (creatureAttacker == null)
+            return;
+
+        EDamageResult damageResult = EDamageResult.Hit;
+        Managers.Object.ShowDamageFont(OverheadPosition, 10, transform, damageResult);
     }
 
     protected virtual void OnDead()
     {
-        
         CancelWait();
         base.OnDead();
     }
@@ -178,20 +236,23 @@ public class Creature : InteractionObject
     #region Wait
 
     protected Coroutine _coWait;
+    protected Action _waitEndAction;
 
-    protected void StartWait(float seconds)
+    public void StartWait(float seconds, Action waitEndAction = null)
     {
         CancelWait();
+        _waitEndAction = waitEndAction;
         _coWait = StartCoroutine(CoWait(seconds));
     }
 
     IEnumerator CoWait(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        _waitEndAction?.Invoke();
         _coWait = null;
     }
 
-    protected void CancelWait()
+    public void CancelWait()
     {
         if (_coWait != null)
             StopCoroutine(_coWait);
@@ -238,6 +299,5 @@ public class Creature : InteractionObject
             }
         }
     }
-
 
 }

@@ -17,7 +17,7 @@ public class DataManager
     public void Init()
     {
         //TextDic = LoadJson<Data.TextDataLoader, string, Data.TextData>("TextData").MakeDict();
-        SkillDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>("SkillData").MakeDict();
+        //SkillDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>("SkillData").MakeDict();
     }
 
     private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

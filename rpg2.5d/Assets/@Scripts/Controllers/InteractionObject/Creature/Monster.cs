@@ -1,66 +1,33 @@
-using BehaviorTree;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static BehaviorTree.IBTNode;
+using UnityEngine.Diagnostics;
 using static Define;
 using static UnityEditor.Recorder.OutputPath;
+using Random = UnityEngine.Random;
 
 public class Monster : Creature
 {
+    protected float ChaseRange = 8.0f;
+    protected float _patrolRange = 5.0f;
 
     private Vector3 _originPos = default;
-
+    private LayerMask _targetMask;
     protected override bool Init()
     {
         if (base.Init() == false)
             return false;
 
-
-        Agent.speed = 3.5f;
-        Agent.angularSpeed = 0;
-        Agent.acceleration = 20f;
-        Agent.stoppingDistance = 1.5f;
+        ObjectType = EObjectType.Monster;
 
         _originPos = Position;
 
-        IBTNode SelectorNode = new SelectorNode
-            (
-                new List<IBTNode>()
-                {
-                    // Attack Sequence
-                    new SequenceNode
-                    (
-                        new List<IBTNode>()
-                        {
-                            new ActionNode(CheckAttacking),
-                            new ActionNode(CheckTargetInAttackRange),
-                            new ActionNode(DoAttack),
-                        }
-                    ),
 
-                    // Chase Sequence
-                    new SequenceNode
-                    (
-                        new List<IBTNode>()
-                        {
-                            new ActionNode(CheckTargetToChase),
-                            new ActionNode(MoveToTarget)
-                        }
-                    ),
-
-                    // Patrol or etc...
-                    new ActionNode(MoveToOriginPosition)
-
-                }
-            );
-
-        _root = SelectorNode;
-
-        SetInfo(0);
+        
 
         return true;
     }
@@ -69,12 +36,23 @@ public class Monster : Creature
     {
         base.SetInfo(templateId);
 
-
-
         // stat
         CreatureState = ECreatureState.Idle;
+        
+        _targetMask = LayerMask.GetMask("Hero");
 
-        StartBT();
+        SetupBasicSkills();
+
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    public void SetupBasicSkills()
+    {
+        Skills.RegisterSkill("MeleeAttack");
     }
 
     bool IsAnimationRunning(int animHash)
@@ -89,149 +67,150 @@ public class Monster : Creature
 
         return false;
     }
-    IBTNode.ENodeState CheckAttacking()
+
+    float UpdateAITick = 0;
+    protected override IEnumerator CoUpdateState()
     {
-        if (IsAnimationRunning(AnimName.ATTACK))
+        while (true)
         {
-            return IBTNode.ENodeState.Running;
-        }
+            Target = GetTargetInRange(ChaseRange);
 
-        if (_coWait != null)
-        {
-            return IBTNode.ENodeState.Running;
-        }
-
-        return IBTNode.ENodeState.Success;
-    }
-
-    IBTNode.ENodeState CheckTargetInAttackRange()
-    {
-        if (Target != null)
-        {
-            if (Vector3.SqrMagnitude(Target.Position - Position) < _attackRange * _attackRange)
+            switch (CreatureState)
             {
-                return IBTNode.ENodeState.Success;
-            }
-        }
-
-
-        return IBTNode.ENodeState.Failure;
-    }
-
-    IBTNode.ENodeState DoAttack()
-    {
-        if (Target != null)
-        {
-            LookLeft = (Target.Position - Position).x < 0;
-            Anim.Play(AnimName.ATTACK); 
-            StartWait(2.0f);
-
-
-            return IBTNode.ENodeState.Success;
-        }
-
-        return IBTNode.ENodeState.Failure;
-    }
-
-    IBTNode.ENodeState CheckTargetToChase()
-    {
-        var overlapColliders = Physics.OverlapSphere(Position, _chaseRange, LayerMask.GetMask("Hero"));
-
-        if (overlapColliders != null && overlapColliders.Length > 0)
-        {
-            Target = overlapColliders[0].gameObject.GetComponent<InteractionObject>();
-
-            _originPos = Position;
-
-            CreatureState = ECreatureState.Move;
-            return IBTNode.ENodeState.Success;
-        }
-
-        Target = null;
-        return IBTNode.ENodeState.Failure;
-    }
-
-    IBTNode.ENodeState MoveToTarget()
-    {
-        if (Target != null)
-        {
-            Vector3 targetVec = Target.Position - Position;
-            if (Vector3.SqrMagnitude(targetVec) < (_attackRange * _attackRange))
-            {
-                CreatureState = ECreatureState.Skill;
-                return IBTNode.ENodeState.Success;
+                case ECreatureState.Idle:
+                    UpdateIdle();
+                    UpdateAITick = 0.1f;
+                    break;
+                //case ECreatureState.Cooltime:
+                //    UpdateCooltime();
+                //    UpdateAITick = 0.1f;
+                    //break;
+                case ECreatureState.Move:
+                    UpdateAITick = 0.0f;
+                    UpdateMove();
+                    break;
+                case ECreatureState.Skill:
+                    UpdateAITick = 0.1f;
+                    UpdateSkill();
+                    break;
+                case ECreatureState.Death:
+                    UpdateAITick = 1f;
+                    UpdateDeath();
+                    break;
             }
 
-            MoveDir = targetVec.normalized;
-            LookLeft = MoveDir.x < 0;
-
-            _agent.nextPosition = Vector3.MoveTowards(Position, Target.Position, Time.deltaTime * MoveSpeed);
-
-            return IBTNode.ENodeState.Running;
+            if (UpdateAITick > 0)
+                yield return new WaitForSeconds(UpdateAITick);
+            else
+                yield return null;
         }
-
-        return IBTNode.ENodeState.Failure;
     }
 
-    IBTNode.ENodeState MoveToOriginPosition()
+    protected override void BeginIdle()
     {
-        //Machine Epsilon 보다 작거나 같다면 두 실수는 같은 값이라 정의
-        if (Vector3.SqrMagnitude(_originPos - Position) < float.Epsilon * float.Epsilon)
+        Anim.SetFloat("MoveSpeed", 0);
+
+        if (Target.IsValid() == false)
         {
-            return IBTNode.ENodeState.Success;
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(Position, _originPos, Time.deltaTime);
-            return IBTNode.ENodeState.Running;
+            StartWait(Random.RandomRange(1, 5), () => { CreatureState = ECreatureState.Move; });
         }
     }
-
     protected override void UpdateIdle()
     {
-        base.UpdateIdle();
+        
+        if (Target.IsValid())
+        {
+            CancelWait();
+            CreatureState = ECreatureState.Move;
+            return;
+        }
         
     }
 
+    protected override void BeginMove()
+    {
+        Anim.SetFloat("MoveSpeed", 1);
+    }
     protected override void UpdateMove()
     {
-        base.UpdateMove();
 
+        //Patrol
+        if (Target.IsValid() == false)
+        {
+            PatrolRandomPosition();
+            return;
+        }
+
+        LookAtTarget(Target.Position);
+
+        if (Position.IsTargetInRange(Target.Position, AttackRange))
+        {//Attack
+
+            Skills.TryActivateSkill("MeleeAttack");
+            CreatureState = ECreatureState.Skill;
+            Anim.SetFloat("MoveSpeed", 0);
+            return;
+        }
+        else
+        {//Chase
+            Agent.SetDestination(Target.Position);
+            return;
+        }
 
     }
 
     protected override void UpdateSkill()
     {
         base.UpdateSkill();
+
     }
 
-
-    public void StartBT()
+    #region Map
+    Vector3 _curDestPos;
+    public void PatrolRandomPosition()
     {
-        StartCoroutine(CoEvaluate());
-    }
+        if (_curDestPos.EqualsEx(Agent.destination))
+        {// PatrolDest설정됨
 
-    public void StopBT()
-    {
-        StopCoroutine(CoEvaluate());
-    }
+            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            {// PatrolDest도착
 
-    IEnumerator CoEvaluate()
-    {
-        while (true)
-        {
-            _root.Evaluate();
+                _curDestPos = Vector3.zero;
+                CreatureState = ECreatureState.Idle;
+                return;
+            }
 
-            yield return null;
+            return;
         }
+
+        //TODO : Z값을 고려하지 않은 randomPos, 갈 수 있는 범위인지를 고려하지 않은 randomPos
+        //TODO : GetRandomPoint => Map Manger에서 관리
+        Vector3 patrolPos = Position + Util.GetRandomPoint(_patrolRange); 
+        LookAtTarget(patrolPos);
+
+        Agent.SetDestination(patrolPos);
+        _curDestPos = Agent.destination;
     }
+
+
+    #endregion
+
+    #region Combat
+    InteractionObject GetTargetInRange(float range)
+    {
+        var targets = Physics.OverlapSphere(Position, range, _targetMask);
+
+        return targets.Length > 0 ? targets[0].GetComponent<InteractionObject>() : null;
+    }
+
+    #endregion
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(this.transform.position, _chaseRange);
+        Gizmos.DrawWireSphere(this.transform.position, ChaseRange);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(this.transform.position, _attackRange);
+        Gizmos.DrawWireSphere(this.transform.position, AttackRange);
     }
 }

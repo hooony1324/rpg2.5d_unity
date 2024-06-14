@@ -58,6 +58,7 @@ MonoBehaviour:
     - 3d5697add1f908b458f673295fd18337
     - cbd41a19e2f9570499b3edcb4eaef37b
     - 813a4bf2163a16449b8a5b6b759960a7
+    - e1c6ebbc908ad7c47aac3d0423c6cb4f
     values:
     - colorIndex: 1
       iconNameOrGuid: 
@@ -140,6 +141,8 @@ MonoBehaviour:
     - colorIndex: 0
       iconNameOrGuid: SceneAsset Icon
     - colorIndex: 4
+      iconNameOrGuid: 
+    - colorIndex: 8
       iconNameOrGuid: 
     - colorIndex: 8
       iconNameOrGuid: 

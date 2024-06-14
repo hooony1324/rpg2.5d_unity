@@ -30,12 +30,14 @@ public class SkillBase : BaseObject
         }
     }
 
-    public float RemainCoolTime { get; set; }
+    protected float SkillCoolTime = 0;      
+    public float RemainCoolTime { get; set; } // SkillCoolTime + 버프
     public float SkillAnimDuration = 0;
     public InteractionObject SkillTarget { get; set; }
 
     protected bool _activated = true;
     public bool Activated { get { return _activated; } }
+    protected LayerMask _targetMask;
 
     protected override bool Init()
     {
@@ -47,7 +49,7 @@ public class SkillBase : BaseObject
 
     public virtual void SetInfo(int skillId)
     {
-        Owner = GetComponent<Creature>();
+        Owner = transform.parent.GetComponent<Creature>();
         //Owner.SkeletonAnim.AnimationState.Event -= OnOwnerAnimEventHandler;
         //Owner.SkeletonAnim.AnimationState.Event += OnOwnerAnimEventHandler;
         //// Owner.SkeletonAnim.AnimationState.Complete -= OnAnimCompleteHandler;
@@ -55,16 +57,14 @@ public class SkillBase : BaseObject
         //SkillData = Managers.Data.SkillDic[skillId];
         //RemainCoolTime = SkillData.CoolTime - Owner.CooldownReduction;
         _activated = true;
-
-        //Owner.AEC = transform.Find("Animation").GetOrAddComponent<AnimEventController>();
-        //Animation aa = Owner.GetComponent<Animation>();
-        //aa.GetClip("Attack").AddEvent(new AnimationEvent{time = 0.1f,  });
+        
 
         //foreach (AnimationClip clip in Owner.Anim.runtimeAnimatorController.animationClips)
         //{
         //    if (clip.name == "Jump")
         //        clip.length;
         //}
+        
     }
     protected override void OnDisable()
     {
@@ -86,37 +86,46 @@ public class SkillBase : BaseObject
     protected void OnOwnerAnimEventHandler() { }
 
     public virtual void OnChangedSkillData() { }
-    public virtual void CancelSkill() { }
+    public virtual void CancelSkill() 
+    {
+        Owner.CreatureState = ECreatureState.Idle;
+    }
 
     public virtual void DoSkill()
     {
         //RemainCoolTime = SkillData.CoolTime;
         //SkillTarget = Owner.Target;
-        //준비된스킬에서 해제
-        if (Activated == false)
-            return;
-
-        //공속은 기본스킬에만 적용
 
 
-        Owner.Skills.CurrentSkill = null;
         //SkillAnimDuration = skill.Animation.Duration;
         //float timeScale = Owner.AttackSpeedRate;
-
+        
         // PlayAnimation & Anim Time
+        float animDuration = 1.0f;
+        // animDuration / Owner.AttackSpeedRate -> 공속
 
-        // Start CoolDown
+        //Owner.StartWait(animDuration, OnSkillAnimEnd);
+
+        
+
+        StartCoolDown();
+    }
+
+
+    protected void StartCoolDown()
+    {
         StartCoroutine(CoCooldown());
     }
 
-    private IEnumerator CoCooldown()
+    IEnumerator CoCooldown()
     {
-        RemainCoolTime = /*_skillData.CoolTime;*/ 4;
+        RemainCoolTime = 3;
         _activated = false;
-        yield return new WaitForSeconds(/*_skillData.CoolTime*/4);
+        
+        yield return new WaitForSeconds(3);
+
+        CancelSkill();
         RemainCoolTime = 0;
-
         _activated = true;
-
     }
 }
