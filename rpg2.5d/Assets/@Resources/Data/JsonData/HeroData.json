@@ -1,0 +1,44 @@
+{
+  "creatures": [
+    {
+      "TemplateId": 201001,
+      "DescriptionTextID": "KnightName",
+      "ColliderOffsetX": 0.0,
+      "ColliderOffsetY": 0.0,
+      "ColliderRadius": 0.0,
+      "MaxHp": 413.0,
+      "UpMaxHpBonus": 35.0,
+      "Atk": 65.0,
+      "MissChance": 0.0,
+      "AtkBonus": 6.0,
+      "MoveSpeed": 7.0,
+      "CriRate": 0.15,
+      "CriDamage": 1.5,
+      "IconImage": null,
+      "DefaultSkillId": 10001,
+      "EnvSkillId": 0,
+      "SkillAId": 10002,
+      "SkillBId": 0
+    },
+    {
+      "TemplateId": 201002,
+      "DescriptionTextID": "SamuraiName",
+      "ColliderOffsetX": 0.0,
+      "ColliderOffsetY": 0.0,
+      "ColliderRadius": 0.0,
+      "MaxHp": 350.0,
+      "UpMaxHpBonus": 29.0,
+      "Atk": 70.0,
+      "MissChance": 0.0,
+      "AtkBonus": 7.0,
+      "MoveSpeed": 7.0,
+      "CriRate": 0.15,
+      "CriDamage": 1.5,
+      "IconImage": null,
+      "DefaultSkillId": 10001,
+      "EnvSkillId": 0,
+      "SkillAId": 10002,
+      "SkillBId": 0
+    }
+  ]
+}

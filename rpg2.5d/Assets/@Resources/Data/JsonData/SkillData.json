@@ -1,0 +1,75 @@
+{
+  "skills": [
+    {
+      "TemplateId": 10001,
+      "Name": "기본공격",
+      "NameTextId": null,
+      "ClassName": "MeleeAttack",
+      "Description": "근접평타",
+      "DescriptionTextId": null,
+      "ProjectileId": 0,
+      "IconLabel": null,
+      "AnimName": null,
+      "CoolTime": 0.0,
+      "Duration": 0.0,
+      "CastingAnimname": null,
+      "CastingSound": null,
+      "SkillRange": 1.2,
+      "TargetCount": 5,
+      "EffectIds": [
+        60001,
+        62001
+      ],
+      "NextLevelId": 0,
+      "AoEId": 0,
+      "EffectSize": 0
+    },
+    {
+      "TemplateId": 10002,
+      "Name": "막기",
+      "NameTextId": null,
+      "ClassName": "Guard",
+      "Description": null,
+      "DescriptionTextId": null,
+      "ProjectileId": 0,
+      "IconLabel": null,
+      "AnimName": null,
+      "CoolTime": 0.0,
+      "Duration": 0.0,
+      "CastingAnimname": null,
+      "CastingSound": null,
+      "SkillRange": 0.0,
+      "TargetCount": 0,
+      "EffectIds": [
+        62001
+      ],
+      "NextLevelId": 0,
+      "AoEId": 0,
+      "EffectSize": 0
+    },
+    {
+      "TemplateId": 10003,
+      "Name": "콤보공격",
+      "NameTextId": null,
+      "ClassName": "ComboAttack",
+      "Description": null,
+      "DescriptionTextId": null,
+      "ProjectileId": 0,
+      "IconLabel": null,
+      "AnimName": null,
+      "CoolTime": 0.0,
+      "Duration": 0.0,
+      "CastingAnimname": null,
+      "CastingSound": null,
+      "SkillRange": 1.2,
+      "TargetCount": 5,
+      "EffectIds": [
+        60001,
+        62001
+      ],
+      "NextLevelId": 0,
+      "AoEId": 0,
+      "EffectSize": 0
+    }
+  ]
+}

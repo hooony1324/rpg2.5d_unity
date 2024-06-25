@@ -33,8 +33,12 @@ public class MeleeAttack : SkillBase
             }
         }
 
+
         if (Owner.ObjectType == EObjectType.Hero)
-            _targetMask = LayerMask.GetMask("Monster");
+        { 
+            _targetMask.AddLayer(ELayer.Monster);
+            _targetMask.AddLayer(ELayer.Env);
+        }
         else if (Owner.ObjectType == EObjectType.Monster)
             _targetMask = LayerMask.GetMask("Hero");
 
@@ -43,6 +47,13 @@ public class MeleeAttack : SkillBase
     public override void CancelSkill()
     {
         base.CancelSkill();
+
+        if (_attack != null)
+        {
+            StopCoroutine(_attack);
+            _attack = null;
+        }
+
     }
 
     public override void DoSkill()
@@ -50,14 +61,16 @@ public class MeleeAttack : SkillBase
         Owner.Anim.SetFloat("MeleeAttackBlend", 0);
         Owner.Anim.SetTrigger(AnimName.MELEEATTACK);
 
-        StartCoroutine(CoMeleeAttack());
+        _attack = StartCoroutine(CoMeleeAttack());
     }
 
+    Coroutine _attack;
     IEnumerator CoMeleeAttack()
     {
 
         yield return new WaitForSeconds(SkillAnimDuration);
         Owner.CreatureState = ECreatureState.Idle;
+        _attack = null;
     }
 
     void OnAttackEvent()
@@ -68,13 +81,33 @@ public class MeleeAttack : SkillBase
 
         Vector3 frontPosition = Owner.Position + (Owner.LookLeft ? Vector3.left : Vector3.right) + Vector3.up;
 
-        Collider[] hitColliders = Physics.OverlapBox(frontPosition, Vector3.one * 2, Quaternion.identity, _targetMask);
+        Collider[] hitColliders = Physics.OverlapSphere(frontPosition, 1.5f, _targetMask);
 
         if (hitColliders.Length > 0)
         {
             InteractionObject obj = hitColliders[0].gameObject.GetComponent<InteractionObject>();
 
-            obj.OnDamage(Owner, 10);
+            //TODO: Env or Monster
+            if (obj.ObjectType == EObjectType.Env)
+            {
+                obj.OnDamage(Owner, 10);
+            }
+            else if (obj.ObjectType == EObjectType.Monster)
+            {
+                ApplyEffects(obj);
+            }
+
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (Owner.CreatureState == ECreatureState.Skill)
+        {
+            Vector3 frontPosition = Owner.Position + (Owner.LookLeft ? Vector3.left : Vector3.right) + Vector3.up;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(frontPosition, 1.5f);
         }
     }
 }

@@ -54,8 +54,8 @@ public class SkillBase : BaseObject
         //Owner.SkeletonAnim.AnimationState.Event += OnOwnerAnimEventHandler;
         //// Owner.SkeletonAnim.AnimationState.Complete -= OnAnimCompleteHandler;
         //// Owner.SkeletonAnim.AnimationState.Complete += OnAnimCompleteHandler;
-        //SkillData = Managers.Data.SkillDic[skillId];
-        //RemainCoolTime = SkillData.CoolTime - Owner.CooldownReduction;
+        SkillData = Managers.Data.SkillDic[skillId];
+        RemainCoolTime = SkillData.CoolTime - Owner.CooldownReduction;
         _activated = true;
         
 
@@ -88,7 +88,8 @@ public class SkillBase : BaseObject
     public virtual void OnChangedSkillData() { }
     public virtual void CancelSkill() 
     {
-        Owner.CreatureState = ECreatureState.Idle;
+        if (Owner.CreatureState != ECreatureState.OnDamaged)
+            Owner.CreatureState = ECreatureState.Idle;
     }
 
     public virtual void DoSkill()
@@ -127,5 +128,18 @@ public class SkillBase : BaseObject
         CancelSkill();
         RemainCoolTime = 0;
         _activated = true;
+    }
+
+    protected List<EffectBase> ApplyEffects(InteractionObject target)
+    {
+        if (SkillData.EffectIds != null)
+            return target.Effects.GenerateEffects(SkillData.EffectIds, EEffectSpawnType.Skill, Owner);
+        return null;
+    }
+
+    public void Clear()
+    {
+        StopAllCoroutines();
+        RemainCoolTime = SkillData.CoolTime;
     }
 }

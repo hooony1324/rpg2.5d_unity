@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,63 +15,132 @@ public class SkillComponent : MonoBehaviour
         get { return _skillList; }
     }
 
-    //[SerializeField] public List<SkillBase> ReadySkills = new List<SkillBase>();
+    [SerializeField] public List<SkillBase> ReadySkills = new List<SkillBase>();
 
-    [SerializeField] public Dictionary<string, SkillBase> ReadySkills = new Dictionary<string, SkillBase>();
+    public SkillBase EnvSkill { get; private set; }
+    public SkillBase DefaultSkill { get; private set; }
+    public SkillBase ASkill { get; private set; }
+    public SkillBase BSkill { get; private set; }
 
-    //public SkillBase DodgeSkill { get; private set; }
-    //public SkillBase JumpSkill { get; private set; }
-    //public SkillBase AttackSkill_A { get; private set; }
-    //public SkillBase AttackSkill_B { get; private set; }
     public SkillBase CurrentSkill;
     private Creature _owner;
-    private GameObject _animator;
+    private GameObject _mesh;
     public void Awake()
     {
         _owner = GetComponent<Creature>();
 
-        _animator = Util.FindChild(gameObject, "Animator");
+        _mesh = Util.FindChild(gameObject, "Mesh");
 
     }
 
-    public bool TryActivateSkill(string skillName)
+    public void AddSkill(int skillId, ESkillSlot skillSlot)
     {
-        CurrentSkill = GetActivatedSkill(skillName);
-        return CurrentSkill != null;
-    }
+        if (skillId == 0)
+            return;
 
-    public SkillBase GetActivatedSkill(string skillName)
-    {
-        ReadySkills.TryGetValue(skillName, out SkillBase skill);
-        return skill.Activated ? skill : null;
-    }
-
-    // Skill List : 배운 스킬들
-    // Registered Skills : 스킬 슬롯 등록(당장 사용가능한 스킬)
-
-    //public void RegisterSkill(int skillId)
-    //{
-    //    string className = Managers.Data.SkillDic[skillId].ClassName;
-    //    SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
-
-    //    if (!skill)
-    //        return;
-
-    //    skill.SetInfo(0);
-    //    ReadySkills[className] = skill;
-    //}
-
-    // 임시, DataSheet나오면 없어질 예정
-    public void RegisterSkill(string className)
-    {
-        // Animatinor와 같은 자식에 있어야 EventTrigger의 Receiver로 인식함
-        SkillBase skill = _animator.AddComponent(Type.GetType(className)) as SkillBase;
+        string className = Managers.Data.SkillDic[skillId].ClassName;
+        SkillBase skill = _mesh.gameObject.AddComponent(Type.GetType(className)) as SkillBase;
 
         if (!skill)
             return;
 
-        skill.SetInfo(0);
-        ReadySkills[className] = skill;
+        skill.SetInfo(skillId);
+        SkillList.Add(skill);
+        
+        switch (skillSlot)
+        {
+            case ESkillSlot.Default:
+                DefaultSkill = skill;
+                break;
+            case ESkillSlot.Env:
+                EnvSkill = skill;
+                break;
+            case ESkillSlot.A:
+                ASkill = skill;
+                AddReadySkill(skill);
+                break;
+            case ESkillSlot.B:
+                BSkill = skill;
+                AddReadySkill(skill);
+                break;
+        }
+    }
+    public void UpdateSkill(int skillId, ESkillSlot skillSlot)
+    {
+        if (skillId == 0)
+            return;
+
+        switch (skillSlot)
+        {
+            case ESkillSlot.Default:
+                SkillList.Remove(DefaultSkill);
+                ReadySkills.Remove(DefaultSkill);
+                break;
+            case ESkillSlot.Env:
+                SkillList.Remove(EnvSkill);
+                ReadySkills.Remove(EnvSkill);
+                break;
+            case ESkillSlot.A:
+                SkillList.Remove(ASkill);
+                ReadySkills.Remove(ASkill);
+                break;
+            case ESkillSlot.B:
+                SkillList.Remove(BSkill);
+                ReadySkills.Remove(BSkill);
+                break;
+        }
+
+        string className = Managers.Data.SkillDic[skillId].ClassName;
+        SkillBase skill = _mesh.gameObject.GetComponent(Type.GetType(className)) as SkillBase;
+        Destroy(skill);
+
+        AddSkill(skillId, skillSlot);
     }
 
+    private void AddReadySkill(SkillBase skill)
+    {
+        if (skill.SkillType != ESkillType.PassiveSkill)
+        {
+            ReadySkills.Add(skill);
+        }
+    }
+
+    public void TrySkill(ESkillSlot skillSlot)
+    {
+        SkillBase skill = null;
+        switch (skillSlot)
+        {
+            case ESkillSlot.Default:
+                skill = DefaultSkill;
+                break;
+            case ESkillSlot.Env:
+                skill = EnvSkill;
+                break;
+            case ESkillSlot.A:
+                skill = ASkill;
+                break;
+            case ESkillSlot.B:
+                skill = BSkill;
+                break;
+        }
+
+        // 스킬 등록 X
+        if (skill == null)
+            return;
+
+        if (skill.Activated)
+        {
+            CurrentSkill = skill;
+            _owner.CreatureState = ECreatureState.Skill;
+        }
+    }
+
+    public void Clear()
+    {
+        ReadySkills.Clear();
+        if (ASkill != null)
+            ASkill.Clear();
+        if (BSkill != null)
+            BSkill.Clear();
+    }
 }

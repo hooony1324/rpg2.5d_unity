@@ -16,7 +16,49 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 7c13a6f767ad0ef429d5981149a14b52
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6e3996a681593d349a36f7b497370d53
+    m_Address: HeroPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42470713826f70a4db4b42367852af5a
+    m_Address: MonsterPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e5e983071cfe544792ca19db2edb3e8
+    m_Address: UI_ComboBar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89bb64452dcfe9f4d9beb842231aa2f9
+    m_Address: EnvPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2590a1a3ab94b39479ab7e2e850525c8
+    m_Address: UI_DamageFont
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6fcfe013bac0626469a8ed69e6ffe751
+    m_Address: UI_StatusBar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcbe099d1f0e8c446a1db29c580a416e
+    m_Address: UI_GameScene
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6b7e383d8e2b32440b13d68a15608bde, type: 2}
   m_SchemaSet:

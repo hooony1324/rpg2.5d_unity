@@ -16,9 +16,13 @@ public class GameScene : BaseScene
 
         
        
-        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero);
+        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero, 201001);
 
-        Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 30);
+        Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
+
+        Env env = Managers.Object.Spawn<Env>(Vector3.right * 5);
+
+        Managers.UI.ShowSceneUI<UI_GameScene>();
 
         Managers.Game.Cam.transform.position = hero.transform.position;
         Managers.Game.Cam.Target = hero;

@@ -1,16 +1,68 @@
+using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Build.Pipeline.Tasks;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using static Define;
 using static UnityEngine.UI.GridLayoutGroup;
 
 public class Creature : InteractionObject
 {
+    #region Stat Value
+    public float MaxHpBase { get; set; }
+    public float AtkBase { get; set; }
+    public float CriRateBase { get; set; }
+    public float CriDamageBase { get; set; }
+    public float MissBase { get; set; }
+    public float ReduceDamageRateBase { get; set; }
+    public float ReduceDamageBase { get; set; }
+    public float LifeStealRateBase { get; set; }
+    public float ThornsDamageRateBase { get; set; }
+    public float MoveSpeedBase { get; set; }
+    public float AttackSpeedRateBase { get; set; }
+    public float CooldownReductionBase { get; set; }
+    [field: SerializeField] public float MaxHp { get; set; }
+    [field: SerializeField] public float Atk { get; set; }
+    [field: SerializeField] public float CriRate { get; set; }
+    [field: SerializeField] public float CriDamage { get; set; }
+    [field: SerializeField] public float MissChance { get; set; }
+    [field: SerializeField] public float ReduceDamageRate { get; set; }
+    [field: SerializeField] public float ReduceDamage { get; set; }
+    [field: SerializeField] public float LifeStealRate { get; set; }
+    [field: SerializeField] public float ThornsDamageRate { get; set; }
+    [field: SerializeField] public float MoveSpeed { get; set; }
+    [field: SerializeField] public float AttackSpeedRate { get; set; }
+    [field: SerializeField] public float CooldownReduction { get; set; }
+    [field: SerializeField] private bool _dirty = false;
+
+    #endregion
+    [field: SerializeField] public Data.CreatureData CreatureData { get; protected set; }
+
+    [SerializeField] private float _hp;
+    public float Hp
+    {
+        get => _hp;
+        protected set => _hp = value;
+    }
+
+    public SkillComponent Skills { get; set; }
+    protected Vector3 InitPos { get; set; }
+    public Vector3 MoveDir { get; set; } = Vector3.zero;
+    [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
+
+    
+    public Rigidbody Rigid => _rigidbody;
+
+    private NavMeshAgent _agent;
+    public NavMeshAgent Agent => _agent;
     [SerializeField] private InteractionObject _target;
     public InteractionObject Target
     {
@@ -19,19 +71,7 @@ public class Creature : InteractionObject
     }
 
 
-    private NavMeshAgent _agent;
-    public Rigidbody Rigid => _rigidbody;
-    
-    protected float AttackRange = 1.5f;
-    public float MoveSpeed { get; set; } = 5.0f;
-    public float AttackSpeedRate { get; set; } = 1.0f;
-
-    public SkillComponent Skills { get; set; }
-    protected Vector3 InitPos { get; set; }
-    public Vector3 MoveDir { get; set; } = Vector3.zero;
-    [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
-    public NavMeshAgent Agent => _agent;
-
+    private ECreatureState testprevstate;
     public virtual ECreatureState CreatureState
     {
         get => _creatureState;
@@ -39,8 +79,14 @@ public class Creature : InteractionObject
         {
             if (_creatureState != value)
             {
+                testprevstate = _creatureState;
                 _creatureState = value;
                 CancelWait();
+
+                if (testprevstate == ECreatureState.OnDamaged)
+                {
+                    int a = 0;
+                }
 
                 UpdateAnimation();
                 OnStateBegin();
@@ -68,33 +114,123 @@ public class Creature : InteractionObject
         _agent.acceleration = 20f;
         _agent.stoppingDistance = 1.5f;
 
+        Hp = MaxHp;
+
         //Test
         //_tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
-        
 
 
         return true;
     }
 
-    public virtual void SetInfo(int templateId)
+    public override void SetInfo(int templateId)
     {
+        base.SetInfo(templateId);
 
         UpdateAnimation();
-
         StartCoroutine(CoUpdateState());
+
+        if (ObjectType == EObjectType.Hero)
+            CreatureData = Managers.Data.HeroDic[templateId];
+        else
+            CreatureData = Managers.Data.MonsterDic[templateId];
+
+        InitCreatureStat();
+        CalculateStat();
+        SetSkill();
+
+        CreatureState = ECreatureState.Idle;
+        OnStateBegin();
     }
+
+    protected virtual void SetSkill() 
+    {
+        Skills.UpdateSkill(CreatureData.DefaultSkillId, ESkillSlot.Default);
+        Skills.UpdateSkill(CreatureData.EnvSkillId, ESkillSlot.Env);
+        Skills.UpdateSkill(CreatureData.SkillAId, ESkillSlot.A);
+        Skills.UpdateSkill(CreatureData.SkillBId, ESkillSlot.B);
+    }
+
+    protected virtual void InitCreatureStat()
+    {
+        Hp = CreatureData.MaxHp;
+
+        //BaseValue
+        MaxHp = MaxHpBase = CreatureData.MaxHp;
+        Atk = AtkBase = CreatureData.Atk;
+        CriRate = CriRateBase = CreatureData.CriRate;
+        CriDamage = CriDamageBase = CreatureData.CriDamage;
+        MissChance = MissBase = 0.0f;
+        ReduceDamageRate = ReduceDamageRateBase = 0;
+        ReduceDamage = ReduceDamageBase = 0;
+        LifeStealRate = LifeStealRateBase = 0;
+        ThornsDamageRate = ThornsDamageRateBase = 0;
+        MoveSpeed = MoveSpeedBase = CreatureData.MoveSpeed;
+        AttackSpeedRate = AttackSpeedRateBase = 1;
+        CooldownReductionBase = 0;
+    }
+
+    public virtual void CalculateStat()
+    {
+        float prevMaxHp = MaxHp;
+        MaxHp = CalculateFinalStat(MaxHpBase, ECalcStatType.MaxHp);
+        Atk = CalculateFinalStat(AtkBase, ECalcStatType.Atk);
+        if (ObjectType == EObjectType.Hero)
+        {
+            //HeroInfo heroInfo = Managers.Hero.GetHeroInfo(TemplateId);
+            //if (heroInfo != null)
+            //{
+            //    MaxHp += (heroInfo.Level - 1) * heroInfo.HeroData.UpMaxHpBonus;
+            //    Atk += (heroInfo.Level - 1) * heroInfo.HeroData.AtkBonus;
+            //}
+        }
+
+        CriRate = CalculateFinalStat(CriRateBase, ECalcStatType.Critical);
+        CriDamage = CalculateFinalStat(CriDamageBase, ECalcStatType.CriticalDamage);
+        MissChance = CalculateFinalStat(MissBase, ECalcStatType.MissChance);
+        ReduceDamageRate = CalculateFinalStat(ReduceDamageRateBase, ECalcStatType.ReduceDamageRate);
+        ReduceDamage = CalculateFinalStat(ReduceDamageBase, ECalcStatType.ReduceDamage);
+        LifeStealRate = CalculateFinalStat(LifeStealRateBase, ECalcStatType.LifeStealRate);
+        ThornsDamageRate = CalculateFinalStat(ThornsDamageRateBase, ECalcStatType.ThornsDamageRate);
+        MoveSpeed = CalculateFinalStat(MoveSpeedBase, ECalcStatType.MoveSpeed);
+        AttackSpeedRate = CalculateFinalStat(AttackSpeedRateBase, ECalcStatType.AttackSpeedRate);
+        CooldownReduction = CalculateFinalStat(CooldownReduction, ECalcStatType.CooldownReduction);
+
+        // 최대 HP번경
+        if (prevMaxHp != MaxHp)
+        {
+            float hpRatio = Hp / prevMaxHp;
+            Hp = MaxHp * hpRatio;
+            Hp = Mathf.Clamp(Hp, 0, MaxHp);
+        }
+
+        float ratio = Hp / MaxHp;
+        _hpBar.Refresh(ratio);
+    }
+
+    protected virtual float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
+    {
+        return 0;
+    }
+
 
     protected virtual void UpdateAnimation()
     {
         switch (CreatureState)
         {
             case ECreatureState.Idle:
-                PlayAnimation(AnimName.IDLE);
+                //PlayAnimation(AnimName.IDLE);
+                Anim.SetFloat("MoveSpeed", 0);
+                Anim.Play("Locomotion");
+                
                 break;
             case ECreatureState.Cooltime:
                 break;
             case ECreatureState.Move:
-                PlayAnimation(AnimName.RUN);
+                //PlayAnimation(AnimName.RUN);
+                Anim.SetFloat("MoveSpeed", 1);
+                Anim.Play("Locomotion");
+
                 break;
             case ECreatureState.OnDamaged:
                 PlayAnimation(AnimName.TAKE_HIT);
@@ -144,7 +280,9 @@ public class Creature : InteractionObject
     {
         while(true)
         {
-            switch(CreatureState)
+            yield return null;
+
+            switch (CreatureState)
             {
                 case ECreatureState.Idle:
                     UpdateIdle();
@@ -162,8 +300,6 @@ public class Creature : InteractionObject
                     UpdateDeath();
                     break;
             }
-
-            yield return null;
         }
     }
 
@@ -190,6 +326,7 @@ public class Creature : InteractionObject
             CreatureState = ECreatureState.Idle;
             return;
         }
+
         Skills.CurrentSkill.DoSkill();
     }
     protected virtual void UpdateSkill()
@@ -210,7 +347,11 @@ public class Creature : InteractionObject
 
     }
 
-    protected virtual void BeginDamaged() { }
+    protected virtual void BeginDamaged() 
+    {
+        Skills.CurrentSkill?.CancelSkill();
+
+    }
     protected virtual void UpdateDamaged() { }
 
     public override void OnDamage(InteractionObject attacker, float value)
@@ -218,12 +359,18 @@ public class Creature : InteractionObject
         if (attacker.IsValid() == false)
             return;
 
+        _hurtFlash.Flash();
+
         Creature creatureAttacker = attacker as Creature;
         if (creatureAttacker == null)
             return;
 
+        Hp = Mathf.Clamp(Hp - value, 0, MaxHp);
+        float ratio = Hp / MaxHp;
+        _hpBar.Refresh(ratio);
+
         EDamageResult damageResult = EDamageResult.Hit;
-        Managers.Object.ShowDamageFont(OverheadPosition, 10, transform, damageResult);
+        Managers.Object.ShowDamageFont(OverheadPosition, value, transform, damageResult);
     }
 
     protected virtual void OnDead()
@@ -298,6 +445,29 @@ public class Creature : InteractionObject
                 IsGrounded = true;
             }
         }
+    }
+    public IEnumerator CoLerpInDirection(Vector3 direction, float duration, float distance = 1.0f)
+    {
+        Vector3 startPosition = Position;
+        Vector3 targetPosition = startPosition + direction * distance;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(targetPosition, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            targetPosition = hit.position;
+        }
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        Agent.Warp(targetPosition);
     }
 
 }

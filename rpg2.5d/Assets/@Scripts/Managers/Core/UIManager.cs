@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ using static Define;
 
 public class UIManager
 {
-    private int _pupupOrder = 100;
+    private int _popupOrder = 100;
     private int _toastOrder = 500;
 
     //private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
@@ -76,8 +77,8 @@ public class UIManager
 
         if (sort)
         {
-            canvas.sortingOrder = _pupupOrder;
-            _pupupOrder++;
+            canvas.sortingOrder = _popupOrder;
+            _popupOrder++;
         }
 
         if (isToast)
@@ -106,6 +107,28 @@ public class UIManager
         Canvas canvas = go.GetOrAddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.worldCamera = Camera.main;
+
+        return Util.GetOrAddComponent<T>(go);
+    }
+
+    public T MakeOverlayUI<T>(Transform parent = null, string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"{name}");
+        if (parent != null)
+            go.transform.SetParent(parent);
+
+        Canvas canvas = go.GetOrAddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+
+        CanvasScaler cs = go.GetOrAddComponent<CanvasScaler>();
+        cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        cs.referenceResolution = new Vector2(1920, 1080);
+
+        // CameraCheck Component
 
         return Util.GetOrAddComponent<T>(go);
     }

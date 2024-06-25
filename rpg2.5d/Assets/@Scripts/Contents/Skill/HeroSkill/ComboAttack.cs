@@ -23,8 +23,7 @@ public class ComboAttack : SkillBase
 
         SkillType = ESkillType.ComboSkill;
 
-        GameObject comboBarObj = Managers.Resource.Instantiate("UI_ComboBar", gameObject.transform);
-        _comboBar = comboBarObj.GetComponent<UI_ComboBar>();
+        _comboBar = Managers.UI.MakeWorldSpaceUI<UI_ComboBar>();
 
         return true;
     }

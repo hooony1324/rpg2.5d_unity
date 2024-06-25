@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -17,8 +18,7 @@ public class BaseObject : InitBase
     private Animator _animator;
     //private AnimEventController _animEventController;
 
-    public Vector3 OverheadPosition => Position + Vector3.up * OverheadOffset;
-    protected float OverheadOffset = 1.8f;
+
     protected override bool Init()
     {
         if (base.Init() == false)
@@ -26,6 +26,8 @@ public class BaseObject : InitBase
 
         _spriteRenderer = Util.FindChild<SpriteRenderer>(gameObject);
         _animator = Util.FindChild<Animator>(gameObject);
+
+
 
         return true;
     }
@@ -65,4 +67,7 @@ public class BaseObject : InitBase
     {
         return _spriteRenderer.bounds.center.y;
     }
+
+
+
 }

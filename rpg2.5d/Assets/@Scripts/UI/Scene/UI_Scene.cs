@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_Scene : UI_Base
 {
@@ -10,6 +12,9 @@ public class UI_Scene : UI_Base
             return false;
 
         Managers.UI.SetCanvas(gameObject, false);
+
+
         return true;
     }
+
 }

@@ -17,12 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1b5f70f4aa591ad47a97a06bbf4c0689
   m_SerializeEntries:
-  - m_GUID: 6e3996a681593d349a36f7b497370d53
-    m_Address: HeroPrefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6feda878aac0dcf428b879b25c60a9b7
     m_Address: Martial
     m_ReadOnly: 0
@@ -35,20 +29,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e5e983071cfe544792ca19db2edb3e8
-    m_Address: UI_ComboBar
+  - m_GUID: dc681eac0984af843ab31be806bcd0a7
+    m_Address: MonsterData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 42470713826f70a4db4b42367852af5a
-    m_Address: MonsterPrefab
+  - m_GUID: e12ca8c1e3b1aa2408733967524cc9d2
+    m_Address: HeroData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f0711ee928be08b42b3ace7ac6f603cf
-    m_Address: DamageFont
+  - m_GUID: 9d9601e774c75de498c7b818635ea277
+    m_Address: SkillData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8139b219091aed645bae3083235db598
+    m_Address: EffectData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c02fd3b62f9d0534a94056f78d47784b
+    m_Address: TextData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

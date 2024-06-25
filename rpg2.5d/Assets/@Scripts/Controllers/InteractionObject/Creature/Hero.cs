@@ -10,12 +10,14 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using static Define;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UI.GridLayoutGroup;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Hero : Creature
 {
     [SerializeField] private EHeroMoveState _heroMoveState = EHeroMoveState.None;
+
+    LayerMask _uiCheckMask;
     public EHeroMoveState HeroMoveState
     {
         get => _heroMoveState;
@@ -46,6 +48,9 @@ public class Hero : Creature
         if (base.Init() == false)
             return false;
 
+        ObjectType = EObjectType.Hero;
+
+        _uiCheckMask.AddLayer(ELayer.UI);
 
         return true;
     }
@@ -61,20 +66,14 @@ public class Hero : Creature
     }
 
 
-    public void SetInfo(int templateId)
+    public override void SetInfo(int templateId)
     {
+        //_heroInfo = Managers.Hero.GetHeroInfo(templateId);
+        //Managers.Game.OnBroadcastEvent -= HandleOnBroadcast;
+        //Managers.Game.OnBroadcastEvent += HandleOnBroadcast;
         base.SetInfo(templateId);
-
-        ObjectType = EObjectType.Hero;
-
-        SetupBasicSkills();
     }
 
-    public void SetupBasicSkills()
-    {
-        //Skills.RegisterSkill("Jump");
-        Skills.RegisterSkill("ComboAttack");
-    }
 
     private void Update()
     {
@@ -141,39 +140,23 @@ public class Hero : Creature
 
         if (Input.GetMouseButtonDown((int)MouseButton.Left))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                Debug.Log(hit.transform.gameObject.layer);
-            }
-
-            //if (Skills.TryActivateSkill("ComboAttack"))
-            //{
-            //    CreatureState = ECreatureState.Skill;
-            //    return;
-            //}
+            HandleMouseClick();
         }
 
     }
 
     protected override void UpdateAnimation()
     {
-        //base.UpdateAnimation();
+        base.UpdateAnimation();
         switch (CreatureState)
         {
             case ECreatureState.Idle:
                 HeroMoveState = EHeroMoveState.None;
-                Anim.SetFloat("MoveSpeed", 0);
-                Anim.SetTrigger("Locomotion");
                 break;
             case ECreatureState.Skill:
                 HeroMoveState = EHeroMoveState.None;
                 break;
             case ECreatureState.Move:
-                Anim.SetFloat("MoveSpeed", 1);
-                Anim.SetTrigger("Locomotion");
                 break;
             case ECreatureState.OnDamaged:
                 break;
@@ -195,7 +178,6 @@ public class Hero : Creature
 
     protected override void UpdateMove()
     {
-        // TODO: ForceMove관련 체크하고 이동
         if (HeroMoveState == EHeroMoveState.ForceMove)
         {
             //transform.position += MoveDir * MoveSpeed * Time.deltaTime;
@@ -214,5 +196,43 @@ public class Hero : Creature
         base.UpdateSkill();
 
         
+    }
+
+    void HandleMouseClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        //UI Click
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        Skills.TrySkill(ESkillSlot.Default);
+
+        //if (Skills.TryActivateSkill("ComboAttack"))
+        //{
+        //    CreatureState = ECreatureState.Skill;
+        //    return;
+        //}
+    }
+
+    protected override float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
+    {
+        float finalValue = baseValue;
+
+        finalValue += Effects.GetStatModifier(calcStatType, EStatModType.Add);
+        //              + Managers.Inventory.GetStatModifier(calcStatType, EStatModType.Add)
+        //              + Managers.Game.GetTrainingStatModifier(calcStatType, EStatModType.Add);
+
+        finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentAdd);
+        //                + Managers.Inventory.GetStatModifier(calcStatType, EStatModType.PercentAdd)
+        //                + Managers.Game.GetTrainingStatModifier(calcStatType, EStatModType.PercentAdd);
+
+        finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentMult);
+        
+
+        return finalValue;
     }
 }

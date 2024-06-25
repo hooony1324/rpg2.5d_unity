@@ -18,14 +18,14 @@ public class ObjectManager
     public Hero Hero { get; private set; }
     public HashSet<Monster> Monsters { get; } = new HashSet<Monster>();
     //public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
-    //public HashSet<Env> Envs { get; } = new HashSet<Env>();
+    public HashSet<Env> Envs { get; } = new HashSet<Env>();
     //public HashSet<Npc> Npcs { get; } = new HashSet<Npc>();
     //public HashSet<ItemHolder> ItemHolders { get; } = new HashSet<ItemHolder>();
 
     public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
     //public Transform ProjectileRoot { get { return GetRootTransform("@Projectiles"); } }
-    //public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
+    public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
     //public Transform EffectRoot { get { return GetRootTransform("@Effects"); } }
     //public Transform NpcRoot { get { return GetRootTransform("@Npc"); } }
     //public Transform ItemHolderRoot { get { return GetRootTransform("@ItemHolders"); } }
@@ -37,9 +37,9 @@ public class ObjectManager
         objMap.name = "@Map";
     }
 
-    public void ShowDamageFont(Vector2 pos, float damage, Transform parent, EDamageResult result)
+    public void ShowDamageFont(Vector3 pos, float damage, Transform parent, EDamageResult result)
     {
-        string prefabName = "DamageFont";
+        string prefabName = "UI_DamageFont";
 
         GameObject go = Managers.Resource.Instantiate(prefabName, pooling: true);
         DamageFont damageText = go.GetComponent<DamageFont>();
@@ -64,26 +64,29 @@ public class ObjectManager
         if (type == typeof(Hero))
         {
             GameObject go = Managers.Resource.Instantiate("HeroPrefab");
-            // go.name = Managers.Data.HeroDic[templateID].DescriptionTextID;
+            string textId = Managers.Data.HeroDic[templateID].DescriptionTextID;
+            go.name = Managers.GetText(textId);
             go.transform.position = spawnPos;
             go.transform.parent = HeroRoot;
             Hero hc = go.GetOrAddComponent<Hero>();
-            //Heroes.Add(hc);
             hc.SetInfo(templateID);
             Hero = hc;
             return hc as T;
         }
-        //if (type == typeof(Env))
-        //{
-        //    GameObject go = Managers.Resource.Instantiate(Managers.Data.EnvDic[templateID].PrefabLabel,
-        //        pooling: true);
-        //    go.transform.position = spawnPos;
-        //    go.transform.parent = EnvRoot;
-        //    Env gr = go.GetOrAddComponent<Env>();
-        //    Envs.Add(gr);
-        //    gr.SetInfo(templateID);
-        //    return gr as T;
-        //}
+        if (type == typeof(Env))
+        {
+            //GameObject go = Managers.Resource.Instantiate(Managers.Data.EnvDic[templateID].PrefabLabel,
+            //    pooling: true);
+
+            GameObject go = Managers.Resource.Instantiate("EnvPrefab");
+
+            go.transform.position = spawnPos;
+            go.transform.parent = EnvRoot;
+            Env gr = go.GetOrAddComponent<Env>();
+            Envs.Add(gr);
+            gr.SetInfo(templateID);
+            return gr as T;
+        }
         //if (type == typeof(Npc))
         //{
         //    GameObject go = Managers.Resource.Instantiate(Managers.Data.NpcDic[templateID].PrefabLabel, pooling: true);
@@ -143,16 +146,16 @@ public class ObjectManager
             //Heroes.Remove(obj as Hero);
             Managers.Resource.Destroy(obj.gameObject);
         }
-        //else if (type == typeof(Monster))
-        //{
-        //    Monsters.Remove(obj as Monster);
-        //    Managers.Resource.Destroy(obj.gameObject);
-        //}
-        //else if (type == typeof(Env))
-        //{
-        //    Envs.Remove(obj as Env);
-        //    Managers.Resource.Destroy(obj.gameObject);
-        //}
+        else if (type == typeof(Monster))
+        {
+            Monsters.Remove(obj as Monster);
+            Managers.Resource.Destroy(obj.gameObject);
+        }
+        else if (type == typeof(Env))
+        {
+            Envs.Remove(obj as Env);
+            Managers.Resource.Destroy(obj.gameObject);
+        }
         //else if (type == typeof(Npc))
         //{
         //    Npcs.Remove(obj as Npc);
@@ -167,5 +170,27 @@ public class ObjectManager
         //    Managers.Resource.Destroy(obj.gameObject);
         //}
         //Managers.Map.RemoveObject(obj);
+    }
+
+    public GameObject SpawnGameObject(Vector3 position, string prefabName)
+    {
+        GameObject go = Managers.Resource.Instantiate(prefabName, pooling: true);
+        go.transform.position = position;
+
+        return go;
+    }
+
+    public void DespawnGameObject<T>(T obj) where T : BaseObject
+    {
+        System.Type type = typeof(T);
+
+        if (typeof(EffectBase).IsAssignableFrom(type))
+        {
+            Managers.Resource.Destroy(obj.gameObject);
+        }
+        //else if (typeof(AoEBase).IsAssignableFrom(type))
+        //{
+        //    Managers.Resource.Destroy(obj.gameObject);
+        //}
     }
 }

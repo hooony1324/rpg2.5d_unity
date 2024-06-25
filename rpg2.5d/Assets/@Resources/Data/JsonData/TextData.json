@@ -1,0 +1,12 @@
+{
+  "texts": [
+    {
+      "DataId": "KnightName",
+      "KOR": "기사"
+    },
+    {
+      "DataId": "SamuraiName",
+      "KOR": "사무라이"
+    }
+  ]
+}

@@ -55,6 +55,16 @@ public static class Extension
         mask &= ~(1 << (int)layer);
     }
 
+    public static bool ContainsLayer(this ref LayerMask mask, Define.ELayer layer)
+    {
+        return (mask & (1 << (int)layer)) != 0;
+    }
+
+    public static bool ContainsLayer(this ref LayerMask mask, int layerIndex)
+    {
+        return (mask & (1 << layerIndex)) != 0;
+    }
+
     public static void DestroyChilds(this GameObject go)
     {
         Transform[] children = new Transform[go.transform.childCount];

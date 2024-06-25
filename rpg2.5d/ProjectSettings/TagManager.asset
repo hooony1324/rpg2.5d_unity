@@ -18,6 +18,8 @@ TagManager:
   - Boss
   - Ground
   - 
+  - Env
+  - Obstacle
   - 
   - 
   - 
@@ -25,9 +27,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Projectile
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 464710227
     locked: 0

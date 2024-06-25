@@ -1,3 +1,4 @@
+using Data;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -27,6 +28,7 @@ public class Monster : Creature
         _originPos = Position;
 
 
+        Agent.avoidancePriority = 40; // Hero : 50
         
 
         return true;
@@ -37,22 +39,21 @@ public class Monster : Creature
         base.SetInfo(templateId);
 
         // stat
-        CreatureState = ECreatureState.Idle;
         
         _targetMask = LayerMask.GetMask("Hero");
 
-        SetupBasicSkills();
+
 
     }
 
-    private void Start()
+    protected override float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
     {
-        
-    }
+        float finalValue = baseValue;
+        //finalValue += Effects.GetStatModifier(calcStatType, EStatModType.Add);
+        //finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentAdd);
+        //finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentMult);
 
-    public void SetupBasicSkills()
-    {
-        Skills.RegisterSkill("MeleeAttack");
+        return finalValue;
     }
 
     bool IsAnimationRunning(int animHash)
@@ -84,7 +85,9 @@ public class Monster : Creature
                 //case ECreatureState.Cooltime:
                 //    UpdateCooltime();
                 //    UpdateAITick = 0.1f;
-                    //break;
+                //break;
+                //case ECreatureState.OnDamaged:
+
                 case ECreatureState.Move:
                     UpdateAITick = 0.0f;
                     UpdateMove();
@@ -108,7 +111,6 @@ public class Monster : Creature
 
     protected override void BeginIdle()
     {
-        Anim.SetFloat("MoveSpeed", 0);
 
         if (Target.IsValid() == false)
         {
@@ -117,7 +119,7 @@ public class Monster : Creature
     }
     protected override void UpdateIdle()
     {
-        
+
         if (Target.IsValid())
         {
             CancelWait();
@@ -127,10 +129,6 @@ public class Monster : Creature
         
     }
 
-    protected override void BeginMove()
-    {
-        Anim.SetFloat("MoveSpeed", 1);
-    }
     protected override void UpdateMove()
     {
 
@@ -143,10 +141,10 @@ public class Monster : Creature
 
         LookAtTarget(Target.Position);
 
-        if (Position.IsTargetInRange(Target.Position, AttackRange))
+        if (Position.IsTargetInRange(Target.Position, 1.5f))
         {//Attack
 
-            Skills.TryActivateSkill("MeleeAttack");
+            Skills.TrySkill(ESkillSlot.Default);
             CreatureState = ECreatureState.Skill;
             Anim.SetFloat("MoveSpeed", 0);
             return;
@@ -211,6 +209,6 @@ public class Monster : Creature
         Gizmos.DrawWireSphere(this.transform.position, ChaseRange);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(this.transform.position, AttackRange);
+        Gizmos.DrawWireSphere(this.transform.position, 1.5f);
     }
 }

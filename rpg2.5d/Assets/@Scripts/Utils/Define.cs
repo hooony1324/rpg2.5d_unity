@@ -119,11 +119,10 @@ public class Define
     }
     public enum ESkillSlot
     {
-        None,
-        SpaceBar, 
-        Shift,
-        LeftClick,
-        RightClick,
+        Default,
+        Env,
+        A,
+        B
 
         // Q, W, E, R, ...
     }
@@ -157,14 +156,6 @@ public class Define
 
     public static class AnimName
     {
-        //public const string ATTACK = "Attack";
-        //public const string IDLE = "Idle";
-        //public const string RUN = "Run";
-        //public const string DAMAGED = "TakeHit";
-        //public const string DEAD = "dead";
-        //public const string JUMP = "Jump";
-        //public const string FALL = "Fall";
-
         public static readonly int IDLE = Animator.StringToHash("Idle");
         public static readonly int RUN = Animator.StringToHash("Run");
         public static readonly int JUMP = Animator.StringToHash("Jump");
@@ -178,14 +169,6 @@ public class Define
 
     public static class DirVec
     {
-        //public static Vector2 BOTTOM = new Vector2(0f, -1f);
-        //public static Vector2 BOTTOM_LEFT = new Vector2(-0.894f, -0.447f);
-        //public static Vector2 BOTTOM_RIGHT = new Vector2(0.894f, -0.447f);
-        //public static Vector2 TOP = new Vector2(0f, 1f);
-        //public static Vector2 TOP_LEFT = new Vector2(-0.894f, 0.447f);
-        //public static Vector2 TOP_RIGHT = new Vector2(0.894f, 0.447f);
-        //public static Vector2 LEFT = new Vector2(-1f, 0f);
-        //public static Vector2 RIGHT = new Vector2(1f, 0f);
         public static Vector3 ZERO = Vector3.zero;
         public static Vector3 UP = new Vector3(0, 0, 1);
         public static Vector3 UP_LEFT = new Vector3(-0.894f, 0, 0.894f);
@@ -197,5 +180,74 @@ public class Define
 
         public static Vector3 RIGHT = new Vector3(1, 0, 0);
         public static Vector3 LEFT = new Vector3(-1, 0, 0);
+    }
+
+    public enum EEffectType
+    {
+        Instant,
+        Buff,
+        Debuff,
+        Dot,
+        Infinite,
+        Knockback,
+        Airborne,
+        Freeze,
+        Stun,
+        Pull,
+    }
+    public enum EEffectSpawnType
+    {
+        Skill,// 지속시간이 있는 기본적인 이펙트 
+        External, // 외부(장판스킬)에서 이펙트를 관리(지속시간에 영향을 받지않음)
+    }
+    public enum EEffectClearType
+    {
+        TimeOut,// 시간초과로 인한 Effect 종료
+        ClearSkill,// 정화 스킬로 인한 Effect 종료
+        TriggerOutAoE,// AoE스킬을 벗어난 종료
+        EndOfCC,// 에어본, 넉백이 끝난 경우 호출되는 종료
+        Disable
+    }
+    public enum EEffectSize
+    {
+        CircleSmall,
+        CircleNormal,
+        CircleBig,
+        ConeSmall,
+        ConeNormal,
+        ConeBig,
+        Single,
+    }
+    public enum ECalcStatType
+    {
+        None,
+        Default,
+        SourceHp,//상대방의 체력
+        SourceAtk,//상대방의 공격력
+
+        Hp,
+        MaxHp,
+        Critical,
+        CriticalDamage,
+        ReduceDamageRate,
+        ReduceDamage,
+        LifeStealRate,
+        ThornsDamageRate,
+
+        AttackSpeedRate,
+        MissChance,
+        Atk,
+        MoveSpeed,
+        CooldownReduction,
+        Thorns,
+
+        Count,
+    }
+
+    public enum EStatModType
+    {
+        Add,
+        PercentAdd,
+        PercentMult,
     }
 }

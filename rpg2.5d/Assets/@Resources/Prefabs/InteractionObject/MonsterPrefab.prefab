@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5402486696428694239}
   - component: {fileID: 4108258992752252911}
-  - component: {fileID: 552880298791903018}
+  - component: {fileID: 3915151562383188355}
   - component: {fileID: 1932990029501522880}
   m_Layer: 7
   m_Name: MonsterPrefab
@@ -62,8 +62,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &552880298791903018
-BoxCollider:
+--- !u!136 &3915151562383188355
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -80,8 +80,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.5, z: 1}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &1932990029501522880
 MonoBehaviour:
@@ -96,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+  <MaxHp>k__BackingField: 100
+  _hp: 0
   _creatureState: 0
   JumpForce: 5
 --- !u!1 &3344470552053618486
@@ -110,7 +114,7 @@ GameObject:
   - component: {fileID: 4888512027437274146}
   - component: {fileID: 8571342072102428397}
   m_Layer: 7
-  m_Name: Animator
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +155,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5db2249000e0814459bdb20e54eec308, type: 2}
+  - {fileID: 2100000, guid: f36c0caacd4f96c489f51cfb0d8b58cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -172,7 +176,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6934013284892070054, guid: c50b517797d93614aac4ca58aaf97355, type: 3}
+  m_Sprite: {fileID: 1819609494, guid: 5f19f67e94a2e2f4ba57d2b338387c11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -193,7 +197,7 @@ Animator:
   m_GameObject: {fileID: 3344470552053618486}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 229aaf0507e7ef244b8cbaf6ec9c429b, type: 2}
+  m_Controller: {fileID: 22100000, guid: d27a943422370f0498a4edc1f82376c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
