@@ -48,7 +48,7 @@ MonoBehaviour:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6fcfe013bac0626469a8ed69e6ffe751
-    m_Address: UI_StatusBar
+    m_Address: UI_HPBar
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

@@ -1,0 +1,55 @@
+{
+  "items": [
+    {
+      "ItemLevel": 1,
+      "CalcStatType": 14,
+      "StatModType": 0,
+      "BonusValue": 11,
+      "SubOptionCount": 0,
+      "Name": "TestSword_1",
+      "ItemGroupType": 1,
+      "Type": 1,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 1,
+      "DataId": 41000,
+      "Description": "기사검_1",
+      "DescriptionTextID": "WeaponDescId",
+      "SpriteName": "Sword_1"
+    },
+    {
+      "ItemLevel": 3,
+      "CalcStatType": 14,
+      "StatModType": 0,
+      "BonusValue": 11,
+      "SubOptionCount": 0,
+      "Name": "TestSword_2",
+      "ItemGroupType": 1,
+      "Type": 1,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 1,
+      "DataId": 41001,
+      "Description": "기사검_2",
+      "DescriptionTextID": "WeaponDescId",
+      "SpriteName": "Sword_2"
+    },
+    {
+      "ItemLevel": 5,
+      "CalcStatType": 14,
+      "StatModType": 0,
+      "BonusValue": 11,
+      "SubOptionCount": 0,
+      "Name": "TestSword_3",
+      "ItemGroupType": 1,
+      "Type": 1,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 1,
+      "DataId": 41002,
+      "Description": "기사검_3",
+      "DescriptionTextID": "WeaponDescId",
+      "SpriteName": "Sword_3"
+    }
+  ]
+}

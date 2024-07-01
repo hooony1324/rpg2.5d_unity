@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AnimationControllers
+  m_EditorClassIdentifier: 
+  m_GroupName: AnimationControllers
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a4387170321ccfb42a43065eadbc1f7f
+  m_SerializeEntries:
+  - m_GUID: 73837f10360808f4c921013a6a57c7f9
+    m_Address: Martial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72bcb684e79dca0439ec4faf3e04f248
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 419662ffe8a90a543a326ac8ad7e2612
+    m_Address: FlyingEye
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f9f8a365ee8ca647a8ae1be7ddc3787
+    m_Address: Goblin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 409938f2392e67a4ba5855b79d8833b1
+    m_Address: Mushroom
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d27a943422370f0498a4edc1f82376c5
+    m_Address: Skeleton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6b7e383d8e2b32440b13d68a15608bde, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 912d9809f07501b4eadb0c708e5594ba, type: 2}
+    - {fileID: 11400000, guid: 9ef0c10f7a1246549a07abf286e9e00d, type: 2}

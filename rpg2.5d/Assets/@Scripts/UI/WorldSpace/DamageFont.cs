@@ -36,14 +36,34 @@ public class DamageFont : UI_Base
 
     public void SetInfo(Vector3 worldPos, float damage = 0, Transform parent = null, EDamageResult damageResult = EDamageResult.Hit)
     {
-        _damageText.SetText(damage.ToString("F0"));
-
         float randomX = Random.Range(-0.5f, 0.5f);
         float randomY = Random.Range(-0.5f, 1.0f);
-
         _worldPos = worldPos + new Vector3(randomX, randomY, 0);
 
-
+        switch (damageResult)
+        {
+            case EDamageResult.Hit:
+                _damageText.SetText(damage.ToString("F0"));
+                _damageText.color = Color.white;
+                break;
+            case EDamageResult.CriticalHit:
+                _damageText.SetText(damage.ToString("F0"));
+                _damageText.color = Util.HexToColor("FF8000");
+                break;
+            case EDamageResult.Miss:
+                _damageText.SetText("Miss");
+                _damageText.color = Color.red;
+                break;
+            case EDamageResult.Heal:
+                _damageText.SetText(damage.ToString("F0"));
+                _damageText.color = Util.HexToColor("3DA55A");
+                break;
+            case EDamageResult.CriticalHeal:
+                _damageText.SetText(damage.ToString("F0"));
+                _damageText.color = Util.HexToColor("3DA55A");
+                break;
+        }
+        
         StartCoroutine(CoAscending());
         FadeOut();
     }

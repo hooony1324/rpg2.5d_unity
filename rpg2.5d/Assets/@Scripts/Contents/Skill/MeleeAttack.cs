@@ -69,7 +69,9 @@ public class MeleeAttack : SkillBase
     {
 
         yield return new WaitForSeconds(SkillAnimDuration);
-        Owner.CreatureState = ECreatureState.Idle;
+
+        if (Owner.IsValid())
+            Owner.CreatureState = ECreatureState.Idle;
         _attack = null;
     }
 
@@ -95,6 +97,7 @@ public class MeleeAttack : SkillBase
             else if (obj.ObjectType == EObjectType.Monster)
             {
                 ApplyEffects(obj);
+                
             }
 
         }

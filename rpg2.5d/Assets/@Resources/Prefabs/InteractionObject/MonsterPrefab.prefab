@@ -97,10 +97,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0cea7308bddfd4f853751df71d2d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
   <MaxHp>k__BackingField: 100
+  <Atk>k__BackingField: 0
+  <CriRate>k__BackingField: 0
+  <CriDamage>k__BackingField: 0
+  <MissChance>k__BackingField: 0
+  <ReduceDamageRate>k__BackingField: 0
+  <ReduceDamage>k__BackingField: 0
+  <LifeStealRate>k__BackingField: 0
+  <ThornsDamageRate>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 0
+  <AttackSpeedRate>k__BackingField: 0
+  <CooldownReduction>k__BackingField: 0
+  _dirty: 0
+  <CreatureData>k__BackingField:
+    TemplateId: 0
+    DescriptionTextID: 
+    AnimationControllerName: 
+    ColliderOffsetX: 0
+    ColliderOffsetY: 0
+    ColliderRadius: 0
+    MaxHp: 0
+    UpMaxHpBonus: 0
+    Atk: 0
+    MissChance: 0
+    AtkBonus: 0
+    MoveSpeed: 0
+    CriRate: 0
+    CriDamage: 0
+    IconImage: 
+    DefaultSkillId: 0
+    EnvSkillId: 0
+    SkillAId: 0
+    SkillBId: 0
   _hp: 0
   _creatureState: 0
+  _target: {fileID: 0}
   JumpForce: 5
 --- !u!1 &3344470552053618486
 GameObject:

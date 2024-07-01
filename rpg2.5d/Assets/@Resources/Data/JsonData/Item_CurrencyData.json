@@ -1,0 +1,69 @@
+{
+  "items": [
+    {
+      "currencyType": 4,
+      "Name": "생고기",
+      "ItemGroupType": 3,
+      "Type": 0,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 0,
+      "DataId": 400000,
+      "Description": "생고기",
+      "DescriptionTextID": null,
+      "SpriteName": "Meat"
+    },
+    {
+      "currencyType": 2,
+      "Name": "장작",
+      "ItemGroupType": 3,
+      "Type": 0,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 0,
+      "DataId": 400100,
+      "Description": "장작",
+      "DescriptionTextID": null,
+      "SpriteName": "WoodIC"
+    },
+    {
+      "currencyType": 3,
+      "Name": "미네랄",
+      "ItemGroupType": 3,
+      "Type": 0,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 0,
+      "DataId": 400200,
+      "Description": "미네랄",
+      "DescriptionTextID": null,
+      "SpriteName": "Mineral"
+    },
+    {
+      "currencyType": 1,
+      "Name": "골드",
+      "ItemGroupType": 3,
+      "Type": 0,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 0,
+      "DataId": 400300,
+      "Description": "골드",
+      "DescriptionTextID": null,
+      "SpriteName": "Gold"
+    },
+    {
+      "currencyType": 5,
+      "Name": "다이아",
+      "ItemGroupType": 3,
+      "Type": 0,
+      "SubType": 0,
+      "Grade": 1,
+      "MaxStack": 0,
+      "DataId": 400400,
+      "Description": "다이아",
+      "DescriptionTextID": null,
+      "SpriteName": "Diamond"
+    }
+  ]
+}

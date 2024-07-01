@@ -165,6 +165,7 @@ public class Define
         public static readonly int DODGE = Animator.StringToHash("Dodge");
         public static readonly int MELEEATTACK = Animator.StringToHash("MeleeAttack");
 
+        public static readonly int TRIGGER_HIT = Animator.StringToHash("Hit");
     }
 
     public static class DirVec
@@ -222,8 +223,8 @@ public class Define
     {
         None,
         Default,
-        SourceHp,//상대방의 체력
-        SourceAtk,//상대방의 공격력
+        SourceHp,   //상대방의 체력
+        SourceAtk,  //상대방의 공격력
 
         Hp,
         MaxHp,
@@ -232,7 +233,7 @@ public class Define
         ReduceDamageRate,
         ReduceDamage,
         LifeStealRate,
-        ThornsDamageRate,
+        ThornsDamageRate,   //데미지 반사
 
         AttackSpeedRate,
         MissChance,
@@ -250,4 +251,60 @@ public class Define
         PercentAdd,
         PercentMult,
     }
+
+    public enum EItemGrade
+    {
+        None,
+        Normal,
+        Rare,
+        Epic,
+        Legendary
+    }
+
+    public enum EItemGroupType
+    {
+        None,
+        Equipment,
+        Consumable,
+        Currency
+    }
+
+    public enum EItemType
+    {
+        None,
+        Equipment,
+        Potion,
+        //Scroll
+    }
+
+    public enum EItemSubType
+    {
+        None,
+        //PinkRune,
+        //RedRune,
+        //YellowRune,
+        //MintRune,
+
+        //EnchantWeapon,
+        //EnchantArmor,
+
+        HealthPotion,
+        ManaPotion,
+    }
+
+    public enum ECurrencyType
+    {
+        None,
+        Gold,
+        Wood,
+        Mineral,
+        Meat,
+        Dia,
+    }
+    public enum EProjetionMotion
+    {
+        Straight,
+        Parabola
+    }
+
 }

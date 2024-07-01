@@ -14,7 +14,7 @@ public class UIManager
     private int _popupOrder = 100;
     private int _toastOrder = 500;
 
-    //private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+    private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     private UI_Scene _sceneUI = null;
 
     //Toast
@@ -27,7 +27,7 @@ public class UIManager
         get => _sceneUI;
     }
 
-    //private Dictionary<string, UI_Popup> _popups = new Dictionary<string, UI_Popup>();
+    private Dictionary<string, UI_Popup> _popups = new Dictionary<string, UI_Popup>();
 
     public GameObject Root
     {
@@ -40,21 +40,19 @@ public class UIManager
         }
     }
 
-    //public void CacheAllPopups()
-    //{
-    //    var list = AppDomain.CurrentDomain.GetAssemblies()
-    //        .SelectMany(assembly => assembly.GetTypes())
-    //        .Where(type => type.IsSubclassOf(typeof(UI_Popup)));
+    public void CacheAllPopups()
+    {
+        var list = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsSubclassOf(typeof(UI_Popup)));
 
-    //    foreach (Type type in list)
-    //    {
-    //        CachePopupUI(type);
-    //    }
+        foreach (Type type in list)
+        {
+            CachePopupUI(type);
+        }
 
-    //    // ShowPopupUI<UI_WaypointPopup>();
-
-    //    CloseAllPopupUI();
-    //}
+        CloseAllPopupUI();
+    }
 
     public Canvas SetCanvas(GameObject go, bool sort = true, int sortOrder = 0, bool isToast = false)
     {
@@ -158,83 +156,83 @@ public class UIManager
         return sceneUI;
     }
 
-    //public void CachePopupUI(Type type)
-    //{
-    //    string name = type.Name;
+    public void CachePopupUI(Type type)
+    {
+        string name = type.Name;
 
-    //    if (_popups.TryGetValue(name, out UI_Popup popup) == false)
-    //    {
-    //        GameObject go = Managers.Resource.Instantiate(name, Root.transform);
-    //        popup = go.GetComponent<UI_Popup>();
-    //        _popups[name] = popup;
-    //    }
+        if (_popups.TryGetValue(name, out UI_Popup popup) == false)
+        {
+            GameObject go = Managers.Resource.Instantiate(name, Root.transform);
+            popup = go.GetComponent<UI_Popup>();
+            _popups[name] = popup;
+        }
 
-    //    _popupStack.Push(popup);
-    //}
+        _popupStack.Push(popup);
+    }
 
-    //public T ShowPopupUI<T>(string name = null) where T : UI_Popup
-    //{
-    //    if (string.IsNullOrEmpty(name))
-    //        name = typeof(T).Name;
+    public T ShowPopupUI<T>(string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
 
-    //    if (_popups.TryGetValue(name, out UI_Popup popup) == false)
-    //    {
-    //        GameObject go = Managers.Resource.Instantiate(name);
-    //        popup = Util.GetOrAddComponent<T>(go);
-    //        _popups[name] = popup;
-    //    }
+        if (_popups.TryGetValue(name, out UI_Popup popup) == false)
+        {
+            GameObject go = Managers.Resource.Instantiate(name);
+            popup = Util.GetOrAddComponent<T>(go);
+            _popups[name] = popup;
+        }
 
-    //    _popupStack.Push(popup);
+        _popupStack.Push(popup);
 
-    //    popup.transform.SetParent(Root.transform);
-    //    popup.gameObject.SetActive(true);
-    //    _pupupOrder++;
-    //    popup.UICanvas.sortingOrder = _pupupOrder;
-    //    return popup as T;
-    //}
+        popup.transform.SetParent(Root.transform);
+        popup.gameObject.SetActive(true);
+        _popupOrder++;
+        popup.UICanvas.sortingOrder = _popupOrder;
+        return popup as T;
+    }
 
-    //public void ClosePopupUI(UI_Popup popup)
-    //{
-    //    if (_popupStack.Count == 0)
-    //        return;
+    public void ClosePopupUI(UI_Popup popup)
+    {
+        if (_popupStack.Count == 0)
+            return;
 
-    //    if (_popupStack.Peek() != popup)
-    //    {
-    //        Debug.Log("Close Popup Failed!");
-    //        return;
-    //    }
+        if (_popupStack.Peek() != popup)
+        {
+            Debug.Log("Close Popup Failed!");
+            return;
+        }
 
-    //    Managers.Sound.PlayPopupClose();
-    //    ClosePopupUI();
-    //}
+        //Managers.Sound.PlayPopupClose();
+        ClosePopupUI();
+    }
 
-    //public void ClosePopupUI()
-    //{
-    //    if (_popupStack.Count == 0)
-    //        return;
+    public void ClosePopupUI()
+    {
+        if (_popupStack.Count == 0)
+            return;
 
-    //    UI_Popup popup = _popupStack.Pop();
-    //    popup.gameObject.SetActive(false);
-    //    _pupupOrder--;
-    //}
+        UI_Popup popup = _popupStack.Pop();
+        popup.gameObject.SetActive(false);
+        _popupOrder--;
+    }
 
-    //public void CloseAllPopupUI()
-    //{
-    //    while (_popupStack.Count > 0)
-    //        ClosePopupUI();
-    //}
+    public void CloseAllPopupUI()
+    {
+        while (_popupStack.Count > 0)
+            ClosePopupUI();
+    }
 
-    //public int GetPopupCount()
-    //{
-    //    return _popupStack.Count;
-    //}
+    public int GetPopupCount()
+    {
+        return _popupStack.Count;
+    }
 
-    //public void Clear()
-    //{
-    //    CloseAllPopupUI();
-    //    Time.timeScale = 1;
-    //    _sceneUI = null;
-    //}
+    public void Clear()
+    {
+        CloseAllPopupUI();
+        Time.timeScale = 1;
+        _sceneUI = null;
+    }
 
 
     #region Toast

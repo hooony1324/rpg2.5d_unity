@@ -1,0 +1,75 @@
+{
+  "dropTables": [
+    {
+      "TemplateId": 80000,
+      "RewardExp": 0,
+      "Description": "생고기",
+      "Rewards": [
+        {
+          "ItemTemplateId": 400000,
+          "Probability": 100,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 400100,
+          "Probability": 100,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 400200,
+          "Probability": 100,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 1000
+        },
+        {
+          "ItemTemplateId": 400400,
+          "Probability": 5,
+          "Count": 1
+        }
+      ]
+    },
+    {
+      "TemplateId": 80001,
+      "RewardExp": 0,
+      "Description": "HP포션(약)",
+      "Rewards": [
+        {
+          "ItemTemplateId": 43001,
+          "Probability": 50,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 43002,
+          "Probability": 50,
+          "Count": 1
+        }
+      ]
+    },
+    {
+      "TemplateId": 80002,
+      "RewardExp": 0,
+      "Description": "기사검_1",
+      "Rewards": [
+        {
+          "ItemTemplateId": 41000,
+          "Probability": 100,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 41001,
+          "Probability": 50,
+          "Count": 1
+        },
+        {
+          "ItemTemplateId": 41002,
+          "Probability": 10,
+          "Count": 1
+        }
+      ]
+    }
+  ]
+}

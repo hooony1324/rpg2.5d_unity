@@ -27,24 +27,25 @@ public class EffectBase : BaseObject
     public virtual void SetInfo(EffectData data, InteractionObject owner, InteractionObject source, EEffectSpawnType spawnType)
     {
         EffectData = data;
-        EffectType = EEffectType.Knockback;
+        EffectType = data.EffectType;
         Owner = owner as Creature;
         Source = source as Creature;
         _spawnType = spawnType;
         isLoop = true;
 
-        //if (_spawnType == EEffectSpawnType.External)
-        //    Remains = float.MaxValue;
-        //else
-        //    Remains = EffectData.TickTime * EffectData.TickCount;
+        if (_spawnType == EEffectSpawnType.External)
+            Remains = float.MaxValue;
+        else
+            Remains = EffectData.TickTime * EffectData.TickCount;
 
-        //if (EffectType == EEffectType.Freeze)
-        //    isLoop = false;
+        if (EffectType == EEffectType.Freeze)
+            isLoop = false;
     }
 
     public virtual void ApplyEffect()
     {
         //ShowEffect();
+
     }
     protected void ShowEffect()
     {
@@ -61,7 +62,7 @@ public class EffectBase : BaseObject
             case EEffectClearType.TimeOut:
             case EEffectClearType.TriggerOutAoE:
             case EEffectClearType.EndOfCC:
-                if (IsCrowdControl())
+                if (IsCrowdControl() && Owner.IsValid())
                     Owner.CreatureState = ECreatureState.Idle;
                 Owner.Effects.RemoveEffect(this);
                 return true;
@@ -78,7 +79,10 @@ public class EffectBase : BaseObject
         return false;
     }
 
-    protected virtual void ProcessDot() { }
+    protected virtual void ProcessDot() 
+    {
+
+    }
 
     protected IEnumerator StartTimer()
     {

@@ -182,23 +182,7 @@ public static class Util
     //    }
     //}
     #region Math
-    public static Vector2 GetRandomPointInRange(float range = 5.0f)
-    {
-        float angle = Random.Range(0f, Mathf.PI * 2);
 
-        float distance = Mathf.Sqrt(Random.Range(0, 1f)) * range;
-
-        float x = distance * Mathf.Cos(angle);
-        float y = distance * Mathf.Sin(angle);
-
-        return new Vector2(x, y);
-    }
-
-    public static Vector3 GetRandomPoint(float range = 5.0f)
-    {
-        Vector2 point = GetRandomPointInRange(range);
-        return new Vector3(point.x, 0, point.y);
-    }
 
     public static bool CheckProbability(float probability)
     {

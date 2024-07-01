@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class EffectComponent : MonoBehaviour
 {
@@ -127,4 +128,9 @@ public class EffectComponent : MonoBehaviour
             ActiveEffects.Remove(effect);
         }
     }
+
+    //public void CleanDebuff()
+    //{
+    //    _owner.Effects.ClearEffectsByCondition(effect => effect.EffectType == EEffectType.Debuff);
+    //}
 }

@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "Value": 3.5,
+      "CoolTime": 2,
+      "Name": "TestPotionID",
+      "ItemGroupType": 2,
+      "Type": 2,
+      "SubType": 1,
+      "Grade": 1,
+      "MaxStack": 10,
+      "DataId": 43001,
+      "Description": "HP포션(약)",
+      "DescriptionTextID": "MaterialsTextID",
+      "SpriteName": "Potion_HP_Small"
+    },
+    {
+      "Value": 3.5,
+      "CoolTime": 2,
+      "Name": "TestPotionID",
+      "ItemGroupType": 2,
+      "Type": 2,
+      "SubType": 2,
+      "Grade": 1,
+      "MaxStack": 10,
+      "DataId": 43002,
+      "Description": "MP포션(약)",
+      "DescriptionTextID": "MaterialsTextID",
+      "SpriteName": "Potion_MP_Small"
+    }
+  ]
+}

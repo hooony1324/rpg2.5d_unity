@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
-
+using Random = UnityEngine.Random;
 public static class Extension
 {
     public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
@@ -98,6 +99,20 @@ public static class Extension
     public static bool IsTargetInRange(this Vector3 origin, Vector3 dest, float range)
     {// 일정 거리 안에 있나
         return Vector3.SqrMagnitude(dest - origin) <= range * range;
+    }
+    
+    public static Vector3 GetRandomPointInCircle(this Vector3 origin, float radius)
+    {
+        float angle = Random.Range(0f, 2f * Mathf.PI);
+        float r = radius * Mathf.Sqrt(Random.Range(0f, 1f));
+
+        float x = r * Mathf.Cos(angle);
+        float y = r * Mathf.Sin(angle);
+
+        origin.x += x;
+        origin.z += y;
+
+        return origin;
     }
 
     public static void Initialize<T>(this T[,] array, T initVal)

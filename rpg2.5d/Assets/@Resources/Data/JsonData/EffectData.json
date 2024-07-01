@@ -3,6 +3,7 @@
     {
       "DataId": 60001,
       "Name": "기본공격(약)",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -18,6 +19,7 @@
     {
       "DataId": 60002,
       "Name": "기본공격(중)",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -33,6 +35,7 @@
     {
       "DataId": 60003,
       "Name": "기본공격(대)",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -48,6 +51,7 @@
     {
       "DataId": 60004,
       "Name": "도트뎀출혈",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -63,6 +67,7 @@
     {
       "DataId": 60005,
       "Name": "도트뎀독",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -78,6 +83,7 @@
     {
       "DataId": 60006,
       "Name": "도트힐",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -93,6 +99,7 @@
     {
       "DataId": 60007,
       "Name": "힐",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -108,6 +115,7 @@
     {
       "DataId": 61001,
       "Name": "공속버프",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -123,6 +131,7 @@
     {
       "DataId": 61002,
       "Name": "공속디버프",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -138,6 +147,7 @@
     {
       "DataId": 62001,
       "Name": "넉백",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -153,6 +163,7 @@
     {
       "DataId": 62002,
       "Name": "에어본",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,
@@ -168,6 +179,7 @@
     {
       "DataId": 62003,
       "Name": "스턴",
+      "Description": null,
       "DescriptionTextID": null,
       "PrefabName": null,
       "IconLabel": null,

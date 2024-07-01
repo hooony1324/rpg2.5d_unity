@@ -46,6 +46,11 @@ public class Creature : InteractionObject
     #endregion
     [field: SerializeField] public Data.CreatureData CreatureData { get; protected set; }
 
+    public SkillComponent Skills { get; set; }
+    protected Vector3 InitPos { get; set; }
+    public Vector3 MoveDir { get; set; } = Vector3.zero;
+    [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
+
     [SerializeField] private float _hp;
     public float Hp
     {
@@ -53,12 +58,7 @@ public class Creature : InteractionObject
         protected set => _hp = value;
     }
 
-    public SkillComponent Skills { get; set; }
-    protected Vector3 InitPos { get; set; }
-    public Vector3 MoveDir { get; set; } = Vector3.zero;
-    [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
 
-    
     public Rigidbody Rigid => _rigidbody;
 
     private NavMeshAgent _agent;
@@ -70,8 +70,7 @@ public class Creature : InteractionObject
         set { _target = value; }
     }
 
-
-    private ECreatureState testprevstate;
+    protected HurtFlashEffect _hurtFlash;
     public virtual ECreatureState CreatureState
     {
         get => _creatureState;
@@ -79,14 +78,8 @@ public class Creature : InteractionObject
         {
             if (_creatureState != value)
             {
-                testprevstate = _creatureState;
                 _creatureState = value;
                 CancelWait();
-
-                if (testprevstate == ECreatureState.OnDamaged)
-                {
-                    int a = 0;
-                }
 
                 UpdateAnimation();
                 OnStateBegin();
@@ -114,6 +107,9 @@ public class Creature : InteractionObject
         _agent.acceleration = 20f;
         _agent.stoppingDistance = 1.5f;
 
+        _hurtFlash = gameObject.GetOrAddComponent<HurtFlashEffect>();
+        _hurtFlash.Init();
+
         Hp = MaxHp;
 
         //Test
@@ -134,6 +130,11 @@ public class Creature : InteractionObject
             CreatureData = Managers.Data.HeroDic[templateId];
         else
             CreatureData = Managers.Data.MonsterDic[templateId];
+
+        //Anim.runtimeAnimatorController = 
+        //CreatureData.AnimationControllerName;
+        RuntimeAnimatorController rac = Managers.Resource.Load<RuntimeAnimatorController>(CreatureData.AnimationControllerName);
+        Anim.runtimeAnimatorController = rac;
 
         InitCreatureStat();
         CalculateStat();
@@ -230,13 +231,12 @@ public class Creature : InteractionObject
                 //PlayAnimation(AnimName.RUN);
                 Anim.SetFloat("MoveSpeed", 1);
                 Anim.Play("Locomotion");
-
                 break;
             case ECreatureState.OnDamaged:
-                PlayAnimation(AnimName.TAKE_HIT);
+                Anim.Play(AnimName.TAKE_HIT);
                 break;
             case ECreatureState.Death:
-                PlayAnimation(AnimName.DEATH);
+                Anim.Play(AnimName.DEATH);
                 break;
             case ECreatureState.Skill:
                 break;
@@ -271,11 +271,6 @@ public class Creature : InteractionObject
         }
     }
 
-    void PlayAnimation(int stateNameHash)
-    {
-        Anim.Play(stateNameHash);
-    }
-
     protected virtual IEnumerator CoUpdateState()
     {
         while(true)
@@ -290,9 +285,9 @@ public class Creature : InteractionObject
                 case ECreatureState.Move:
                     UpdateMove();
                     break;
-                //case ECreatureState.Cooltime:
-                //    UpdateCooltime();
-                //    break;
+                    //case ECreatureState.Cooltime:
+                    //    UpdateCooltime();
+                    //    break;
                 case ECreatureState.Skill:
                     UpdateSkill();
                     break;
@@ -306,7 +301,7 @@ public class Creature : InteractionObject
     protected virtual void BeginIdle() { }
     protected virtual void UpdateIdle()
     {
-        UnityEngine.Debug.Log("idle");
+        
     }
     protected virtual void BeginMove() { }
     protected virtual void UpdateMove()
@@ -341,10 +336,14 @@ public class Creature : InteractionObject
 
     }
 
-    protected virtual void BeginDeath() { }
+    protected virtual void BeginDeath() 
+    {
+        OnDead();
+    }
+    
     protected virtual void UpdateDeath()
     {
-
+        
     }
 
     protected virtual void BeginDamaged() 
@@ -354,7 +353,7 @@ public class Creature : InteractionObject
     }
     protected virtual void UpdateDamaged() { }
 
-    public override void OnDamage(InteractionObject attacker, float value)
+    public override void OnDamage(InteractionObject attacker, float damage)
     {
         if (attacker.IsValid() == false)
             return;
@@ -365,12 +364,48 @@ public class Creature : InteractionObject
         if (creatureAttacker == null)
             return;
 
-        Hp = Mathf.Clamp(Hp - value, 0, MaxHp);
+        bool isCritical = Util.CheckProbability(creatureAttacker.CriRate);
+        EDamageResult damageResult = EDamageResult.Hit;
+        if (damage < 0)
+        {
+            if (isCritical)
+            {
+                damageResult = EDamageResult.CriticalHeal;
+                damage *= creatureAttacker.CriDamage;
+            }
+            else
+            {
+                damageResult = EDamageResult.Heal;
+            }
+        }
+        else if (Util.CheckProbability(MissChance))
+        {
+            damageResult = EDamageResult.Miss;
+            Managers.Object.ShowDamageFont(OverheadPosition, damage, transform, damageResult);
+            return;
+        }
+        else if (isCritical)
+        {
+            damage *= creatureAttacker.CriDamage;
+            damageResult = EDamageResult.CriticalHit;
+        }
+
+        if (damageResult != EDamageResult.Heal)
+        {
+            damage -= ReduceDamage;
+            damage -= damage * ReduceDamageRate;
+        }
+
+        Managers.Object.ShowDamageFont(OverheadPosition, damage, transform, damageResult);
+
+        Hp = Mathf.Clamp(Hp - damage, 0, MaxHp);
         float ratio = Hp / MaxHp;
         _hpBar.Refresh(ratio);
 
-        EDamageResult damageResult = EDamageResult.Hit;
-        Managers.Object.ShowDamageFont(OverheadPosition, value, transform, damageResult);
+        if (Hp == 0)
+        {
+            CreatureState = ECreatureState.Death;
+        }
     }
 
     protected virtual void OnDead()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  m_GroupName: Datas
+  m_GroupName: Data
   m_Data:
     m_SerializedData: []
   m_GUID: 338afde7c84805743837d58258a21b50
@@ -43,6 +43,30 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c02fd3b62f9d0534a94056f78d47784b
     m_Address: TextData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9892ba3ae3b771e48a115b82fefb2694
+    m_Address: DropTableData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07a49516780b18a47bc44f146d9f5342
+    m_Address: Item_EquipmentData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 091908145f40cf441a8f75173d19e3d2
+    m_Address: Item_ConsumableData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 597553bf66aa7634db556d777583ed2c
+    m_Address: Item_CurrencyData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

@@ -37,42 +37,42 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 7513373817520228872}
-    m_Position: {x: 370, y: 210, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -8052771380516865954}
-    m_Position: {x: 370, y: 370, z: 0}
+    m_Position: {x: -540, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4520562501452587024}
-    m_Position: {x: 580, y: 370, z: 0}
+    m_Position: {x: -340, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4218809434882837037}
-    m_Position: {x: 370, y: 290, z: 0}
+    m_Position: {x: -560, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9192193450593710132}
-    m_Position: {x: 580, y: 290, z: 0}
+    m_Position: {x: -310, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1530633493612544285}
-    m_Position: {x: 370, y: 430, z: 0}
+    m_Position: {x: -580, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9196440083607380726}
-    m_Position: {x: 580, y: 210, z: 0}
+    m_Position: {x: -320, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7342261270959291720}
     m_Position: {x: 610, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4204608041450138956}
     m_Position: {x: 360, y: 110, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8224907129027976924}
+    m_Position: {x: 340, y: 260, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: -20, z: 0}
+  m_AnyStatePosition: {x: 50, y: 250, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
-  m_ExitPosition: {x: 50, y: 20, z: 0}
+  m_ExitPosition: {x: -250, y: 150, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 4204608041450138956}
---- !u!1102 &-8052771380516865954
+--- !u!1102 &-8224907129027976924
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -359,7 +359,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Death
-  m_Speed: 1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

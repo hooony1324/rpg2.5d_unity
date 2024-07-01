@@ -2,7 +2,9 @@
   "creatures": [
     {
       "TemplateId": 201001,
+      "Description": "기사",
       "DescriptionTextID": "KnightName",
+      "AnimationControllerName": "Knight",
       "ColliderOffsetX": 0.0,
       "ColliderOffsetY": 0.0,
       "ColliderRadius": 0.0,
@@ -22,7 +24,9 @@
     },
     {
       "TemplateId": 201002,
+      "Description": "사무라이",
       "DescriptionTextID": "SamuraiName",
+      "AnimationControllerName": "Martial",
       "ColliderOffsetX": 0.0,
       "ColliderOffsetY": 0.0,
       "ColliderRadius": 0.0,

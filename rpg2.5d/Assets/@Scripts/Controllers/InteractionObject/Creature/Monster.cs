@@ -13,6 +13,8 @@ using Random = UnityEngine.Random;
 
 public class Monster : Creature
 {
+    public MonsterData MonsterData;
+
     protected float ChaseRange = 8.0f;
     protected float _patrolRange = 5.0f;
 
@@ -25,10 +27,10 @@ public class Monster : Creature
 
         ObjectType = EObjectType.Monster;
 
-        _originPos = Position;
+        
 
-
-        Agent.avoidancePriority = 40; // Hero : 50
+        // NavMesh 충돌 문제 Hero : 50
+        Agent.avoidancePriority = 40; 
         
 
         return true;
@@ -38,11 +40,12 @@ public class Monster : Creature
     {
         base.SetInfo(templateId);
 
+        MonsterData = CreatureData as MonsterData;
+
+        _originPos = Position;
         // stat
-        
+
         _targetMask = LayerMask.GetMask("Hero");
-
-
 
     }
 
@@ -111,12 +114,12 @@ public class Monster : Creature
 
     protected override void BeginIdle()
     {
-
         if (Target.IsValid() == false)
         {
             StartWait(Random.RandomRange(1, 5), () => { CreatureState = ECreatureState.Move; });
         }
     }
+
     protected override void UpdateIdle()
     {
 
@@ -126,12 +129,11 @@ public class Monster : Creature
             CreatureState = ECreatureState.Move;
             return;
         }
-        
+
     }
 
     protected override void UpdateMove()
     {
-
         //Patrol
         if (Target.IsValid() == false)
         {
@@ -163,6 +165,23 @@ public class Monster : Creature
 
     }
 
+    protected override void OnDead()
+    {
+        base.OnDead();
+
+        DropItem(MonsterData.DropItemId);
+        // Broadcast
+        //Managers.Game.BroadcastEvent(EBroadcastEventType.KillMonster, ECurrencyType.None, MonsterData.TemplateId);
+
+        StartCoroutine(CoOndead());
+    }
+    IEnumerator CoOndead()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        Managers.Object.Despawn(this);
+    }
+
     #region Map
     Vector3 _curDestPos;
     public void PatrolRandomPosition()
@@ -183,7 +202,7 @@ public class Monster : Creature
 
         //TODO : Z값을 고려하지 않은 randomPos, 갈 수 있는 범위인지를 고려하지 않은 randomPos
         //TODO : GetRandomPoint => Map Manger에서 관리
-        Vector3 patrolPos = Position + Util.GetRandomPoint(_patrolRange); 
+        Vector3 patrolPos = Position.GetRandomPointInCircle(_patrolRange);
         LookAtTarget(patrolPos);
 
         Agent.SetDestination(patrolPos);

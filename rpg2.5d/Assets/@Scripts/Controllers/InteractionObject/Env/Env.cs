@@ -73,8 +73,6 @@ public class Env : InteractionObject
         if (EnvState != EEnvState.Idle)
             return;
 
-        _hurtFlash.Flash();
-
         EnvState = EEnvState.OnDamaged;
 
         Hp = Mathf.Clamp(Hp - value, 0, MaxHp);

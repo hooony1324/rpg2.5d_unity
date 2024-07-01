@@ -20,7 +20,7 @@ public class ObjectManager
     //public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
     public HashSet<Env> Envs { get; } = new HashSet<Env>();
     //public HashSet<Npc> Npcs { get; } = new HashSet<Npc>();
-    //public HashSet<ItemHolder> ItemHolders { get; } = new HashSet<ItemHolder>();
+    public HashSet<ItemHolder> ItemHolders { get; } = new HashSet<ItemHolder>();
 
     public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
@@ -108,14 +108,14 @@ public class ObjectManager
             mc.SetInfo(templateID);
             return mc as T;
         }
-        //if (type == typeof(ItemHolder))
-        //{
-        //    GameObject go = Managers.Resource.Instantiate("ItemHolder", ItemHolderRoot, pooling: true);
-        //    go.transform.position = spawnPos;
-        //    ItemHolder itemHolder = go.GetOrAddComponent<ItemHolder>();
-        //    ItemHolders.Add(itemHolder);
-        //    return itemHolder as T;
-        //}
+        if (type == typeof(ItemHolder))
+        {
+            GameObject go = Managers.Resource.Instantiate("ItemHolder", pooling: true);
+            go.transform.position = spawnPos;
+            ItemHolder itemHolder = go.GetOrAddComponent<ItemHolder>();
+            ItemHolders.Add(itemHolder);
+            return itemHolder as T;
+        }
         //if (type == typeof(AoEBase))
         //{
         //    GameObject go = Managers.Resource.Instantiate(prefabName, pooling: true);
@@ -161,14 +161,15 @@ public class ObjectManager
         //    Npcs.Remove(obj as Npc);
         //    Managers.Resource.Destroy(obj.gameObject);
         //}
-        //else if (type == typeof(InteractionObject))
-        //{
-        //    Managers.Resource.Destroy(obj.gameObject);
-        //}
-        //else if (type == typeof(ItemHolder))
-        //{
-        //    Managers.Resource.Destroy(obj.gameObject);
-        //}
+        else if (type == typeof(InteractionObject))
+        {
+            Managers.Resource.Destroy(obj.gameObject);
+        }
+        else if (type == typeof(ItemHolder))
+        {
+            Managers.Resource.Destroy(obj.gameObject);
+        }
+
         //Managers.Map.RemoveObject(obj);
     }
 

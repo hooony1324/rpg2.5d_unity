@@ -1,3 +1,4 @@
+using Codice.CM.WorkspaceServer.Tree;
 using Data;
 using Newtonsoft.Json;
 using System;
@@ -22,6 +23,12 @@ public class DataTransformer : EditorWindow
         ParseExcelDataToJson<HeroDataLoader, HeroData>("Hero");
         ParseExcelDataToJson<SkillDataLoader, SkillData>("Skill");
         ParseExcelDataToJson<EffectDataLoader, EffectData>("Effect");
+
+        ParseExcelDataToJson<DropTableDataLoader, DropTableData>("DropTable");
+        ParseExcelDataToJson<ItemDataLoader<EquipmentData>, EquipmentData>("Item_Equipment");
+        ParseExcelDataToJson<ItemDataLoader<ConsumableData>, ConsumableData>("Item_Consumable");
+        ParseExcelDataToJson<ItemDataLoader<CurrencyData>, CurrencyData>("Item_Currency");
+
     }
 
     private static void ParseExcelDataToJson<Loader, LoaderData>(string filename) where Loader : new() where LoaderData : new()
@@ -42,7 +49,6 @@ public class DataTransformer : EditorWindow
         string[] lines = File.ReadAllText($"{Application.dataPath}/@Resources/Data/ExcelData/{filename}Data.csv").Trim().Split("\n");
 
         List<string[]> rows = new List<string[]>();
-
         int innerFieldCount = 0;
         for (int l = 1; l < lines.Length; l++)
         {
@@ -57,7 +63,7 @@ public class DataTransformer : EditorWindow
             if (string.IsNullOrEmpty(rows[r][0]))
                 continue;
             innerFieldCount = 0;
-            //Dragon 파생클래스를 GetField하면 파생클래스 변수 -> 부모 변수로 되어 있음. 순서 변경
+            
             LoaderData loaderData = new LoaderData();
             Type loaderDataType = typeof(LoaderData);
             BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
@@ -69,6 +75,7 @@ public class DataTransformer : EditorWindow
                 if (string.IsNullOrEmpty(rows[nextIndex][0]) == false)
                     break;
             }
+
 
             for (int f = 0; f < fields.Count; f++)
             {
@@ -197,10 +204,10 @@ public class DataTransformer : EditorWindow
     }
 
     public static List<FieldInfo> GetFieldsInBase(Type type, BindingFlags bindingFlags)
-    {
+    {//Data.Contents.cs에 정의된 클래스로 멤버Serialize하여 파싱 준비
         List<FieldInfo> fields = new List<FieldInfo>();
-        HashSet<string> fieldNames = new HashSet<string>();//중복방지
-        Stack<Type> stack = new Stack<Type>();
+        HashSet<string> fieldNames = new HashSet<string>(); //중복방지
+        Stack<Type> stack = new Stack<Type>();              //Fields순서 : 자식->부모 >> 부모->자식 
 
         while (type != null && type != typeof(object))
         {

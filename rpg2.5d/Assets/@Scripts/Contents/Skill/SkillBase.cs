@@ -88,8 +88,7 @@ public class SkillBase : BaseObject
     public virtual void OnChangedSkillData() { }
     public virtual void CancelSkill() 
     {
-        if (Owner.CreatureState != ECreatureState.OnDamaged)
-            Owner.CreatureState = ECreatureState.Idle;
+            
     }
 
     public virtual void DoSkill()

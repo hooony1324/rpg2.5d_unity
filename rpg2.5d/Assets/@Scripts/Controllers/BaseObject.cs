@@ -12,11 +12,10 @@ public class BaseObject : InitBase
     public Vector3 Position => transform.position;
     protected SpriteRenderer Sprite => _spriteRenderer;
     public Animator Anim => _animator;
-    //public AnimEventController AEC { get; set; }
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    //private AnimEventController _animEventController;
+    
 
 
     protected override bool Init()
