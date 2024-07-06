@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Util;
 
 public class Define
 {
@@ -9,6 +10,14 @@ public class Define
     public const char MAP_TOOL_WALKABLE = '1';
     //public const char MAP_TOOL_SEMI_WALL = '2';
 
+    public static readonly float[] ITEM_GRADE_PROB = new float[]
+    {
+        0,
+        0.10f,   // Normal 확률
+        0.15f,   // Rare 확률
+        0.20f,   // Epic 확률
+        0.55f,  // Legendary 확률
+    };
 
     public static readonly Dictionary<Type, Array> _enumDict = new Dictionary<Type, Array>();
 
@@ -69,6 +78,14 @@ public class Define
         TraditionalChinese,
         Japanese
     }
+
+    public enum ETextType
+    {
+        Description,
+        Message,
+        Name,
+    }
+        
     public enum EDamageResult
     {
         None,
@@ -166,6 +183,26 @@ public class Define
         public static readonly int MELEEATTACK = Animator.StringToHash("MeleeAttack");
 
         public static readonly int TRIGGER_HIT = Animator.StringToHash("Hit");
+    }
+    public static class EquipmentUIColors
+    {
+        #region 장비 이름 색상
+        public static readonly Color COMMON_NAME = HexToColor("3E4C68");
+        public static readonly Color RARE_NAME = HexToColor("1D75E2");
+        public static readonly Color EPIC_NAME = HexToColor("73438E");
+        public static readonly Color LEGEND_NAME = HexToColor("C2590E");
+        #endregion
+        #region 테두리 색상
+        public static readonly Color COMMON_OUTLINE = HexToColor("949DB3");
+        public static readonly Color RARE_OUTLINE = HexToColor("6C9BF2");
+        public static readonly Color EPIC_OUTLINE = HexToColor("A876C4");
+        public static readonly Color LEGEND_OUTLINE = HexToColor("F19451");
+        #endregion
+        // #region 배경색상
+        // public static readonly Color EpicBg = HexToColor("D094FF");
+        // public static readonly Color LegendaryBg = HexToColor("F8BE56");
+        // public static readonly Color MythBg = HexToColor("FF7F6E");
+        // #endregion
     }
 
     public static class DirVec
@@ -274,16 +311,16 @@ public class Define
         None,
         Equipment,
         Potion,
-        //Scroll
+        Scroll
     }
 
     public enum EItemSubType
     {
         None,
-        //PinkRune,
-        //RedRune,
-        //YellowRune,
-        //MintRune,
+        PinkRune,
+        RedRune,
+        YellowRune,
+        MintRune,
 
         //EnchantWeapon,
         //EnchantArmor,
@@ -307,4 +344,55 @@ public class Define
         Parabola
     }
 
+    public enum EEquipSlotType
+    {
+        None,
+        Red = 1,
+        Pink = 2,
+        Mint = 3,
+        Yellow = 4,
+        EquipMax,
+
+        Inventory = 100,
+        WareHouse = 200,
+    }
+    public enum EBroadcastEventType
+    {
+        None,
+        KillMonster,
+        HeroLevelUp,
+        DungeonClear,
+        ChangeInventory,
+        ChangeTeam,
+        PlayerLevelUp,
+        UnlockTraining,
+        ChangeCurrency,
+        ChangeCampState,
+        ChangeSetting,
+        HeroDead,
+    }
+
+    public enum EToastPosition
+    {
+        TopLeft,
+        TopCenter,
+        TopRight,
+        MiddleLeft,
+        MiddleCenter,
+        MiddleRight,
+        BottomLeft,
+        BottomCenter,
+        BottomRight
+    }
+    public enum EToastColor
+    {
+        Black,
+        Red,
+        Purple,
+        Magenta,
+        Blue,
+        Green,
+        Yellow,
+        Orange
+    }
 }

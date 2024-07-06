@@ -342,4 +342,48 @@ namespace Data
         }
     }
     #endregion
+
+    #region PlayerLevelData
+    [Serializable]
+    public class PlayerLevelData
+    {
+        public int Level;
+        public int Exp;
+    }
+
+    [Serializable]
+    public class PlayerLevelDataLoader : ILoader<int, PlayerLevelData>
+    {
+        public List<PlayerLevelData> levels = new List<PlayerLevelData>();
+        public Dictionary<int, PlayerLevelData> MakeDict()
+        {
+            Dictionary<int, PlayerLevelData> dict = new Dictionary<int, PlayerLevelData>();
+            foreach (PlayerLevelData levelData in levels)
+                dict.Add(levelData.Level, levelData);
+            return dict;
+        }
+    }
+    #endregion
+
+    #region LevelData
+    [Serializable]
+    public class HeroLevelData
+    {
+        public int Level;
+        public int Exp;
+    }
+
+    [Serializable]
+    public class HeroLevelDataLoader : ILoader<int, HeroLevelData>
+    {
+        public List<HeroLevelData> levels = new List<HeroLevelData>();
+        public Dictionary<int, HeroLevelData> MakeDict()
+        {
+            Dictionary<int, HeroLevelData> dict = new Dictionary<int, HeroLevelData>();
+            foreach (HeroLevelData levelData in levels)
+                dict.Add(levelData.Level, levelData);
+            return dict;
+        }
+    }
+    #endregion
 }

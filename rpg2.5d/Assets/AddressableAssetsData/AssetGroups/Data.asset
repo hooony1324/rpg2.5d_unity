@@ -41,12 +41,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c02fd3b62f9d0534a94056f78d47784b
-    m_Address: TextData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9892ba3ae3b771e48a115b82fefb2694
     m_Address: DropTableData
     m_ReadOnly: 0
@@ -67,6 +61,42 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 597553bf66aa7634db556d777583ed2c
     m_Address: Item_CurrencyData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edc17c9d61c52314a90b007764d3a9c7
+    m_Address: EquipmentOptionData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da6e0ce81659f67408e4c84d7d010223
+    m_Address: HeroLevelData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f827aca33bf720429aea50dcc182b88
+    m_Address: PlayerLevelData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eef75513a1d9e1f42abee47eeea87d58
+    m_Address: Text_NameData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a4a011b3f7dd3a4db3059e1c862fe00
+    m_Address: Text_DescriptionData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5b8961c03ebed8458d30d573845d155
+    m_Address: Text_MessageData
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

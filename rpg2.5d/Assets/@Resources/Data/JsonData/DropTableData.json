@@ -27,7 +27,7 @@
         },
         {
           "ItemTemplateId": 400400,
-          "Probability": 5,
+          "Probability": 100,
           "Count": 1
         }
       ]
@@ -68,6 +68,38 @@
           "ItemTemplateId": 41002,
           "Probability": 10,
           "Count": 1
+        }
+      ]
+    },
+    {
+      "TemplateId": 80003,
+      "RewardExp": 0,
+      "Description": "골드",
+      "Rewards": [
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 1000
+        },
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 2000
+        },
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 3000
+        },
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 4000
+        },
+        {
+          "ItemTemplateId": 400300,
+          "Probability": 100,
+          "Count": 5000
         }
       ]
     }

@@ -16,14 +16,34 @@ public class GameScene : BaseScene
 
         
        
-        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero, 201002);
+        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero, 201001);
 
-        Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
+        {
+            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
+        }
+
+        {
+            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202002);
+        }
+
+        {
+            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202003);
+        }
+
+        {
+            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202004);
+        }
+
+
 
         Env env = Managers.Object.Spawn<Env>(Vector3.right * 5);
 
         Managers.UI.CacheAllPopups();
-        Managers.UI.ShowSceneUI<UI_GameScene>();
+
+        UI_GameScene sceneUI = Managers.UI.ShowSceneUI<UI_GameScene>();
+        Managers.UI.SceneUI = sceneUI;
+        sceneUI.GetComponent<Canvas>().sortingOrder = 1;
+        sceneUI.SetInfo();
 
         Managers.Game.Cam.transform.position = hero.transform.position;
         Managers.Game.Cam.Target = hero;

@@ -6,31 +6,23 @@ using UnityEngine.Rendering;
 using System.Collections;
 using UnityEditorInternal;
 
-public class DamageFont : UI_Base
+public class DamageFont : BaseObject
 {
-    enum Texts
-    {
-        Text,
-    }
-
     TMP_Text _damageText;
-    Camera _camera;
-    RectTransform _rect;
-    Vector3 _worldPos;
-    float floatDistance = 1.5f;
-    float duration = 30.0f;
+    Vector3 _startPos;
+    Vector3 _endPos;
+
+    float floatDistance = 3f;
+    float duration = 3.0f;
 
     protected override bool Init()
     {
         if (base.Init() == false)
             return false;
 
-        BindText(typeof(Texts));
-        _damageText = GetText((int)Texts.Text);
-        
-        _camera = Camera.main;
-        _rect = _damageText.rectTransform;
-        
+        _damageText = Util.FindChild(gameObject, "Text").GetComponent<TextMeshPro>();
+
+
         return true;
     }
 
@@ -38,7 +30,10 @@ public class DamageFont : UI_Base
     {
         float randomX = Random.Range(-0.5f, 0.5f);
         float randomY = Random.Range(-0.5f, 1.0f);
-        _worldPos = worldPos + new Vector3(randomX, randomY, 0);
+
+        transform.position = worldPos + new Vector3(randomX, randomY, 0);
+        _startPos = transform.position;
+        _endPos = _startPos + Vector3.up * floatDistance;
 
         switch (damageResult)
         {
@@ -67,8 +62,8 @@ public class DamageFont : UI_Base
         StartCoroutine(CoAscending());
         FadeOut();
     }
-    
-    
+
+
     IEnumerator CoAscending()
     {
         float start = Time.time;
@@ -77,22 +72,16 @@ public class DamageFont : UI_Base
         {
             total = Time.time - start;
             float progress = total / duration;
-            Vector3 offset = Vector3.up * 50 * progress;
-
-            Vector3 position = _camera.WorldToScreenPoint(_worldPos + offset);
-
-            _rect.position = position;
-            //transform.position = position;
+            
+            transform.position = Vector3.Lerp(_startPos, _endPos, progress);
 
             yield return null;
         }
     }
 
-
     void FadeOut()
     {
         Sequence sequence = DOTween.Sequence();
-
 
         sequence.Append(transform.DOScale(1.2f, duration / 2).SetEase(Ease.OutBack));
         //sequence.Append(transform.DOScale(1f, duration / 2).SetEase(Ease.InQuad));

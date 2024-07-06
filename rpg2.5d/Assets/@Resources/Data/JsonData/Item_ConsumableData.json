@@ -6,12 +6,12 @@
       "Name": "TestPotionID",
       "ItemGroupType": 2,
       "Type": 2,
-      "SubType": 1,
+      "SubType": 5,
       "Grade": 1,
       "MaxStack": 10,
       "DataId": 43001,
       "Description": "HP포션(약)",
-      "DescriptionTextID": "MaterialsTextID",
+      "DescriptionTextID": "Potion_HP_1",
       "SpriteName": "Potion_HP_Small"
     },
     {
@@ -20,12 +20,12 @@
       "Name": "TestPotionID",
       "ItemGroupType": 2,
       "Type": 2,
-      "SubType": 2,
+      "SubType": 6,
       "Grade": 1,
       "MaxStack": 10,
       "DataId": 43002,
       "Description": "MP포션(약)",
-      "DescriptionTextID": "MaterialsTextID",
+      "DescriptionTextID": "Potion_MP_1",
       "SpriteName": "Potion_MP_Small"
     }
   ]

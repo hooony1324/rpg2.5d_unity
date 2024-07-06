@@ -18,7 +18,10 @@ public class DataTransformer : EditorWindow
     [MenuItem("Tools/ParseExcelToJson")]
     public static void ParseExcelDataToJson()
     {
-        ParseExcelDataToJson<TextDataLoader, TextData>("Text");
+        ParseExcelDataToJson<TextDataLoader, TextData>("Text_Name");
+        ParseExcelDataToJson<TextDataLoader, TextData>("Text_Description");
+        ParseExcelDataToJson<TextDataLoader, TextData>("Text_Message");
+
         ParseExcelDataToJson<MonsterDataLoader, MonsterData>("Monster");
         ParseExcelDataToJson<HeroDataLoader, HeroData>("Hero");
         ParseExcelDataToJson<SkillDataLoader, SkillData>("Skill");
@@ -29,6 +32,9 @@ public class DataTransformer : EditorWindow
         ParseExcelDataToJson<ItemDataLoader<ConsumableData>, ConsumableData>("Item_Consumable");
         ParseExcelDataToJson<ItemDataLoader<CurrencyData>, CurrencyData>("Item_Currency");
 
+        ParseExcelDataToJson<EquipmentOptionDataLoader, EquipmentOptionData>("EquipmentOption");
+        ParseExcelDataToJson<HeroLevelDataLoader, HeroLevelData>("HeroLevel");
+        ParseExcelDataToJson<PlayerLevelDataLoader, PlayerLevelData>("PlayerLevel");
     }
 
     private static void ParseExcelDataToJson<Loader, LoaderData>(string filename) where Loader : new() where LoaderData : new()

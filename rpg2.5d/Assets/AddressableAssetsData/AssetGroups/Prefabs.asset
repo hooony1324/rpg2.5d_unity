@@ -29,32 +29,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e5e983071cfe544792ca19db2edb3e8
-    m_Address: UI_ComboBar
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89bb64452dcfe9f4d9beb842231aa2f9
     m_Address: EnvPrefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2590a1a3ab94b39479ab7e2e850525c8
-    m_Address: UI_DamageFont
+  - m_GUID: a1b64e09a74eefe4dac8ff837c313297
+    m_Address: ItemHolder
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6fcfe013bac0626469a8ed69e6ffe751
-    m_Address: UI_HPBar
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bcbe099d1f0e8c446a1db29c580a416e
-    m_Address: UI_GameScene
+  - m_GUID: 3f9d556cd6b841a4f9cd9fc2977a0e1f
+    m_Address: EffectPrefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

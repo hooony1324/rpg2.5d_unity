@@ -19,7 +19,7 @@ public class InteractionObject : BaseObject
     protected UI_HPBar _hpBar;
 
     public Vector3 OverheadPosition => Position + Vector3.up * OverheadOffset;
-    protected float OverheadOffset => _collider.height * 1.2f;
+    public float OverheadOffset => _collider.height * 1.2f;
     protected CapsuleCollider _collider;
 
     protected override bool Init()
@@ -41,7 +41,7 @@ public class InteractionObject : BaseObject
     {
 
 
-        _hpBar = Managers.UI.MakeOverlayUI<UI_HPBar>(transform);
+        _hpBar = Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
         _hpBar.SetInfo(this);
     }
 

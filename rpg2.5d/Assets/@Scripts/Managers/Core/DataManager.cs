@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface ILoader<Key, Value>
@@ -21,10 +22,12 @@ public class DataManager
     public Dictionary<int, Data.EquipmentData> EquipmentDic { get; private set; } = new Dictionary<int, Data.EquipmentData>();
     public Dictionary<int, Data.ConsumableData> ConsumableDic { get; private set; } = new Dictionary<int, Data.ConsumableData>();
     public Dictionary<int, Data.CurrencyData> CurrencyDic { get; private set; } = new Dictionary<int, Data.CurrencyData>();
+    public Dictionary<int, Data.EquipmentOptionData> EquipmentOptionDic { get; private set; } = new Dictionary<int, Data.EquipmentOptionData>();
+    public Dictionary<int, Data.HeroLevelData> HeroLevelDic { get; private set; } = new Dictionary<int, Data.HeroLevelData>();
+    public Dictionary<int, Data.PlayerLevelData> PlayerLevelDic { get; private set; } = new Dictionary<int, Data.PlayerLevelData>();
 
     public void Init()
     {
-        TextDic = LoadJson<Data.TextDataLoader, string, Data.TextData>("TextData").MakeDict();
         HeroDic = LoadJson<Data.HeroDataLoader, int, Data.HeroData>("HeroData").MakeDict();
         MonsterDic = LoadJson<Data.MonsterDataLoader, int, Data.MonsterData>("MonsterData").MakeDict();
         SkillDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>("SkillData").MakeDict();
@@ -35,6 +38,10 @@ public class DataManager
         ConsumableDic = LoadJson<Data.ItemDataLoader<Data.ConsumableData>, int, Data.ConsumableData>("Item_ConsumableData").MakeDict();
         CurrencyDic = LoadJson<Data.ItemDataLoader<Data.CurrencyData>, int, Data.CurrencyData>("Item_CurrencyData").MakeDict();
 
+        EquipmentOptionDic = LoadJson<Data.EquipmentOptionDataLoader, int, Data.EquipmentOptionData>("EquipmentOptionData").MakeDict();
+        HeroLevelDic = LoadJson<Data.HeroLevelDataLoader, int, Data.HeroLevelData>("HeroLevelData").MakeDict();
+        PlayerLevelDic = LoadJson<Data.PlayerLevelDataLoader, int, Data.PlayerLevelData>("PlayerLevelData").MakeDict();
+
         ItemDic.Clear();
         foreach (var item in EquipmentDic)
             ItemDic.Add(item.Key, item.Value);
@@ -44,6 +51,11 @@ public class DataManager
 
         foreach (var item in CurrencyDic)
             ItemDic.Add(item.Key, item.Value);
+
+        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_NameData").MakeDict());
+        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_DescriptionData").MakeDict());
+        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_MessageData").MakeDict());
+
     }
 
     private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

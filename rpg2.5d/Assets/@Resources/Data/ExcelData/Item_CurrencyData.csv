@@ -1,6 +1,6 @@
 ﻿DataId,Description,DescriptionTextID,SpriteName,Name,GroupType,Type,SubType,Grade,MaxStack,ResourceType
-400000,생고기,,Meat,생고기,Currency,None,None,Normal,0,Meat
-400100,장작,,WoodIC,장작,Currency,None,None,Normal,0,Wood
-400200,미네랄,,Mineral,미네랄,Currency,None,None,Normal,0,Mineral
-400300,골드,,Gold,골드,Currency,None,None,Normal,0,Gold
-400400,다이아,,Diamond,다이아,Currency,None,None,Normal,0,Dia
+400000,생고기,Meat,Meat,생고기,Currency,None,None,Normal,0,Meat
+400100,장작,Wood,WoodIC,장작,Currency,None,None,Normal,0,Wood
+400200,미네랄,Mineral,Mineral,미네랄,Currency,None,None,Rare,0,Mineral
+400300,골드,Gold,Gold,골드,Currency,None,None,Epic,0,Gold
+400400,다이아,Diamond,Diamond,다이아,Currency,None,None,Legendary,0,Dia

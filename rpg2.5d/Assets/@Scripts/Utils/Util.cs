@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 using Random = UnityEngine.Random;
@@ -106,27 +107,27 @@ public static class Util
             _enumDict[type] = Enum.GetValues(type);
 
         Array values = _enumDict[type];
-
+        
         int index = UnityEngine.Random.Range(0, values.Length);
         return (T)values.GetValue(index);
     }
 
-    //public static EItemGrade ChooseItemGrade()
-    //{
-    //    float randValue = UnityEngine.Random.value;
+    public static EItemGrade ChooseItemGrade()
+    {
+        float randValue = UnityEngine.Random.value;
 
-    //    float cumulative = 0.0f;
-    //    for (int i = 0; i < ITEM_GRADE_PROB.Length; i++)
-    //    {
-    //        cumulative += ITEM_GRADE_PROB[i];
-    //        if (randValue < cumulative)
-    //        {
-    //            return (EItemGrade)i;
-    //        }
-    //    }
+        float cumulative = 0.0f;
+        for (int i = 0; i < ITEM_GRADE_PROB.Length; i++)
+        {
+            cumulative += ITEM_GRADE_PROB[i];
+            if (randValue < cumulative)
+            {
+                return (EItemGrade)i;
+            }
+        }
 
-    //    return EItemGrade.None;
-    //}
+        return EItemGrade.None;
+    }
 
     //string값 으로 Enum값 찾기
     public static T ParseEnum<T>(string value)
@@ -244,23 +245,23 @@ public static class Util
     //    }
     //}
 
-    //public static Color GetTextColor(EItemGrade type)
-    //{
-    //    switch (type)
-    //    {
-    //        case EItemGrade.None:
-    //        case EItemGrade.Normal:
-    //            return EquipmentUIColors.COMMON_NAME;
-    //        case EItemGrade.Rare:
-    //            return EquipmentUIColors.RARE_NAME;
-    //        case EItemGrade.Epic:
-    //            return EquipmentUIColors.EPIC_NAME;
-    //        case EItemGrade.Legendary:
-    //            return EquipmentUIColors.LEGEND_NAME;
-    //        default:
-    //            return EquipmentUIColors.COMMON_NAME;
-    //    }
-    //}
+    public static Color GetTextColor(EItemGrade type)
+    {
+        switch (type)
+        {
+            case EItemGrade.None:
+            case EItemGrade.Normal:
+                return EquipmentUIColors.COMMON_NAME;
+            case EItemGrade.Rare:
+                return EquipmentUIColors.RARE_NAME;
+            case EItemGrade.Epic:
+                return EquipmentUIColors.EPIC_NAME;
+            case EItemGrade.Legendary:
+                return EquipmentUIColors.LEGEND_NAME;
+            default:
+                return EquipmentUIColors.COMMON_NAME;
+        }
+    }
 
     //public static Color GetOutlineColor(EItemGrade type)
     //{

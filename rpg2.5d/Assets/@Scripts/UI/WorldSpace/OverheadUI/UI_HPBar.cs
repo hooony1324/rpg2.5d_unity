@@ -14,7 +14,6 @@ public class UI_HPBar : UI_Base
         MP,
     }
 
-    Camera _camera;
     InteractionObject _owner;
     Slider _hp;
     Slider _mp;
@@ -25,15 +24,13 @@ public class UI_HPBar : UI_Base
         if (base.Init() == false)
             return false;
 
-        _camera = Camera.main;
-
         BindSlider(typeof(Sliders));
         _hp = GetSlider((int)Sliders.HP);
         _mp = GetSlider((int)Sliders.MP);
 
         _mp.gameObject.SetActive(false);
 
-        _rect = _hp.transform.parent.GetComponent<RectTransform>();
+        _rect = gameObject.GetComponent<RectTransform>();
 
         return true;
     }
@@ -43,8 +40,9 @@ public class UI_HPBar : UI_Base
         _owner = owner;
 
         //..
-
-        switch(owner.ObjectType)
+        _rect.anchoredPosition = new Vector3(0, _owner.OverheadOffset, 0);
+        
+        switch (owner.ObjectType)
         {
             case EObjectType.Hero:
             case EObjectType.Monster:
@@ -52,10 +50,10 @@ public class UI_HPBar : UI_Base
         }
     }
 
-    private void Update()
-    {
-        _rect.position = _camera.WorldToScreenPoint(_owner.OverheadPosition);
-    }
+    //private void Update()
+    //{
+    //    _rect.position = _camera.WorldToScreenPoint(_owner.OverheadPosition);
+    //}
 
     public void Refresh(float ratio)
     {

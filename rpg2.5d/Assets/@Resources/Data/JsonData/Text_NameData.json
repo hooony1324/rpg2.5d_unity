@@ -1,0 +1,52 @@
+{
+  "texts": [
+    {
+      "DataId": "Knight_Name",
+      "KOR": "기사"
+    },
+    {
+      "DataId": "Samurai_Name",
+      "KOR": "사무라이"
+    },
+    {
+      "DataId": "Meat_Name",
+      "KOR": "생고기"
+    },
+    {
+      "DataId": "Wood_Name",
+      "KOR": "장작"
+    },
+    {
+      "DataId": "Mineral_Name",
+      "KOR": "미네랄"
+    },
+    {
+      "DataId": "Gold_Name",
+      "KOR": "골드"
+    },
+    {
+      "DataId": "Diamond_Name",
+      "KOR": "다이아"
+    },
+    {
+      "DataId": "TestSword_1_Name",
+      "KOR": "기사검_1"
+    },
+    {
+      "DataId": "TestSword_2_Name",
+      "KOR": "기사검_2"
+    },
+    {
+      "DataId": "TestSword_3_Name",
+      "KOR": "기사검_3"
+    },
+    {
+      "DataId": "Potion_HP_1_Name",
+      "KOR": "HP포션(약)"
+    },
+    {
+      "DataId": "Potion_MP_1_Name",
+      "KOR": "MP포션(약)"
+    }
+  ]
+}

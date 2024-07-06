@@ -1,3 +1,3 @@
 ﻿DataId,Description,DescriptionTextID,SpriteName,Name,GroupType,Type,SubType,Grade,MaxStack,Value,Cooltime
-43001,HP포션(약),MaterialsTextID,Potion_HP_Small,TestPotionID,Consumable,Potion,HealthPotion,Normal,10,3.5,2
-43002,MP포션(약),MaterialsTextID,Potion_MP_Small,TestPotionID,Consumable,Potion,ManaPotion,Normal,10,3.5,2
+43001,HP포션(약),Potion_HP_1,Potion_HP_Small,TestPotionID,Consumable,Potion,HealthPotion,Normal,10,3.5,2
+43002,MP포션(약),Potion_MP_1,Potion_MP_Small,TestPotionID,Consumable,Potion,ManaPotion,Normal,10,3.5,2

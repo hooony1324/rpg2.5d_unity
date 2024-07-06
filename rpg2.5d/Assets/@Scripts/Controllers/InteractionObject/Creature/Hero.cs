@@ -13,8 +13,10 @@ using static Define;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Hero : Creature
+public class Hero : Creature, IItemAccessible
 {
+    InputController _inputController;
+
     [SerializeField] private EHeroMoveState _heroMoveState = EHeroMoveState.None;
 
     LayerMask _uiCheckMask;
@@ -51,6 +53,8 @@ public class Hero : Creature
         ObjectType = EObjectType.Hero;
 
         _uiCheckMask.AddLayer(ELayer.UI);
+        _inputController = gameObject.GetOrAddComponent<InputController>();
+        _inputController.Init(this);
 
         return true;
     }
@@ -65,7 +69,6 @@ public class Hero : Creature
         }
     }
 
-
     public override void SetInfo(int templateId)
     {
         //_heroInfo = Managers.Hero.GetHeroInfo(templateId);
@@ -77,72 +80,8 @@ public class Hero : Creature
 
     private void Update()
     {
-        HandleInput();
-    }
-
-    public void HandleMovement()
-    {
-        Agent.nextPosition = Position + MoveDir * MoveSpeed * Time.deltaTime;
-    }
-
-    void HandleInput()
-    {
-        Vector2 inputDir = Vector3.zero;
-        MoveDir = DirVec.ZERO;
-        if (Input.GetKey(KeyCode.W))
-        {
-            inputDir.y += 1;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            inputDir.y -= 1;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            inputDir.x += 1;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            inputDir.x -= 1;
-        }
-
-        if (!(inputDir.sqrMagnitude > 0))
-        {
-            HeroMoveState = EHeroMoveState.None;
-        }
-        else
-        {
-            HeroMoveState = EHeroMoveState.ForceMove;
-            float angle = Mathf.Atan2(inputDir.x, inputDir.y) * 180 / Mathf.PI;
-            if (angle > 15f && angle <= 75f)
-                MoveDir = DirVec.UP_LEFT;
-            else if (angle > 75f && angle <= 105f)
-                MoveDir = DirVec.LEFT;
-            else if (angle > 105f && angle <= 160f)
-                MoveDir = DirVec.DOWN_LEFT;
-            else if (angle > 160f || angle <= -160f)
-                MoveDir = DirVec.DOWN;
-            else if (angle < -15f && angle >= -75f)
-                MoveDir = DirVec.UP_RIGHT;
-            else if (angle < -75f && angle >= -105f)
-                MoveDir = DirVec.RIGHT;
-            else if (angle < -105f && angle >= -160f)
-                MoveDir = DirVec.DOWN_RIGHT;
-            else
-                MoveDir = DirVec.UP;
-        }
-
-
-        //if (!(MoveDir == DirVec.UP || MoveDir == DirVec.DOWN))
-
-        if (Input.GetMouseButtonDown((int)MouseButton.Left))
-        {
-            HandleMouseClick();
-        }
-
+        _inputController.HandleInput();
+        _inputController.HandleMovement();
     }
 
     protected override void UpdateAnimation()
@@ -198,26 +137,6 @@ public class Hero : Creature
         
     }
 
-    void HandleMouseClick()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        //UI Click
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-
-        Skills.TrySkill(ESkillSlot.Default);
-
-        //if (Skills.TryActivateSkill("ComboAttack"))
-        //{
-        //    CreatureState = ECreatureState.Skill;
-        //    return;
-        //}
-    }
-
     protected override float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
     {
         float finalValue = baseValue;
@@ -234,5 +153,21 @@ public class Hero : Creature
         
 
         return finalValue;
+    }
+
+
+    public ItemHolder TargetItemHolder { get; set; } = null;
+    public void TrySetTargetItemHolder(ItemHolder itemHolder)
+    {
+        if (TargetItemHolder == null)
+            TargetItemHolder = itemHolder;
+        else
+        {
+            float originTarget = Vector3.SqrMagnitude(TargetItemHolder.Position - Position);
+            float newTarget = Vector3.SqrMagnitude(itemHolder.Position - Position);
+
+            if (newTarget < originTarget)
+                TargetItemHolder = itemHolder;
+        }
     }
 }

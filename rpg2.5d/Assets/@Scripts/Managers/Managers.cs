@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Define;
 
 public class Managers : MonoBehaviour
 {
@@ -77,12 +78,26 @@ public class Managers : MonoBehaviour
         }
     }
 
-    public static string GetText(string textId)
+    public static string GetText(string textId, ETextType textType)
     {
+        string dataType = "";
+        switch (textType)
+        {
+            case ETextType.Description:
+                dataType = "_Description";
+                break;
+            case ETextType.Message:
+                dataType = "_Message";
+                break;
+            case ETextType.Name:
+                dataType = "_Name";
+                break;
+        }
+
         switch (_language)
         {
             case Define.ELanguage.Korean:
-                return Managers.Data.TextDic[textId].KOR;
+                return Managers.Data.TextDic[$"{textId}{dataType}"].KOR;
             case Define.ELanguage.English:
                 break;
             case Define.ELanguage.French:

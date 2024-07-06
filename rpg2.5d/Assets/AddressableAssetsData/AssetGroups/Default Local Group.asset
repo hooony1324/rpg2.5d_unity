@@ -16,25 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 1b5f70f4aa591ad47a97a06bbf4c0689
-  m_SerializeEntries:
-  - m_GUID: 3f9d556cd6b841a4f9cd9fc2977a0e1f
-    m_Address: EffectPrefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 37490cd0abc3c844981bcae906afaafc
-    m_Address: UI_InventoryPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a1b64e09a74eefe4dac8ff837c313297
-    m_Address: ItemHolder
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6b7e383d8e2b32440b13d68a15608bde, type: 2}
   m_SchemaSet:

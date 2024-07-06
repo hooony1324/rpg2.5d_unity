@@ -1,3 +1,3 @@
 ﻿DataId,Description,DescriptionTextID,AnimationControllerName,ColliderOffSetX,ColliderOffsetY,ColliderRadius,MaxHp,UpMaxHp,Atk,MissChance,AtkBonus,MovSpeed,CriRate,Cridamage,IconImage,DefaultSkill,EnvSkill,SkillA,SkillB
-201001,기사,KnightName,Knight,,,,413,35,65,0,6,7,0.15,1.5,,10001,,10002,
-201002,사무라이,SamuraiName,Martial,,,,350,29,70,0,7,7,0.15,1.5,,10001,,10002,
+201001,기사,Knight,Knight,,,,413,35,500,0,6,7,0.15,1.5,,10001,,10002,
+201002,사무라이,Samurai,Martial,,,,350,29,70,0,7,7,0.15,1.5,,10001,,10002,

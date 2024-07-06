@@ -326,14 +326,6 @@ public class Creature : InteractionObject
     }
     protected virtual void UpdateSkill()
     {
-
-        //TEST
-        //°ø¼Ó
-        //AttackSpeedRate = 2.0f;
-        //Anim.speed = AttackSpeedRate;
-
-
-
     }
 
     protected virtual void BeginDeath() 
@@ -343,7 +335,6 @@ public class Creature : InteractionObject
     
     protected virtual void UpdateDeath()
     {
-        
     }
 
     protected virtual void BeginDamaged() 

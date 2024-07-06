@@ -1,0 +1,24 @@
+{
+  "texts": [
+    {
+      "DataId": "TestSword_1_Description",
+      "KOR": "기사의 검이다"
+    },
+    {
+      "DataId": "TestSword_2_Description",
+      "KOR": "기사의 검이다"
+    },
+    {
+      "DataId": "TestSword_3_Description",
+      "KOR": "기사의 검이다"
+    },
+    {
+      "DataId": "Potion_HP_1_Description",
+      "KOR": "HP를 회복해주는 포션이다"
+    },
+    {
+      "DataId": "Potion_MP_1_Description",
+      "KOR": "MP를 회복해주는 포션이다"
+    }
+  ]
+}

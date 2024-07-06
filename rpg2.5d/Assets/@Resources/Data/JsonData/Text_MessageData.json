@@ -1,0 +1,12 @@
+{
+  "texts": [
+    {
+      "DataId": "AcquireItem_Message",
+      "KOR": "아이템 획득"
+    },
+    {
+      "DataId": "LackCurrency_Message",
+      "KOR": "자원이 부족합니다"
+    }
+  ]
+}

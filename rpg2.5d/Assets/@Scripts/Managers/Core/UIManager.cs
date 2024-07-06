@@ -19,7 +19,7 @@ public class UIManager
 
     //Toast
     public bool isToastLoaded = false;
-    //private static ToastUI _toastUI;
+    private static ToastUI _toastUI;
 
     public UI_Scene SceneUI
     {
@@ -237,28 +237,28 @@ public class UIManager
 
     #region Toast
 
-    //private void PrepareToast()
-    //{
-    //    if (!isToastLoaded)
-    //    {
-    //        GameObject instance = MonoBehaviour.Instantiate(Managers.Resource.Load<GameObject>("ToastUI"));
-    //        instance.name = "[ TOAST UI ]";
-    //        _toastUI = instance.GetComponent<ToastUI>();
-    //        isToastLoaded = true;
-    //    }
-    //}
+    private void PrepareToast()
+    {
+        if (!isToastLoaded)
+        {
+            GameObject instance = MonoBehaviour.Instantiate(Managers.Resource.Load<GameObject>("ToastUI"));
+            instance.name = "[ TOAST UI ]";
+            _toastUI = instance.GetComponent<ToastUI>();
+            isToastLoaded = true;
+        }
+    }
 
-    //public void ShowToast(string text, float duration = 1f, EToastColor color = EToastColor.Black, EToastPosition position = EToastPosition.MiddleCenter)
-    //{
-    //    PrepareToast();
-    //    _toastUI.SetInfo(text, duration, color, position);
-    //}
+    public void ShowToast(string text, float duration = 1f, EToastColor color = EToastColor.Black, EToastPosition position = EToastPosition.MiddleCenter)
+    {
+        PrepareToast();
+        _toastUI.SetInfo(text, duration, color, position);
+    }
 
-    //public void Dismiss()
-    //{
-    //    if (isToastLoaded)
-    //        _toastUI.Dismiss();
-    //}
+    public void Dismiss()
+    {
+        if (isToastLoaded)
+            _toastUI.Dismiss();
+    }
 
     #endregion
 }

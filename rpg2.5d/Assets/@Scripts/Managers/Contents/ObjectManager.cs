@@ -39,7 +39,7 @@ public class ObjectManager
 
     public void ShowDamageFont(Vector3 pos, float damage, Transform parent, EDamageResult result)
     {
-        string prefabName = "UI_DamageFont";
+        string prefabName = "DamageFont";
 
         GameObject go = Managers.Resource.Instantiate(prefabName, pooling: true);
         DamageFont damageText = go.GetComponent<DamageFont>();
@@ -65,7 +65,7 @@ public class ObjectManager
         {
             GameObject go = Managers.Resource.Instantiate("HeroPrefab");
             string textId = Managers.Data.HeroDic[templateID].DescriptionTextID;
-            go.name = Managers.GetText(textId);
+            go.name = Managers.GetText(textId, ETextType.Name);
             go.transform.position = spawnPos;
             go.transform.parent = HeroRoot;
             Hero hc = go.GetOrAddComponent<Hero>();
