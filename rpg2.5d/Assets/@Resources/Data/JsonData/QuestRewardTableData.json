@@ -1,0 +1,44 @@
+{
+  "rewardDatas": [
+    {
+      "TemplateId": 1001,
+      "Rewards": [
+        {
+          "RewardType": 0,
+          "RewardDataId": 0,
+          "RewardCount": 30,
+          "SpriteName": "Gold"
+        },
+        {
+          "RewardType": 2,
+          "RewardDataId": 0,
+          "RewardCount": 50,
+          "SpriteName": "Meat"
+        },
+        {
+          "RewardType": 4,
+          "RewardDataId": 41002,
+          "RewardCount": 1,
+          "SpriteName": "Sword_3"
+        }
+      ]
+    },
+    {
+      "TemplateId": 1002,
+      "Rewards": [
+        {
+          "RewardType": 4,
+          "RewardDataId": 43001,
+          "RewardCount": 1,
+          "SpriteName": "Potion_HP_Small"
+        },
+        {
+          "RewardType": 4,
+          "RewardDataId": 43002,
+          "RewardCount": 1,
+          "SpriteName": "Potion_MP_Small"
+        }
+      ]
+    }
+  ]
+}

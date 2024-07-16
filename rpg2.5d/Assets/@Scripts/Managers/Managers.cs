@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
+using static UnityEditor.LightingExplorerTableColumn;
 
 public class Managers : MonoBehaviour
 {
@@ -17,14 +18,14 @@ public class Managers : MonoBehaviour
     private ObjectManager _object = new ObjectManager();
     //private MapManager _map = new MapManager();
     private InventoryManager _inventory = new InventoryManager();
-    //private QuestManager _quest = new QuestManager();
+    private QuestManager _quest = new QuestManager();
     //private HeroManager _hero = new HeroManager();
 
     public static GameManager Game { get { return Instance?._game; } }
     public static ObjectManager Object { get { return Instance?._object; } }
     //public static MapManager Map { get { return Instance?._map; } }
     public static InventoryManager Inventory { get { return Instance?._inventory; } }
-    //public static QuestManager Quest { get { return Instance?._quest; } }
+    public static QuestManager Quest { get { return Instance?._quest; } }
     //public static HeroManager Hero { get { return Instance?._hero; } }
     #endregion
 
@@ -62,8 +63,8 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
+            s_instance._quest.Init();
             //s_instance._sound.Init();
-            //s_instance._quest.Init();
         }
     }
 
@@ -80,24 +81,25 @@ public class Managers : MonoBehaviour
 
     public static string GetText(string textId, ETextType textType)
     {
-        string dataType = "";
+        Dictionary<string, Data.TextData> dict = null;
+        
         switch (textType)
         {
             case ETextType.Description:
-                dataType = "_Description";
+                dict = Managers.Data.TextDic_Desc;
                 break;
             case ETextType.Message:
-                dataType = "_Message";
+                dict = Managers.Data.TextDic_Msg;
                 break;
             case ETextType.Name:
-                dataType = "_Name";
+                dict = Managers.Data.TextDic_Name;
                 break;
         }
 
         switch (_language)
         {
             case Define.ELanguage.Korean:
-                return Managers.Data.TextDic[$"{textId}{dataType}"].KOR;
+                return dict[textId].KOR;
             case Define.ELanguage.English:
                 break;
             case Define.ELanguage.French:
@@ -112,6 +114,7 @@ public class Managers : MonoBehaviour
 
         return "";
     }
+
     #endregion
     public static void Clear()
     {

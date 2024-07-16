@@ -16,7 +16,10 @@ namespace Data
     [Serializable]
     public class TextDataLoader : ILoader<string, TextData>
     {
-        public List<TextData> texts = new List<TextData>();
+        // DataTransformer.cs
+        // ParceExcelDataToJson() > FieldInfo field = loader.GetType().GetFields()[0]ë¶€ë¶„
+        public List<TextData> texts = new List<TextData>(); 
+
         public Dictionary<string, TextData> MakeDict()
         {
             Dictionary<string, TextData> dict = new Dictionary<string, TextData>();
@@ -33,7 +36,7 @@ namespace Data
     {
         public int TemplateId;
         public string Description;
-        public string DescriptionTextID;
+        public string TextID;
         public string AnimationControllerName;
         public float ColliderOffsetX;
         public float ColliderOffsetY;
@@ -189,7 +192,7 @@ namespace Data
     public class RewardData
     {
         public int ItemTemplateId;
-        public int Probability; // 100ºÐÀ²
+        public int Probability; // 100ë¶„ìœ¨
         public int Count;
     }
 
@@ -234,7 +237,7 @@ namespace Data
     [Serializable]
     public class ItemData : BaseData
     {
-        public string Name;
+        public string NameTextId;
         public EItemGroupType ItemGroupType;
         public EItemType Type;
         public EItemSubType SubType;
@@ -382,6 +385,80 @@ namespace Data
             Dictionary<int, HeroLevelData> dict = new Dictionary<int, HeroLevelData>();
             foreach (HeroLevelData levelData in levels)
                 dict.Add(levelData.Level, levelData);
+            return dict;
+        }
+    }
+    #endregion
+
+    #region QuestData
+    [Serializable]
+    public class QuestData
+    {
+        public int TemplateId;
+        public string NameTextId;
+        public EQuestPeriodType QuestPeriodType;
+        public List<QuestTaskData> QuestTasks = new List<QuestTaskData>();
+    }
+
+    [Serializable]
+    public class QuestTaskData
+    {
+        public int TemplateId;
+        public string DescriptionTextId;
+        public EQuestObjectiveType ObjectiveType;
+        public string ObjectiveIcon;
+        public int ObjectiveDataId;
+        public int ObjectiveCount;
+
+        //public EQuestRewardType RewardType;
+        //public int RewardDataId;
+        //public int RewardCount;
+        //public string RewardIcon;
+        public int NextQuestId;
+        public int QuestRewardId;
+    }
+
+    [Serializable]
+    public class QuestDataLoader : ILoader<int, QuestData>
+    {
+        public List<QuestData> quests = new List<QuestData>();
+        public Dictionary<int, QuestData> MakeDict()
+        {
+            Dictionary<int, QuestData> dict = new Dictionary<int, QuestData>();
+            foreach (QuestData quest in quests)
+                dict.Add(quest.TemplateId, quest);
+            return dict;
+        }
+    }
+    #endregion
+
+    #region QuestRewardData
+    [Serializable]
+    public class QuestRewardData
+    {
+        public EQuestRewardType RewardType;
+        public int RewardDataId;
+        public int RewardCount;
+        public string SpriteName;
+    }
+
+    [Serializable]
+    public class QuestRewardTableData
+    {
+        public int TemplateId;
+        public List<QuestRewardData> Rewards = new List<QuestRewardData>();
+    }
+
+    [Serializable]
+    public class QuestRewardTableDataLoader : ILoader<int, QuestRewardTableData>
+    {
+        public List<QuestRewardTableData> rewardDatas = new List<QuestRewardTableData>();
+
+        public Dictionary<int, QuestRewardTableData> MakeDict()
+        {
+            Dictionary<int, QuestRewardTableData> dict = new Dictionary<int, QuestRewardTableData>();
+            foreach (QuestRewardTableData rewardData in rewardDatas)
+                dict.Add(rewardData.TemplateId, rewardData);
             return dict;
         }
     }

@@ -12,7 +12,6 @@ public class UI_Popup : UI_Base
             return false;
 
         UICanvas = Managers.UI.SetCanvas(gameObject, true);
-        PopupOpenAnimation(gameObject);
         return true;
     }
 

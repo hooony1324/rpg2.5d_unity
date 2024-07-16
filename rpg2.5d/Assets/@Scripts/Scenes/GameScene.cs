@@ -27,11 +27,11 @@ public class GameScene : BaseScene
         }
 
         {
-            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202003);
+            //Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202003);
         }
 
         {
-            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202004);
+            //Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202004);
         }
 
 

@@ -272,7 +272,7 @@ public class UI_InventoryPopup : UI_Popup
 
         GetImage((int)Images.SelectedItemImage).sprite = Managers.Resource.Load<Sprite>(_selectedItem.TemplateData.SpriteName);
 
-        GetText((int)Texts.SelectedItemText).text = _selectedItem.TemplateData.Name;
+        GetText((int)Texts.SelectedItemText).text = _selectedItem.TemplateData.NameTextId;
 
         string itemDesc = Managers.GetText(_selectedItem.TemplateData.DescriptionTextID, ETextType.Description); 
         GetText((int)Texts.ItemInfoText).text = itemDesc;

@@ -2,7 +2,7 @@
   "items": [
     {
       "currencyType": 4,
-      "Name": "생고기",
+      "NameTextId": "Meat",
       "ItemGroupType": 3,
       "Type": 0,
       "SubType": 0,
@@ -15,7 +15,7 @@
     },
     {
       "currencyType": 2,
-      "Name": "장작",
+      "NameTextId": "Wood",
       "ItemGroupType": 3,
       "Type": 0,
       "SubType": 0,
@@ -28,7 +28,7 @@
     },
     {
       "currencyType": 3,
-      "Name": "미네랄",
+      "NameTextId": "Mineral",
       "ItemGroupType": 3,
       "Type": 0,
       "SubType": 0,
@@ -41,7 +41,7 @@
     },
     {
       "currencyType": 1,
-      "Name": "골드",
+      "NameTextId": "Gold",
       "ItemGroupType": 3,
       "Type": 0,
       "SubType": 0,
@@ -54,7 +54,7 @@
     },
     {
       "currencyType": 5,
-      "Name": "다이아",
+      "NameTextId": "Diamond",
       "ItemGroupType": 3,
       "Type": 0,
       "SubType": 0,

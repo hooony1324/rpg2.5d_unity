@@ -2,6 +2,8 @@ using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 using Object = UnityEngine.Object;
@@ -33,15 +35,53 @@ public class GameManager
         get { return _saveData.PlayerExp; }
         private set { _saveData.PlayerExp = value; }
     }
-
+    #endregion
     //public List< /*TemplateId*/int> UnlockedTrainings = new List<int>();
 
     //public Dictionary<ECurrencyType, Storage> Storages = new Dictionary<ECurrencyType, Storage>();
 
-    public Vector3Int LastWorldPos
+    public void Init()
     {
-        get { return _saveData.LastWorldPos; }
-        set { _saveData.LastWorldPos = value; }
+        InitGame();
+        //if (File.Exists(Path) == false)
+        //    InitGame();
+        //else
+        //    LoadGame();
+
+
+    }
+
+    void InitGame()
+    {
+        // Quest
+        var quests = Managers.Data.QuestDic.Values.ToList();
+        foreach (QuestData questData in quests)
+        {
+            QuestSaveData saveData = new QuestSaveData()
+            {
+                TemplateId = questData.TemplateId,
+                State = EQuestState.None,
+                TaskProgressCount = new List<int>(),
+                TaskStates = new List<EQuestState>(),
+                NextResetTime = DateTime.Now,
+            };
+
+            for (int i = 0; i < questData.QuestTasks.Count; i++)
+            {
+                saveData.TaskProgressCount.Add(0);
+                saveData.TaskStates.Add(EQuestState.None);
+            }
+
+            Managers.Quest.AddQuest(saveData);
+        }
+
+        Managers.Quest.MainQuest.StartQuest();
+
+        // Inventory
+        foreach (var key in Managers.Data.CurrencyDic.Keys)
+        {
+            Managers.Inventory.MakeItem(key, 0);
+        }
     }
 
     public void BroadcastEvent(EBroadcastEventType eventType, ECurrencyType currencyType = ECurrencyType.None, int value = 0)
@@ -67,26 +107,18 @@ public class GameManager
         _saveData.ItemDbIdGenerator++;
         return itemDbId;
     }
-    #endregion
+
+    public Vector3Int LastWorldPos
+    {
+        get { return _saveData.LastWorldPos; }
+        set { _saveData.LastWorldPos = value; }
+    }
 
     private Hero _playerHero;
     public Hero PlayerHero
     {
         get => _playerHero;
         set { _playerHero = value; }
-    }
-
-    public void Init()
-    {
-        //if (File.Exists(Path) == false)
-        //    InitGame();
-        //else
-        //    LoadGame();
-
-        foreach (var key in Managers.Data.CurrencyDic.Keys)
-        {
-            Managers.Inventory.MakeItem(key, 0);
-        }
     }
 
     private CameraController _cam;

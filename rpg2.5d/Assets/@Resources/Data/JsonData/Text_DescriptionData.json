@@ -1,24 +1,40 @@
 {
   "texts": [
     {
-      "DataId": "TestSword_1_Description",
+      "DataId": "TestSword_1",
       "KOR": "기사의 검이다"
     },
     {
-      "DataId": "TestSword_2_Description",
+      "DataId": "TestSword_2",
       "KOR": "기사의 검이다"
     },
     {
-      "DataId": "TestSword_3_Description",
+      "DataId": "TestSword_3",
       "KOR": "기사의 검이다"
     },
     {
-      "DataId": "Potion_HP_1_Description",
+      "DataId": "Potion_HP_1",
       "KOR": "HP를 회복해주는 포션이다"
     },
     {
-      "DataId": "Potion_MP_1_Description",
+      "DataId": "Potion_MP_1",
       "KOR": "MP를 회복해주는 포션이다"
+    },
+    {
+      "DataId": "KillGoblin",
+      "KOR": "고블린 처치"
+    },
+    {
+      "DataId": "KillSkeleton",
+      "KOR": "스켈레톤 처치"
+    },
+    {
+      "DataId": "EarnWood",
+      "KOR": "나무 획득하기"
+    },
+    {
+      "DataId": "EarnMineral",
+      "KOR": "미네랄 획득하기"
     }
   ]
 }

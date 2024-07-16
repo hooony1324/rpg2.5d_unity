@@ -35,6 +35,9 @@ public class DataTransformer : EditorWindow
         ParseExcelDataToJson<EquipmentOptionDataLoader, EquipmentOptionData>("EquipmentOption");
         ParseExcelDataToJson<HeroLevelDataLoader, HeroLevelData>("HeroLevel");
         ParseExcelDataToJson<PlayerLevelDataLoader, PlayerLevelData>("PlayerLevel");
+
+        ParseExcelDataToJson<QuestDataLoader, QuestData>("Quest");
+        ParseExcelDataToJson<QuestRewardTableDataLoader, QuestRewardTableData>("QuestRewardTable");
     }
 
     private static void ParseExcelDataToJson<Loader, LoaderData>(string filename) where Loader : new() where LoaderData : new()
@@ -125,7 +128,7 @@ public class DataTransformer : EditorWindow
                                 {
                                     if (f + innerFieldCount < rows[i + 1].Length)
                                     {
-                                        //DataId°¡ nullÀÌ¸é ¸®½ºÆ®°¡ ¾ÆÁ÷ ³¡³­°Ô ¾Æ´Ô
+                                        //DataIdê°€ nullì´ë©´ ë¦¬ìŠ¤íŠ¸ê°€ ì•„ì§ ëë‚œê²Œ ì•„ë‹˜
                                         if (string.IsNullOrEmpty(rows[i + 1][0]))
                                             nextStr = rows[i + 1][f + innerFieldCount];
                                     }
@@ -186,7 +189,7 @@ public class DataTransformer : EditorWindow
                     }
                     else
                     {
-                        //±âÅ¸ÇÊµå Ã³¸®
+                        //ê¸°íƒ€í•„ë“œ ì²˜ë¦¬
                         object value = ConvertValue(rows[r][f], field.FieldType);
                         if (value != null)
                         {
@@ -210,10 +213,10 @@ public class DataTransformer : EditorWindow
     }
 
     public static List<FieldInfo> GetFieldsInBase(Type type, BindingFlags bindingFlags)
-    {//Data.Contents.cs¿¡ Á¤ÀÇµÈ Å¬·¡½º·Î ¸â¹öSerializeÇÏ¿© ÆÄ½Ì ÁØºñ
+    {//Data.Contents.csì— ì •ì˜ëœ í´ë˜ìŠ¤ë¡œ ë©¤ë²„Serializeí•˜ì—¬ íŒŒì‹± ì¤€ë¹„
         List<FieldInfo> fields = new List<FieldInfo>();
-        HashSet<string> fieldNames = new HashSet<string>(); //Áßº¹¹æÁö
-        Stack<Type> stack = new Stack<Type>();              //Fields¼ø¼­ : ÀÚ½Ä->ºÎ¸ğ >> ºÎ¸ğ->ÀÚ½Ä 
+        HashSet<string> fieldNames = new HashSet<string>(); //ì¤‘ë³µë°©ì§€
+        Stack<Type> stack = new Stack<Type>();              //Fieldsìˆœì„œ : ìì‹->ë¶€ëª¨ >> ë¶€ëª¨->ìì‹ 
 
         while (type != null && type != typeof(object))
         {

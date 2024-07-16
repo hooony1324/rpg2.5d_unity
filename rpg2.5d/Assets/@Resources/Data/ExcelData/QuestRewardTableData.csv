@@ -1,0 +1,6 @@
+﻿DataId,Reward.RewardType,Reward.RewardDataId,Reward.Count,SpriteName
+1001,Gold,0,30,Gold
+,Meat,0,50,Meat
+,Item,41002,1,Sword_3
+1002,Item,43001,1,Potion_HP_Small
+,Item,43002,1,Potion_MP_Small

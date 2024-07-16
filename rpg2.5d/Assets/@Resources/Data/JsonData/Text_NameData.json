@@ -1,52 +1,60 @@
 {
   "texts": [
     {
-      "DataId": "Knight_Name",
+      "DataId": "Knight",
       "KOR": "기사"
     },
     {
-      "DataId": "Samurai_Name",
+      "DataId": "Samurai",
       "KOR": "사무라이"
     },
     {
-      "DataId": "Meat_Name",
+      "DataId": "Meat",
       "KOR": "생고기"
     },
     {
-      "DataId": "Wood_Name",
+      "DataId": "Wood",
       "KOR": "장작"
     },
     {
-      "DataId": "Mineral_Name",
+      "DataId": "Mineral",
       "KOR": "미네랄"
     },
     {
-      "DataId": "Gold_Name",
+      "DataId": "Gold",
       "KOR": "골드"
     },
     {
-      "DataId": "Diamond_Name",
+      "DataId": "Diamond",
       "KOR": "다이아"
     },
     {
-      "DataId": "TestSword_1_Name",
+      "DataId": "TestSword_1",
       "KOR": "기사검_1"
     },
     {
-      "DataId": "TestSword_2_Name",
+      "DataId": "TestSword_2",
       "KOR": "기사검_2"
     },
     {
-      "DataId": "TestSword_3_Name",
+      "DataId": "TestSword_3",
       "KOR": "기사검_3"
     },
     {
-      "DataId": "Potion_HP_1_Name",
+      "DataId": "Potion_HP_1",
       "KOR": "HP포션(약)"
     },
     {
-      "DataId": "Potion_MP_1_Name",
+      "DataId": "Potion_MP_1",
       "KOR": "MP포션(약)"
+    },
+    {
+      "DataId": "MainQuest_1",
+      "KOR": "첫 임무!"
+    },
+    {
+      "DataId": "MainQuest_2",
+      "KOR": "두 번째 임무!"
     }
   ]
 }

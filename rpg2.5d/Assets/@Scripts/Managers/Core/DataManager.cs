@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<string, Data.TextData> TextDic { get; private set; } = new Dictionary<string, Data.TextData>();
+    public Dictionary<string, Data.TextData> TextDic_Name { get; private set; } = new Dictionary<string, Data.TextData>();
+    public Dictionary<string, Data.TextData> TextDic_Desc { get; private set; } = new Dictionary<string, Data.TextData>();
+    public Dictionary<string, Data.TextData> TextDic_Msg { get; private set; } = new Dictionary<string, Data.TextData>();
     public Dictionary<int, Data.HeroData> HeroDic { get; private set; } = new Dictionary<int, Data.HeroData>();
     public Dictionary<int, Data.MonsterData> MonsterDic { get; private set; } = new Dictionary<int, Data.MonsterData>();
     public Dictionary<int, Data.SkillData> SkillDic { get; private set; } = new Dictionary<int, Data.SkillData>();
@@ -25,6 +28,8 @@ public class DataManager
     public Dictionary<int, Data.EquipmentOptionData> EquipmentOptionDic { get; private set; } = new Dictionary<int, Data.EquipmentOptionData>();
     public Dictionary<int, Data.HeroLevelData> HeroLevelDic { get; private set; } = new Dictionary<int, Data.HeroLevelData>();
     public Dictionary<int, Data.PlayerLevelData> PlayerLevelDic { get; private set; } = new Dictionary<int, Data.PlayerLevelData>();
+    public Dictionary<int, Data.QuestData> QuestDic { get; private set; } = new Dictionary<int, Data.QuestData>();
+    public Dictionary<int, Data.QuestRewardTableData> QuestRewardDic { get; private set; } = new Dictionary<int, Data.QuestRewardTableData>();
 
     public void Init()
     {
@@ -42,6 +47,10 @@ public class DataManager
         HeroLevelDic = LoadJson<Data.HeroLevelDataLoader, int, Data.HeroLevelData>("HeroLevelData").MakeDict();
         PlayerLevelDic = LoadJson<Data.PlayerLevelDataLoader, int, Data.PlayerLevelData>("PlayerLevelData").MakeDict();
 
+        QuestDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>("QuestData").MakeDict();
+        
+        QuestRewardDic = LoadJson<Data.QuestRewardTableDataLoader, int, Data.QuestRewardTableData>("QuestRewardTableData").MakeDict();
+
         ItemDic.Clear();
         foreach (var item in EquipmentDic)
             ItemDic.Add(item.Key, item.Value);
@@ -52,9 +61,9 @@ public class DataManager
         foreach (var item in CurrencyDic)
             ItemDic.Add(item.Key, item.Value);
 
-        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_NameData").MakeDict());
-        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_DescriptionData").MakeDict());
-        TextDic.AddRange(LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_MessageData").MakeDict());
+        TextDic_Name = LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_NameData").MakeDict();
+        TextDic_Desc = LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_DescriptionData").MakeDict();
+        TextDic_Msg = LoadJson<Data.TextDataLoader, string, Data.TextData>("Text_MessageData").MakeDict();
 
     }
 

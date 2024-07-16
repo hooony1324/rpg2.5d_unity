@@ -40,10 +40,10 @@ public class InventoryManager
 
     public Item MakeItem(int itemTemplateId, int count = 1)
     {
-        int itemDbId = Managers.Game.GenerateItemDbId();
-
         if (Managers.Data.ItemDic.TryGetValue(itemTemplateId, out ItemData itemData) == false)
             return null;
+
+        int itemDbId = Managers.Game.GenerateItemDbId();
 
         // 장비아이템의 경우 옵션 추가
         List<int> optionIds = new List<int>();

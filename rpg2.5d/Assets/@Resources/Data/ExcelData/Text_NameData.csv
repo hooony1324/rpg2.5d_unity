@@ -1,13 +1,15 @@
 ﻿DataId,KOR
-Knight_Name,기사
-Samurai_Name,사무라이
-Meat_Name,생고기
-Wood_Name,장작
-Mineral_Name,미네랄
-Gold_Name,골드
-Diamond_Name,다이아
-TestSword_1_Name,기사검_1
-TestSword_2_Name,기사검_2
-TestSword_3_Name,기사검_3
-Potion_HP_1_Name,HP포션(약)
-Potion_MP_1_Name,MP포션(약)
+Knight,기사
+Samurai,사무라이
+Meat,생고기
+Wood,장작
+Mineral,미네랄
+Gold,골드
+Diamond,다이아
+TestSword_1,기사검_1
+TestSword_2,기사검_2
+TestSword_3,기사검_3
+Potion_HP_1,HP포션(약)
+Potion_MP_1,MP포션(약)
+MainQuest_1,첫 임무!
+MainQuest_2,두 번째 임무!

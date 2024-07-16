@@ -9,6 +9,7 @@ public class InputController : InitBase
 {
     Hero _owner;
     Vector2 _inputDir = Vector2.zero;
+
     public void Init(Hero hero)
     {
         _owner = hero;
@@ -49,6 +50,11 @@ public class InputController : InitBase
         if (Input.GetKeyDown(KeyCode.I))
         {
             Managers.UI.GetSceneUI<UI_GameScene>().ToggleInventoryPopup();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            
         }
 
         if (Input.GetMouseButtonDown((int)MouseButton.Left))

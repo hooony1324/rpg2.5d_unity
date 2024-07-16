@@ -1,0 +1,112 @@
+{
+  "quests": [
+    {
+      "TemplateId": 8,
+      "NameTextId": "MainQuest_1",
+      "QuestPeriodType": 0,
+      "QuestTasks": [
+        {
+          "TemplateId": 1,
+          "DescriptionTextId": "KillGoblin",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202001,
+          "ObjectiveCount": 1,
+          "NextQuestId": 9,
+          "QuestRewardId": 1001
+        },
+        {
+          "TemplateId": 2,
+          "DescriptionTextId": "KillSkeleton",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202002,
+          "ObjectiveCount": 1,
+          "NextQuestId": 0,
+          "QuestRewardId": 0
+        }
+      ]
+    },
+    {
+      "TemplateId": 9,
+      "NameTextId": "MainQuest_2",
+      "QuestPeriodType": 0,
+      "QuestTasks": [
+        {
+          "TemplateId": 1,
+          "DescriptionTextId": "KillGoblin",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202001,
+          "ObjectiveCount": 2,
+          "NextQuestId": 10,
+          "QuestRewardId": 1001
+        },
+        {
+          "TemplateId": 2,
+          "DescriptionTextId": "KillSkeleton",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202002,
+          "ObjectiveCount": 2,
+          "NextQuestId": 11,
+          "QuestRewardId": 0
+        }
+      ]
+    },
+    {
+      "TemplateId": 10,
+      "NameTextId": "MainQuest_2",
+      "QuestPeriodType": 0,
+      "QuestTasks": [
+        {
+          "TemplateId": 1,
+          "DescriptionTextId": "KillGoblin",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202001,
+          "ObjectiveCount": 2,
+          "NextQuestId": 0,
+          "QuestRewardId": 1001
+        },
+        {
+          "TemplateId": 2,
+          "DescriptionTextId": "KillSkeleton",
+          "ObjectiveType": 0,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 202002,
+          "ObjectiveCount": 2,
+          "NextQuestId": 0,
+          "QuestRewardId": 0
+        }
+      ]
+    },
+    {
+      "TemplateId": 11,
+      "NameTextId": "MainQuest_2",
+      "QuestPeriodType": 0,
+      "QuestTasks": [
+        {
+          "TemplateId": 1,
+          "DescriptionTextId": "EarnWood",
+          "ObjectiveType": 3,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 0,
+          "ObjectiveCount": 2,
+          "NextQuestId": 0,
+          "QuestRewardId": 1001
+        },
+        {
+          "TemplateId": 2,
+          "DescriptionTextId": "EarnMineral",
+          "ObjectiveType": 5,
+          "ObjectiveIcon": null,
+          "ObjectiveDataId": 0,
+          "ObjectiveCount": 2,
+          "NextQuestId": 0,
+          "QuestRewardId": 0
+        }
+      ]
+    }
+  ]
+}

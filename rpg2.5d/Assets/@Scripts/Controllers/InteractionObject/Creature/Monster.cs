@@ -29,7 +29,7 @@ public class Monster : Creature
 
         
 
-        // NavMesh √Êµπ πÆ¡¶ Hero : 50
+        // NavMesh Ï∂©Îèå Î¨∏Ï†ú Hero : 50
         Agent.avoidancePriority = 40; 
         
 
@@ -170,8 +170,8 @@ public class Monster : Creature
         base.OnDead();
 
         DropItem(MonsterData.DropItemId);
-        // Broadcast
-        //Managers.Game.BroadcastEvent(EBroadcastEventType.KillMonster, ECurrencyType.None, MonsterData.TemplateId);
+        
+        Managers.Game.BroadcastEvent(EBroadcastEventType.KillMonster, ECurrencyType.None, MonsterData.TemplateId);
 
         StartCoroutine(CoOndead());
     }
@@ -187,10 +187,10 @@ public class Monster : Creature
     public void PatrolRandomPosition()
     {
         if (_curDestPos.EqualsEx(Agent.destination))
-        {// PatrolDestº≥¡§µ 
+        {// PatrolDestÏÑ§Ï†ïÎê®
 
             if (Agent.remainingDistance <= Agent.stoppingDistance)
-            {// PatrolDestµµ¬¯
+            {// PatrolDestÎèÑÏ∞©
 
                 _curDestPos = Vector3.zero;
                 CreatureState = ECreatureState.Idle;
@@ -200,8 +200,6 @@ public class Monster : Creature
             return;
         }
 
-        //TODO : Z∞™¿ª ∞Ì∑¡«œ¡ˆ æ ¿∫ randomPos, ∞• ºˆ ¿÷¥¬ π¸¿ß¿Œ¡ˆ∏¶ ∞Ì∑¡«œ¡ˆ æ ¿∫ randomPos
-        //TODO : GetRandomPoint => Map Mangerø°º≠ ∞¸∏Æ
         Vector3 patrolPos = Position.GetRandomPointInCircle(_patrolRange);
         LookAtTarget(patrolPos);
 

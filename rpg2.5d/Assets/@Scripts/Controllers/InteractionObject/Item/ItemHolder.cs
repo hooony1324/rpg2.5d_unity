@@ -49,7 +49,8 @@ public class ItemHolder : BaseObject
         _currentSprite.sprite = Managers.Resource.Load<Sprite>(_itemData.SpriteName);
         _parabolaMotion.SetInfo(startPos, endPos, null, null, 3f, endCallback: Arrived);
 
-        _text.SetText(_itemData.Name);
+        string name = Managers.GetText(_itemData.NameTextId, ETextType.Name);
+        _text.SetText(name);
         _text.color = Util.GetTextColor(_itemData.Grade);
     }
 
@@ -119,7 +120,7 @@ public class ItemHolder : BaseObject
                 if (Managers.Data.EquipmentDic.TryGetValue(_itemData.DataId, out EquipmentData equipData))
                 {
                     Managers.Inventory.MakeItem(_itemData.DataId);
-                    Managers.UI.ShowToast($"Items : {equipData.Name}");
+                    Managers.UI.ShowToast($"Items : {Managers.GetText(equipData.NameTextId, ETextType.Name)}");
                 }
                 break;
             case EItemGroupType.Consumable:
@@ -131,7 +132,7 @@ public class ItemHolder : BaseObject
                 if (Managers.Data.ConsumableDic.TryGetValue(_itemData.DataId, out ConsumableData consumableData))
                 {
                     Managers.Inventory.MakeItem(_itemData.DataId);
-                    Managers.UI.ShowToast($"Items : {consumableData.Name}");
+                    Managers.UI.ShowToast($"Items : {Managers.GetText(consumableData.NameTextId, ETextType.Name)}");
                 }
                 break;
             case EItemGroupType.Currency:

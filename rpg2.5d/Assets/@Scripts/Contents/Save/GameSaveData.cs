@@ -18,10 +18,10 @@ public class GameSaveData
 
     public List<ItemSaveData> Items = new List<ItemSaveData>();
     //public List<StorageSaveData> Storages = new List<StorageSaveData>();
-    //public List<QuestSaveData> AllQuests = new List<QuestSaveData>();
+    public List<QuestSaveData> AllQuests = new List<QuestSaveData>();
 
     public int CurrentStageIndex = 0;
-    public Vector3Int LastWorldPos; // ÀçÁ¢½Ã À§Ä¡
+    public Vector3Int LastWorldPos; // ì¬ì ‘ì‹œ ìœ„ì¹˜
 }
 
 
@@ -32,23 +32,23 @@ public class ItemSaveData
     public int DbId;
     public int TemplateId;
     public int Count;
-    public int EquipSlot; // ÀåÂø + ÀÎº¥ + Ã¢°í
+    public int EquipSlot; // ì¥ì°© + ì¸ë²¤ + ì°½ê³ 
     public int EnchantCount; 
     public bool IsLock;
     public List<int> OptionIds = new List<int>();
 }
 
-//[Serializable]
-//public class QuestSaveData
-//{
-//    public int TemplateId;
-//    public EQuestState State = EQuestState.Processing;
-//    public List<int> TaskProgressCount = new List<int>();//TaskÀÇ Count
-//    public List<EQuestState> TaskStates = new List<EQuestState>();//TaskÀÇ Count
-//    public DateTime NextResetTime;
-//    public int DailyScore;
-//    public int WeeklyScore;
-//}
+[Serializable]
+public class QuestSaveData
+{
+    public int TemplateId;
+    public EQuestState State = EQuestState.Processing;
+    public List<int> TaskProgressCount = new List<int>();//Taskì˜ Count
+    public List<EQuestState> TaskStates = new List<EQuestState>();//Taskì˜ Count
+    public DateTime NextResetTime;
+    public int DailyScore;
+    public int WeeklyScore;
+}
 
 //[Serializable]
 //public class StorageSaveData

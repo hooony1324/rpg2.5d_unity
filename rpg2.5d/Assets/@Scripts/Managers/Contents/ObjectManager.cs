@@ -64,7 +64,7 @@ public class ObjectManager
         if (type == typeof(Hero))
         {
             GameObject go = Managers.Resource.Instantiate("HeroPrefab");
-            string textId = Managers.Data.HeroDic[templateID].DescriptionTextID;
+            string textId = Managers.Data.HeroDic[templateID].TextID;
             go.name = Managers.GetText(textId, ETextType.Name);
             go.transform.position = spawnPos;
             go.transform.parent = HeroRoot;

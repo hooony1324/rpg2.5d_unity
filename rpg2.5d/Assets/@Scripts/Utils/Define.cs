@@ -13,10 +13,10 @@ public class Define
     public static readonly float[] ITEM_GRADE_PROB = new float[]
     {
         0,
-        0.10f,   // Normal È®·ü
-        0.15f,   // Rare È®·ü
-        0.20f,   // Epic È®·ü
-        0.55f,  // Legendary È®·ü
+        0.10f,   // Normal í™•ë¥ 
+        0.15f,   // Rare í™•ë¥ 
+        0.20f,   // Epic í™•ë¥ 
+        0.55f,  // Legendary í™•ë¥ 
     };
 
     public static readonly Dictionary<Type, Array> _enumDict = new Dictionary<Type, Array>();
@@ -186,19 +186,19 @@ public class Define
     }
     public static class EquipmentUIColors
     {
-        #region Àåºñ ÀÌ¸§ »ö»ó
+        #region ì¥ë¹„ ì´ë¦„ ìƒ‰ìƒ
         public static readonly Color COMMON_NAME = HexToColor("3E4C68");
         public static readonly Color RARE_NAME = HexToColor("1D75E2");
         public static readonly Color EPIC_NAME = HexToColor("73438E");
         public static readonly Color LEGEND_NAME = HexToColor("C2590E");
         #endregion
-        #region Å×µÎ¸® »ö»ó
+        #region í…Œë‘ë¦¬ ìƒ‰ìƒ
         public static readonly Color COMMON_OUTLINE = HexToColor("949DB3");
         public static readonly Color RARE_OUTLINE = HexToColor("6C9BF2");
         public static readonly Color EPIC_OUTLINE = HexToColor("A876C4");
         public static readonly Color LEGEND_OUTLINE = HexToColor("F19451");
         #endregion
-        // #region ¹è°æ»ö»ó
+        // #region ë°°ê²½ìƒ‰ìƒ
         // public static readonly Color EpicBg = HexToColor("D094FF");
         // public static readonly Color LegendaryBg = HexToColor("F8BE56");
         // public static readonly Color MythBg = HexToColor("FF7F6E");
@@ -235,15 +235,15 @@ public class Define
     }
     public enum EEffectSpawnType
     {
-        Skill,// Áö¼Ó½Ã°£ÀÌ ÀÖ´Â ±âº»ÀûÀÎ ÀÌÆåÆ® 
-        External, // ¿ÜºÎ(ÀåÆÇ½ºÅ³)¿¡¼­ ÀÌÆåÆ®¸¦ °ü¸®(Áö¼Ó½Ã°£¿¡ ¿µÇâÀ» ¹ŞÁö¾ÊÀ½)
+        Skill,// ì§€ì†ì‹œê°„ì´ ìˆëŠ” ê¸°ë³¸ì ì¸ ì´í™íŠ¸ 
+        External, // ì™¸ë¶€(ì¥íŒìŠ¤í‚¬)ì—ì„œ ì´í™íŠ¸ë¥¼ ê´€ë¦¬(ì§€ì†ì‹œê°„ì— ì˜í–¥ì„ ë°›ì§€ì•ŠìŒ)
     }
     public enum EEffectClearType
     {
-        TimeOut,// ½Ã°£ÃÊ°ú·Î ÀÎÇÑ Effect Á¾·á
-        ClearSkill,// Á¤È­ ½ºÅ³·Î ÀÎÇÑ Effect Á¾·á
-        TriggerOutAoE,// AoE½ºÅ³À» ¹ş¾î³­ Á¾·á
-        EndOfCC,// ¿¡¾îº», ³Ë¹éÀÌ ³¡³­ °æ¿ì È£ÃâµÇ´Â Á¾·á
+        TimeOut,// ì‹œê°„ì´ˆê³¼ë¡œ ì¸í•œ Effect ì¢…ë£Œ
+        ClearSkill,// ì •í™” ìŠ¤í‚¬ë¡œ ì¸í•œ Effect ì¢…ë£Œ
+        TriggerOutAoE,// AoEìŠ¤í‚¬ì„ ë²—ì–´ë‚œ ì¢…ë£Œ
+        EndOfCC,// ì—ì–´ë³¸, ë„‰ë°±ì´ ëë‚œ ê²½ìš° í˜¸ì¶œë˜ëŠ” ì¢…ë£Œ
         Disable
     }
     public enum EEffectSize
@@ -260,8 +260,8 @@ public class Define
     {
         None,
         Default,
-        SourceHp,   //»ó´ë¹æÀÇ Ã¼·Â
-        SourceAtk,  //»ó´ë¹æÀÇ °ø°İ·Â
+        SourceHp,   //ìƒëŒ€ë°©ì˜ ì²´ë ¥
+        SourceAtk,  //ìƒëŒ€ë°©ì˜ ê³µê²©ë ¥
 
         Hp,
         MaxHp,
@@ -270,7 +270,7 @@ public class Define
         ReduceDamageRate,
         ReduceDamage,
         LifeStealRate,
-        ThornsDamageRate,   //µ¥¹ÌÁö ¹İ»ç
+        ThornsDamageRate,   //ë°ë¯¸ì§€ ë°˜ì‚¬
 
         AttackSpeedRate,
         MissChance,
@@ -363,13 +363,14 @@ public class Define
         HeroLevelUp,
         DungeonClear,
         ChangeInventory,
-        ChangeTeam,
+        //ChangeTeam,
         PlayerLevelUp,
         UnlockTraining,
         ChangeCurrency,
-        ChangeCampState,
+        //ChangeCampState,
         ChangeSetting,
         HeroDead,
+        QuestCompleted,     // ë³´ìƒë°›ê¸° ëˆ„ë¥´ë©´ ë°œìƒ
     }
 
     public enum EToastPosition
@@ -394,5 +395,46 @@ public class Define
         Green,
         Yellow,
         Orange
+    }
+    public enum EQuestPeriodType
+    {
+        Once, // ë‹¨ë°œì„±
+        Daily,
+        Weekly,
+        Infinite, // ë¬´í•œìœ¼ë¡œ
+    }
+    public enum EQuestObjectiveType
+    {
+        KillMonster,
+        EarnMeat,
+        SpendMeat,
+        EarnWood,
+        SpendWood,
+        EarnMineral,
+        SpendMineral,
+        EarnGold,
+        SpendGold,
+        UseItem,
+        Survival,
+        ClearDungeon,
+        Click,
+    }
+    public enum EQuestRewardType
+    {
+        Gold,
+        Mineral,
+        Meat,
+        Wood,
+
+        Item,
+
+    }
+
+    public enum EQuestState
+    {
+        None,
+        Processing,
+        Completed,
+        Rewarded,
     }
 }

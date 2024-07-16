@@ -3,7 +3,7 @@
     {
       "Value": 3.5,
       "CoolTime": 2,
-      "Name": "TestPotionID",
+      "NameTextId": "Potion_HP_1",
       "ItemGroupType": 2,
       "Type": 2,
       "SubType": 5,
@@ -17,7 +17,7 @@
     {
       "Value": 3.5,
       "CoolTime": 2,
-      "Name": "TestPotionID",
+      "NameTextId": "Potion_MP_1",
       "ItemGroupType": 2,
       "Type": 2,
       "SubType": 6,
