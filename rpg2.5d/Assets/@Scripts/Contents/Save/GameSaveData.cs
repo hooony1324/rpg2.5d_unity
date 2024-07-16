@@ -1,3 +1,4 @@
+using Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class GameSaveData
     public List<QuestSaveData> AllQuests = new List<QuestSaveData>();
 
     public int CurrentStageIndex = 0;
-    public Vector3Int LastWorldPos; // 재접시 위치
+    public Vector3 LastWorldPos; // 재접시 위치
 }
 
 
@@ -46,8 +47,8 @@ public class QuestSaveData
     public List<int> TaskProgressCount = new List<int>();//Task의 Count
     public List<EQuestState> TaskStates = new List<EQuestState>();//Task의 Count
     public DateTime NextResetTime;
-    public int DailyScore;
-    public int WeeklyScore;
+    //public int DailyScore;
+    //public int WeeklyScore;
 }
 
 //[Serializable]

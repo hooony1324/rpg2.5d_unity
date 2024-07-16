@@ -22,7 +22,7 @@
           "ObjectiveIcon": null,
           "ObjectiveDataId": 202002,
           "ObjectiveCount": 1,
-          "NextQuestId": 0,
+          "NextQuestId": 10,
           "QuestRewardId": 0
         }
       ]
@@ -38,8 +38,8 @@
           "ObjectiveType": 0,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 202001,
-          "ObjectiveCount": 2,
-          "NextQuestId": 10,
+          "ObjectiveCount": 1,
+          "NextQuestId": 11,
           "QuestRewardId": 1001
         },
         {
@@ -48,8 +48,8 @@
           "ObjectiveType": 0,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 202002,
-          "ObjectiveCount": 2,
-          "NextQuestId": 11,
+          "ObjectiveCount": 1,
+          "NextQuestId": 0,
           "QuestRewardId": 0
         }
       ]
@@ -65,9 +65,9 @@
           "ObjectiveType": 0,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 202001,
-          "ObjectiveCount": 2,
+          "ObjectiveCount": 1,
           "NextQuestId": 0,
-          "QuestRewardId": 1001
+          "QuestRewardId": 1002
         },
         {
           "TemplateId": 2,
@@ -75,7 +75,7 @@
           "ObjectiveType": 0,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 202002,
-          "ObjectiveCount": 2,
+          "ObjectiveCount": 1,
           "NextQuestId": 0,
           "QuestRewardId": 0
         }
@@ -92,9 +92,9 @@
           "ObjectiveType": 3,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 0,
-          "ObjectiveCount": 2,
+          "ObjectiveCount": 1,
           "NextQuestId": 0,
-          "QuestRewardId": 1001
+          "QuestRewardId": 1002
         },
         {
           "TemplateId": 2,
@@ -102,7 +102,7 @@
           "ObjectiveType": 5,
           "ObjectiveIcon": null,
           "ObjectiveDataId": 0,
-          "ObjectiveCount": 2,
+          "ObjectiveCount": 1,
           "NextQuestId": 0,
           "QuestRewardId": 0
         }

@@ -68,7 +68,7 @@ public class UI_QuestList_SubItem : UI_SubItem
         return true;
     }
 
-    public void RefreshInfo(Quest quest)
+    public void RefreshDisplay(Quest quest)
     {
         if (quest == null)
             return;

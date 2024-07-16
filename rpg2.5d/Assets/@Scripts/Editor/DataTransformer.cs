@@ -14,6 +14,21 @@ using UnityEngine;
 public class DataTransformer : EditorWindow
 {
 #if UNITY_EDITOR
+    [MenuItem("ClearData/ClearSaveData")]
+    public static void ClearSaveData()
+    {
+        string path = Application.persistentDataPath + "/SaveData.json";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log("SaveFile Deleted");
+        }
+        else
+        {
+            Debug.Log("No SaveFile Detected");
+        }
+    }
+
 
     [MenuItem("Tools/ParseExcelToJson")]
     public static void ParseExcelDataToJson()

@@ -2,7 +2,9 @@ using Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
@@ -36,20 +38,22 @@ public class GameManager
         private set { _saveData.PlayerExp = value; }
     }
     #endregion
-    //public List< /*TemplateId*/int> UnlockedTrainings = new List<int>();
-
-    //public Dictionary<ECurrencyType, Storage> Storages = new Dictionary<ECurrencyType, Storage>();
 
     public void Init()
     {
-        InitGame();
-        //if (File.Exists(Path) == false)
-        //    InitGame();
-        //else
-        //    LoadGame();
-
-
+        if (File.Exists(Path) == false)
+            InitGame();
+        else
+            LoadGame();
     }
+
+    #region Save & Load
+    public string Path
+    {
+        get { return Application.persistentDataPath + "/SaveData.json"; }
+    }
+
+    #endregion
 
     void InitGame()
     {
@@ -84,6 +88,62 @@ public class GameManager
         }
     }
 
+    public void SaveGame()
+    {
+        LastWorldPos = PlayerHero.Position;
+
+        // Quest
+        {
+            SaveData.AllQuests.Clear();
+            foreach (Quest quest in Managers.Quest.AllQuests.Values)
+            {
+                SaveData.AllQuests.Add(quest.SaveData);
+            }
+        }
+
+        // Item
+        {
+            SaveData.Items.Clear();
+            foreach (var item in Managers.Inventory.AllItems)
+                SaveData.Items.Add(item.SaveData);
+        }
+
+        string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);
+        File.WriteAllText(Path, jsonStr);
+    }
+
+    public void LoadGame()
+    {
+        string fileStr = File.ReadAllText(Path);
+        GameSaveData data = JsonUtility.FromJson<GameSaveData>(fileStr);
+
+        if (data != null)
+            Managers.Game.SaveData = data;
+
+        // Quest
+        {
+            Managers.Quest.Clear();
+
+            foreach (QuestSaveData questSaveData in data.AllQuests)
+            {
+                Quest quest = Managers.Quest.AddQuest(questSaveData);
+            }
+            Managers.Quest.AddUnknownQuests();
+        }
+
+        //Item
+        {
+            Managers.Inventory.Clear();
+
+            for (int i = 0; i < data.Items.Count; i++)
+            {
+                Managers.Inventory.AddItem(data.Items[i]);
+            }
+        }
+
+        Debug.Log($"Save Game Loaded : {Path}");
+    }
+
     public void BroadcastEvent(EBroadcastEventType eventType, ECurrencyType currencyType = ECurrencyType.None, int value = 0)
     {
         switch (eventType)
@@ -96,7 +156,7 @@ public class GameManager
         OnBroadcastEvent?.Invoke(eventType, currencyType, value);
         if (Managers.Scene.CurrentScene.SceneType == EScene.GameScene)
         {
-            //SaveGame();//юс╫ц
+            //SaveGame();
         }
 
     }
@@ -108,7 +168,7 @@ public class GameManager
         return itemDbId;
     }
 
-    public Vector3Int LastWorldPos
+    public Vector3 LastWorldPos
     {
         get { return _saveData.LastWorldPos; }
         set { _saveData.LastWorldPos = value; }

@@ -9,8 +9,9 @@ public class QuestManager
     public const int DEFAULT_QUEST_SLOT_COUNT = 4;
 
     public Dictionary<int /*DataId*/, Quest> AllQuests = new Dictionary<int, Quest>();
-    public List<Quest> ProcessingQuests => AllQuests.Values.Where(quest => quest.State == EQuestState.Processing).ToList();
+    public List<Quest> CompletedOrProcessingQuests => AllQuests.Values.Where(quest => (quest.State == EQuestState.Processing) || (quest.State == EQuestState.Completed)).ToList();
 
+    
     public Quest MainQuest
     {
         get
@@ -34,16 +35,7 @@ public class QuestManager
         }
     }
 
-    public Quest AddQuest(QuestSaveData questInfo)
-    {
-        Quest quest = Quest.MakeQuest(questInfo);
-        if (quest == null)
-            return null;
 
-        AllQuests.Add(quest.TemplateId, quest);
-
-        return quest;
-    }
     public void CheckProcessingQuests()
     {
         foreach (Quest quest in AllQuests.Values)
@@ -67,5 +59,37 @@ public class QuestManager
         }
 
         return null;
+    }
+
+    // 재접속 시 유효한 퀘스트 확인하여 추가
+    public void AddUnknownQuests()
+    {
+        foreach (QuestData questData in Managers.Data.QuestDic.Values.ToList())
+        {
+            if (AllQuests.ContainsKey(questData.TemplateId))
+                continue;
+
+            QuestSaveData questSaveData = new QuestSaveData()
+            {
+                TemplateId = questData.TemplateId,
+                State = Define.EQuestState.None,
+                NextResetTime = DateTime.MaxValue,
+            };
+
+            for (int i = 0; i < questData.QuestTasks.Count; i++)
+                questSaveData.TaskProgressCount.Add(0);
+
+            AddQuest(questSaveData);
+        }
+    }
+    public Quest AddQuest(QuestSaveData questInfo)
+    {
+        Quest quest = Quest.MakeQuest(questInfo);
+        if (quest == null)
+            return null;
+
+        AllQuests.Add(quest.TemplateId, quest);
+
+        return quest;
     }
 }

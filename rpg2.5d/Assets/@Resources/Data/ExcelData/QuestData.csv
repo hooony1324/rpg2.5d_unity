@@ -1,9 +1,9 @@
 ﻿DataId,NameTextId,QuestPeriodType,QuestTask.TemplateId,DescriptionTextId,QuestTask.ObjectiveType,QuestTask.ObjectiveIcon,QuestTask.ObjectiveDataId,QuestTask.Count,NextQuestId,QuestRewardId
 8,MainQuest_1,Once,1,KillGoblin,KillMonster,,202001,1,9,1001
+,,,2,KillSkeleton,KillMonster,,202002,1,10,
+9,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,1,11,1001
 ,,,2,KillSkeleton,KillMonster,,202002,1,,
-9,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,2,10,1001
-,,,2,KillSkeleton,KillMonster,,202002,2,11,
-10,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,2,,1001
-,,,2,KillSkeleton,KillMonster,,202002,2,,
-11,MainQuest_2,Once,1,EarnWood,EarnWood,,,2,,1001
-,,,2,EarnMineral,EarnMineral,,,2,,
+10,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,1,,1002
+,,,2,KillSkeleton,KillMonster,,202002,1,,
+11,MainQuest_2,Once,1,EarnWood,EarnWood,,,1,,1002
+,,,2,EarnMineral,EarnMineral,,,1,,

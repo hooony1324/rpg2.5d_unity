@@ -29,19 +29,6 @@ public class Hero : Creature, IItemAccessible
                 return;
 
             _heroMoveState = value;
-            switch (value)
-            {
-                //case EHeroMoveState.CollectEnv:
-                //    NeedArange = true;
-                //    break;
-                //case EHeroMoveState.TargetMonster:
-                //    NeedArange = true;
-                //    break;
-                //case EHeroMoveState.ForceMove:
-                //    Target = null;
-                //    NeedArange = true;
-                //    break;
-            }
 
         }
     }

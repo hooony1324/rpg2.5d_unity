@@ -27,17 +27,17 @@ public class Quest
         set { SaveData.State = value; }
     }
 
-    public int DailyScore
-    {
-        get { return SaveData.DailyScore; }
-        set { SaveData.DailyScore = value; }
-    }
+    //public int DailyScore
+    //{
+    //    get { return SaveData.DailyScore; }
+    //    set { SaveData.DailyScore = value; }
+    //}
 
-    public int WeeklyScore
-    {
-        get { return SaveData.WeeklyScore; }
-        set { SaveData.WeeklyScore = value; }
-    }
+    //public int WeeklyScore
+    //{
+    //    get { return SaveData.WeeklyScore; }
+    //    set { SaveData.WeeklyScore = value; }
+    //}
 
     public Quest(QuestSaveData saveData)
     {
@@ -46,11 +46,13 @@ public class Quest
         QuestData = Managers.Data.QuestDic[TemplateId];
 
         _questTasks.Clear();
-
         for (int i = 0; i < QuestData.QuestTasks.Count; i++)
         {
             _questTasks.Add(new QuestTask(i, QuestData.QuestTasks[i], saveData.TaskProgressCount[i], saveData.TaskStates[i], this));
         }
+
+        int rewardTableId = QuestTasks[0].TaskData.QuestRewardId;
+        _questRewards = Managers.Data.QuestRewardDic[rewardTableId].Rewards;
     }
 
     public bool IsTasksCompleted()
@@ -93,9 +95,6 @@ public class Quest
             if (_questTasks[i].TaskState == EQuestState.None)
                 _questTasks[i].TaskState = EQuestState.Processing;
         }
-
-        int rewardTableId = QuestTasks[0].TaskData.QuestRewardId;
-        _questRewards = Managers.Data.QuestRewardDic[rewardTableId].Rewards;
     }
 
     public List<QuestTask> GetProcessingTasks()
@@ -152,12 +151,6 @@ public class Quest
 
             OnQuestCompleted?.Invoke(this);
 
-            // 1. 보상 받기
-            //  1) 보상테이블 아이템들 확인, 보상 테이블ID는 1번 Task에 있음
-            //  2) 아이템 종류별로 GetReward하기
-            GetReward();
-
-            // 2. 새로운 퀘스트 할당
             foreach (QuestTask task in QuestTasks)
             {
                 int nextId = task.TaskData.NextQuestId;
@@ -168,7 +161,7 @@ public class Quest
                 }
             }
 
-            Managers.Game.BroadcastEvent(EBroadcastEventType.QuestCompleted);
+            GetReward();
         }
     }
     private void GetReward()

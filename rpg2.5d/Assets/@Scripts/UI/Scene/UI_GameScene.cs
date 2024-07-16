@@ -1,14 +1,8 @@
 using Castle.Core.Internal;
-using NSubstitute.Routing.Handlers;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 using static Define;
 
 public class UI_GameScene : UI_Scene
@@ -30,9 +24,8 @@ public class UI_GameScene : UI_Scene
         QuestDropdownButton,
     }
 
-    Quest _mainQuest;
-    QuestTask _questTask;
     GameObject _questList;
+    RectTransform _questListRect;
     List<UI_QuestList_SubItem> _questListItems = new List<UI_QuestList_SubItem>();
 
     protected override bool Init()
@@ -47,35 +40,15 @@ public class UI_GameScene : UI_Scene
         GetObject((int)GameObjects.InputGuide).gameObject.SetActive(false);
 
         _questList = GetObject((int)GameObjects.QuestList).gameObject;
+        _questListRect = _questList.GetComponent<RectTransform>();
 
-        GameObject button = GetButton((int)Buttons.QuestDropdownButton).gameObject;
-        GetButton((int)Buttons.QuestDropdownButton).gameObject.BindEvent(() =>
-        {
-            bool bEnabled;
-            if (_questList.active == true)
-            {
-                _questList.SetActive(false);
-                bEnabled = false;
-            }
-            else
-            {
-                _questList.SetActive(true);
-                bEnabled = true;
-            }
-
-            RectTransform rect = button.GetComponent<RectTransform>();
-            Vector3 currentRotation = rect.localEulerAngles;
-            currentRotation.z = bEnabled ? 270 : 90;
-            
-            rect.localEulerAngles = currentRotation;
-        });
+        GetButton((int)Buttons.QuestDropdownButton).gameObject.BindEvent(OnToggleQuestDropdown);
 
         for (int i = 0; i < QuestManager.DEFAULT_QUEST_SLOT_COUNT; i++)
         {
             UI_QuestList_SubItem subItem = Managers.UI.MakeSubItem<UI_QuestList_SubItem>(_questList.transform);
             _questListItems.Add(subItem);
         }
-        
 
         Refresh();
         return true;
@@ -95,7 +68,6 @@ public class UI_GameScene : UI_Scene
             case EBroadcastEventType.HeroLevelUp:
             case EBroadcastEventType.ChangeInventory:
             case EBroadcastEventType.KillMonster:
-            case EBroadcastEventType.QuestCompleted:
                 Refresh();
                 break;
         }
@@ -108,27 +80,61 @@ public class UI_GameScene : UI_Scene
         RefreshQuest();
     }
 
+    #region Quest
     void RefreshQuest()
     {
-        List<Quest> quests = Managers.Quest.ProcessingQuests;
+        List<Quest> quests = Managers.Quest.CompletedOrProcessingQuests;
         int count = quests.Count;
         if (quests.Count == 0)
+        {
+            for (int i = 0; i < QuestManager.DEFAULT_QUEST_SLOT_COUNT; i++)
+            {
+                _questListItems[i].gameObject.SetActive(false);
+            }
+
+            _questList.SetActive(false);
             return;
+        }
 
         for (int i = 0; i < QuestManager.DEFAULT_QUEST_SLOT_COUNT; i++)
         {
             if (count - 1 < i)
             {
-                _questListItems[i].RefreshInfo(null);
+                _questListItems[i].RefreshDisplay(null);
                 _questListItems[i].gameObject.SetActive(false);
             }
             else
             {
-                _questListItems[i].RefreshInfo(quests[i]);
+                _questListItems[i].RefreshDisplay(quests[i]);
                 _questListItems[i].gameObject.SetActive(true);
             }
         }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_questListRect);
     }
+
+    void OnToggleQuestDropdown()
+    {
+        GameObject button = GetButton((int)Buttons.QuestDropdownButton).gameObject;
+        bool bEnabled;
+        if (_questList.active == true)
+        {
+            _questList.SetActive(false);
+            bEnabled = false;
+        }
+        else
+        {
+            _questList.SetActive(true);
+            bEnabled = true;
+        }
+
+        RectTransform rect = button.GetComponent<RectTransform>();
+        Vector3 currentRotation = rect.localEulerAngles;
+        currentRotation.z = bEnabled ? 270 : 90;
+
+        rect.localEulerAngles = currentRotation;
+    }
+    #endregion
 
     #region InputGuide
     public void ActivateInputGuide(string textId)

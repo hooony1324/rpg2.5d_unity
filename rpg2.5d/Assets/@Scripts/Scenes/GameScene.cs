@@ -11,20 +11,20 @@ public class GameScene : BaseScene
         if (base.Init() == false)
             return false;
 
-        //LoadMap
-
-
         
-       
-        Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero, 201001);
+        Hero hero = Managers.Object.Spawn<Hero>(Managers.Game.SaveData.LastWorldPos, 201001);
 
+        for (int i = 0; i < 3; i++)
         {
-            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
+            {
+                Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
+            }
+
+            {
+                Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202002);
+            }
         }
 
-        {
-            Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202002);
-        }
 
         {
             //Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202003);
@@ -49,12 +49,19 @@ public class GameScene : BaseScene
         Managers.Game.Cam.Target = hero;
 
         Managers.Game.PlayerHero = hero;
-        
+        StartCoroutine(CoSaveGame());
         return true;
     }
 
-    public override void Clear()
+    WaitForSeconds wait = new WaitForSeconds(1);
+    private IEnumerator CoSaveGame()
     {
-        
+        while(true)
+        {
+            yield return wait;
+            Managers.Game.SaveGame();
+        }
     }
+
+    public override void Clear() { }
 }

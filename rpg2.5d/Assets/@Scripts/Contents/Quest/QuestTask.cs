@@ -105,6 +105,12 @@ public class QuestTask
                     Count += absValue;
                 }
                 break;
+            case EQuestObjectiveType.EarnMineral:
+                if (currencyType == ECurrencyType.Mineral && value > 0)
+                {
+                    Count += absValue;
+                }
+                break;
             case EQuestObjectiveType.SpendWood:
                 if (currencyType == ECurrencyType.Wood && value < 0)
                 {
