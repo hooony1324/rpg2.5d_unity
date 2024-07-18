@@ -9,7 +9,7 @@ using UnityEngine.Diagnostics;
 using UnityEngine.AI;
 
 public class InteractionObject : BaseObject
-{// ¼­·Î »óÈ£ÀÛ¿ë °¡´É Object
+{// ì„œë¡œ ìƒí˜¸ì‘ìš© ê°€ëŠ¥ Object
 
     public int TemplateId {  get; set; }
     public EffectComponent Effects { get; set; }
@@ -41,8 +41,7 @@ public class InteractionObject : BaseObject
     {
 
 
-        _hpBar = Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
-        _hpBar.SetInfo(this);
+
     }
 
     public virtual void OnDamage(InteractionObject attacker, float value)
@@ -101,12 +100,12 @@ public class InteractionObject : BaseObject
         {
             if (item.Probability == 100)
             {
-                //È®Á¤µå·Ó¾ÆÀÌÅÛ
+                //í™•ì •ë“œë¡­ì•„ì´í…œ
                 rewardDatas.Add(item);
                 continue;
             }
 
-            //È®Á¤µå·Ó¾ÆÀÌÅÛÀ» Á¦¿ÜÇÑ ¾ÆÀÌÅÛ
+            //í™•ì •ë“œë¡­ì•„ì´í…œì„ ì œì™¸í•œ ì•„ì´í…œ
             sum += item.Probability;
             if (randValue <= sum)
             {

@@ -15,6 +15,8 @@ using UnityEngine.UI;
 
 public class Hero : Creature, IItemAccessible
 {
+    public Action OnPlayerStatChanged;
+
     InputController _inputController;
 
     [SerializeField] private EHeroMoveState _heroMoveState = EHeroMoveState.None;
@@ -30,6 +32,16 @@ public class Hero : Creature, IItemAccessible
 
             _heroMoveState = value;
 
+        }
+    }
+
+    public float GetNormalizedHP() => (float)Hp / MaxHp;
+    public override float Hp
+    {
+        set
+        {
+            _hp = value;
+            OnPlayerStatChanged?.Invoke();
         }
     }
     protected override bool Init()
@@ -58,9 +70,6 @@ public class Hero : Creature, IItemAccessible
 
     public override void SetInfo(int templateId)
     {
-        //_heroInfo = Managers.Hero.GetHeroInfo(templateId);
-        //Managers.Game.OnBroadcastEvent -= HandleOnBroadcast;
-        //Managers.Game.OnBroadcastEvent += HandleOnBroadcast;
         base.SetInfo(templateId);
     }
 
@@ -106,7 +115,6 @@ public class Hero : Creature, IItemAccessible
     {
         if (HeroMoveState == EHeroMoveState.ForceMove)
         {
-            //transform.position += MoveDir * MoveSpeed * Time.deltaTime;
             LookLeft = MoveDir.x < 0;
             Agent.nextPosition = Position + MoveDir * MoveSpeed * Time.deltaTime;
             return;
@@ -129,19 +137,14 @@ public class Hero : Creature, IItemAccessible
         float finalValue = baseValue;
 
         finalValue += Effects.GetStatModifier(calcStatType, EStatModType.Add);
-        //              + Managers.Inventory.GetStatModifier(calcStatType, EStatModType.Add)
-        //              + Managers.Game.GetTrainingStatModifier(calcStatType, EStatModType.Add);
 
         finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentAdd);
-        //                + Managers.Inventory.GetStatModifier(calcStatType, EStatModType.PercentAdd)
-        //                + Managers.Game.GetTrainingStatModifier(calcStatType, EStatModType.PercentAdd);
 
         finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentMult);
         
 
         return finalValue;
     }
-
 
     public ItemHolder TargetItemHolder { get; set; } = null;
     public void TrySetTargetItemHolder(ItemHolder itemHolder)

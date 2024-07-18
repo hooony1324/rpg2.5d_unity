@@ -60,22 +60,6 @@ public class ItemHolder : BaseObject
         GetComponent<CapsuleCollider>().enabled = true;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    _text.gameObject.SetActive(true);
-
-    //    var itemAccessor = other.GetComponent<IItemAccessible>();
-    //    if (itemAccessor == null)
-    //        return;
-
-    //    itemAccessor.SetTargetItemHolder(this);
-
-    //    if (itemAccessor.TargetItemHolder == this)
-    //    {
-    //        Managers.UI.SceneUI.GetComponent<UI_GameScene>().ActivateInputGuide("AcquireItemGuide");
-    //    }
-    //}
-
     public void OnTriggerStay(Collider other)
     {
         _text.gameObject.SetActive(true);
@@ -160,10 +144,10 @@ public class ItemHolder : BaseObject
     {
         EquipmentData[] equipments = Managers.Data.EquipmentDic.Values.ToArray();
 
-        //1. µå·ÓÇÒ Àåºñ ÆÄÃ÷ °áÁ¤(Çï¸ä Àå°© ¹«±â µî)
+        //1. ë“œë¡­í•  ìž¥ë¹„ íŒŒì¸  ê²°ì •(í—¬ë©§ ìž¥ê°‘ ë¬´ê¸° ë“±)
         EItemSubType subType = ChooseSubEquipmentType();
 
-        //2. µî±Þ °áÁ¤
+        //2. ë“±ê¸‰ ê²°ì •
         EItemGrade grade = Util.ChooseItemGrade();
 
         List<EquipmentData> filtered = equipments.Where(e => e.SubType == subType && e.Grade == grade).ToList();

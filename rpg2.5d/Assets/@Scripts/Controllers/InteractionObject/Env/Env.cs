@@ -29,6 +29,8 @@ public class Env : InteractionObject
         MaxHp = 100;
         Hp = MaxHp;
 
+        _hpBar = Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        _hpBar.SetInfo(this);
 
         return true;
     }
@@ -36,6 +38,8 @@ public class Env : InteractionObject
     public override void SetInfo(int templateId)
     {
         base.SetInfo(templateId);
+
+
 
         EnvState = EEnvState.Idle;
     }
@@ -60,7 +64,7 @@ public class Env : InteractionObject
                 PlayDamagedSequence();
                 break;
             case EEnvState.Dead:
-                //Start : CoReserveSpawn : ¸î ÃÊµÚ ¸®½ºÆù
+                //Start : CoReserveSpawn : ëª‡ ì´ˆë’¤ ë¦¬ìŠ¤í°
                 PlayFadeOutSequence();
                 break;
         }
@@ -83,9 +87,9 @@ public class Env : InteractionObject
 
     }
 
-    [SerializeField] float duration = 0.5f; // Áö¼Ó ½Ã°£
-    [SerializeField] float positionStrength = 0.1f; // Áøµ¿ °­µµ
-    [SerializeField] int vibrato = 30; // Áøµ¿ È½¼ö
+    [SerializeField] float duration = 0.5f; // ì§€ì† ì‹œê°„
+    [SerializeField] float positionStrength = 0.1f; // ì§„ë™ ê°•ë„
+    [SerializeField] int vibrato = 30; // ì§„ë™ íšŸìˆ˜
     [SerializeField] float randomness = 90f;
 
     void PlayDamagedSequence()

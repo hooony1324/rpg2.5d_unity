@@ -13,6 +13,7 @@ public class GameScene : BaseScene
 
         
         Hero hero = Managers.Object.Spawn<Hero>(Managers.Game.SaveData.LastWorldPos, 201001);
+        Managers.Game.PlayerHero = hero;
 
         for (int i = 0; i < 3; i++)
         {
@@ -48,7 +49,7 @@ public class GameScene : BaseScene
         Managers.Game.Cam.transform.position = hero.transform.position;
         Managers.Game.Cam.Target = hero;
 
-        Managers.Game.PlayerHero = hero;
+        
         StartCoroutine(CoSaveGame());
         return true;
     }

@@ -27,7 +27,8 @@ public class Monster : Creature
 
         ObjectType = EObjectType.Monster;
 
-        
+        _hpBar = Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        _hpBar.SetInfo(this);
 
         // NavMesh 충돌 문제 Hero : 50
         Agent.avoidancePriority = 40; 
@@ -43,18 +44,18 @@ public class Monster : Creature
         MonsterData = CreatureData as MonsterData;
 
         _originPos = Position;
-        // stat
 
         _targetMask = LayerMask.GetMask("Hero");
+
 
     }
 
     protected override float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
     {
         float finalValue = baseValue;
-        //finalValue += Effects.GetStatModifier(calcStatType, EStatModType.Add);
-        //finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentAdd);
-        //finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentMult);
+        finalValue += Effects.GetStatModifier(calcStatType, EStatModType.Add);
+        finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentAdd);
+        finalValue *= 1 + Effects.GetStatModifier(calcStatType, EStatModType.PercentMult);
 
         return finalValue;
     }
@@ -85,12 +86,6 @@ public class Monster : Creature
                     UpdateIdle();
                     UpdateAITick = 0.1f;
                     break;
-                //case ECreatureState.Cooltime:
-                //    UpdateCooltime();
-                //    UpdateAITick = 0.1f;
-                //break;
-                //case ECreatureState.OnDamaged:
-
                 case ECreatureState.Move:
                     UpdateAITick = 0.0f;
                     UpdateMove();

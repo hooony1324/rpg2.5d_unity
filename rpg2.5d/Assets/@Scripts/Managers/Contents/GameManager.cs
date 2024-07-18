@@ -29,13 +29,21 @@ public class GameManager
     public int PlayerLevel
     {
         get { return _saveData.PlayerLevel; }
-        private set { _saveData.PlayerLevel = value; }
+        private set 
+        {
+            _saveData.PlayerLevel = value;
+            Managers.Game.PlayerHero.OnPlayerStatChanged?.Invoke();
+        }
     }
 
     public int PlayerExp
     {
         get { return _saveData.PlayerExp; }
-        private set { _saveData.PlayerExp = value; }
+        private set 
+        { 
+            _saveData.PlayerExp = value;
+            Managers.Game.PlayerHero.OnPlayerStatChanged?.Invoke();
+        }
     }
     #endregion
 
@@ -239,7 +247,7 @@ public class GameManager
         return GetExpToNextLevel() - PlayerExp;
     }
 
-    private int GetExpToNextLevel()
+    public int GetExpToNextLevel()
     {
         PlayerLevelData playerLevelData;
         if (Managers.Data.PlayerLevelDic.TryGetValue(PlayerLevel, out playerLevelData))

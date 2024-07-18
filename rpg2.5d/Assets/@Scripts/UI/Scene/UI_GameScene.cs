@@ -1,4 +1,5 @@
 using Castle.Core.Internal;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,17 +12,32 @@ public class UI_GameScene : UI_Scene
     {
         InputGuide,
         QuestList,
+        QuestListContent,
     }
 
     enum Texts
     {
+        // PlayerInfo
+        PlayerLevelText,
+        PlayerExpText,
+        PlayerHPText,
+        PlayerMPText,
+
         InputText,
         InputGuideText,
     }
 
+    enum Sliders
+    {
+        // PlayerInfo
+        PlayerExpSlider,
+        PlayerHPSlider,
+        PlayerMPSlider,
+    }
+
     enum Buttons
     {
-        QuestDropdownButton,
+        QuestCollapseButton,
     }
 
     GameObject _questList;
@@ -36,17 +52,24 @@ public class UI_GameScene : UI_Scene
         BindObject(typeof(GameObjects));
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
+        BindSlider(typeof(Sliders));
 
+        // PlayerInfo
+
+
+        // InputGuide
         GetObject((int)GameObjects.InputGuide).gameObject.SetActive(false);
 
+        // Quest
         _questList = GetObject((int)GameObjects.QuestList).gameObject;
-        _questListRect = _questList.GetComponent<RectTransform>();
+        GameObject questListContent = GetObject((int)GameObjects.QuestListContent).gameObject;
+        _questListRect = questListContent.GetComponent<RectTransform>();
 
-        GetButton((int)Buttons.QuestDropdownButton).gameObject.BindEvent(OnToggleQuestDropdown);
+        GetButton((int)Buttons.QuestCollapseButton).gameObject.BindEvent(OnToggleQuestDropdown);
 
         for (int i = 0; i < QuestManager.DEFAULT_QUEST_SLOT_COUNT; i++)
         {
-            UI_QuestList_SubItem subItem = Managers.UI.MakeSubItem<UI_QuestList_SubItem>(_questList.transform);
+            UI_QuestList_SubItem subItem = Managers.UI.MakeSubItem<UI_QuestList_SubItem>(questListContent.transform);
             _questListItems.Add(subItem);
         }
 
@@ -57,6 +80,8 @@ public class UI_GameScene : UI_Scene
     public void SetInfo()
     {
         Managers.Game.OnBroadcastEvent += HandleOnBroadcastEvent;
+        Managers.Game.PlayerHero.OnPlayerStatChanged += RefreshPlayerInfo;
+
         Refresh();
     }
 
@@ -76,8 +101,25 @@ public class UI_GameScene : UI_Scene
     void Refresh()
     {
         // Level, Exp, ...
-
+        RefreshPlayerInfo();
         RefreshQuest();
+    }
+
+    #region PlayerInfo
+    void RefreshPlayerInfo()
+    {
+        GetText((int)Texts.PlayerLevelText).text =
+            $"LV.{Managers.Game.PlayerLevel.ToString()}";
+
+        GetText((int)Texts.PlayerExpText).text =
+            $"{Managers.Game.PlayerExp:F2} / {Managers.Game.GetExpToNextLevel():F2}";
+        GetText((int)Texts.PlayerHPText).text =
+            $"{Managers.Game.PlayerHero.Hp:F2} / {Managers.Game.PlayerHero.MaxHp:F2}";
+
+        GetSlider((int)Sliders.PlayerExpSlider).value = Managers.Game.GetExpNormalized();
+        GetSlider((int)Sliders.PlayerHPSlider).value = Managers.Game.PlayerHero.GetNormalizedHP();
+
+        //TODO: playermp
     }
 
     #region Quest
@@ -112,10 +154,11 @@ public class UI_GameScene : UI_Scene
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(_questListRect);
     }
+    #endregion
 
     void OnToggleQuestDropdown()
     {
-        GameObject button = GetButton((int)Buttons.QuestDropdownButton).gameObject;
+        GameObject button = GetButton((int)Buttons.QuestCollapseButton).gameObject;
         bool bEnabled;
         if (_questList.active == true)
         {

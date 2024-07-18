@@ -51,11 +51,11 @@ public class Creature : InteractionObject
     public Vector3 MoveDir { get; set; } = Vector3.zero;
     [SerializeField] protected ECreatureState _creatureState = ECreatureState.Idle;
 
-    [SerializeField] private float _hp;
-    public float Hp
+    [SerializeField] protected float _hp;
+    public virtual float Hp
     {
         get => _hp;
-        protected set => _hp = value;
+        set => _hp = value;
     }
 
 
@@ -197,7 +197,7 @@ public class Creature : InteractionObject
         AttackSpeedRate = CalculateFinalStat(AttackSpeedRateBase, ECalcStatType.AttackSpeedRate);
         CooldownReduction = CalculateFinalStat(CooldownReduction, ECalcStatType.CooldownReduction);
 
-        // ÃÖ´ë HP¹ø°æ
+        // ìµœëŒ€ HPë²ˆê²½
         if (prevMaxHp != MaxHp)
         {
             float hpRatio = Hp / prevMaxHp;
@@ -206,7 +206,7 @@ public class Creature : InteractionObject
         }
 
         float ratio = Hp / MaxHp;
-        _hpBar.Refresh(ratio);
+        _hpBar?.Refresh(ratio);
     }
 
     protected virtual float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)
@@ -391,7 +391,7 @@ public class Creature : InteractionObject
 
         Hp = Mathf.Clamp(Hp - damage, 0, MaxHp);
         float ratio = Hp / MaxHp;
-        _hpBar.Refresh(ratio);
+        _hpBar?.Refresh(ratio);
 
         if (Hp == 0)
         {

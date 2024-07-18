@@ -11,7 +11,6 @@ public class UI_HPBar : UI_Base
     enum Sliders
     {
         HP,
-        MP,
     }
 
     InteractionObject _owner;
@@ -26,9 +25,6 @@ public class UI_HPBar : UI_Base
 
         BindSlider(typeof(Sliders));
         _hp = GetSlider((int)Sliders.HP);
-        _mp = GetSlider((int)Sliders.MP);
-
-        _mp.gameObject.SetActive(false);
 
         _rect = gameObject.GetComponent<RectTransform>();
 
