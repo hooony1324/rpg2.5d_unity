@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private AudioSource[] _audioSources = new AudioSource[(int)Define.ESound.Max];
+    private Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 }

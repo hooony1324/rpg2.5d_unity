@@ -42,6 +42,14 @@ public class Define
         MB,
         GB
     }
+
+    public enum ESound
+    {
+        Bgm,
+        SubBg,
+        Effect,
+        Max,
+    }
     public enum UIEvent
     {
         Click,

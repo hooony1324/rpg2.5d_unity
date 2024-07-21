@@ -1,3 +1,4 @@
+using Cinemachine;
 using Data;
 using System;
 using System.Collections;
@@ -190,19 +191,16 @@ public class GameManager
     }
 
     private CameraController _cam;
-
-    public CameraController Cam
+    public CameraController Cam 
     {
         get
         {
-            if (_cam == null)
-            {
-                _cam = Object.FindObjectOfType<CameraController>();
-            }
-
+            _cam ??= Camera.main.gameObject.GetComponent<CameraController>();
+            
             return _cam;
         }
     }
+
 
     #region Player Level
     public void AddExp(int value)

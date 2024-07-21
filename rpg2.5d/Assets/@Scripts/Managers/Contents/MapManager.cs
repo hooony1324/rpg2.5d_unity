@@ -18,37 +18,12 @@ public class MapManager
         map.name = $"@Map_{mapName}";
 
         Map = map;
-        CellGrid = map.GetComponent<Grid>();
     }
 
     void DestroyMap()
     {
-
+        if (Map != null)
+            Managers.Resource.Destroy(Map);
     }
-
-
-
-    #region Grid
-    public Grid CellGrid { get; private set; }
-
-    private int _minX;
-    private int _maxX;
-    private int _minZ;
-    private int _maxZ;
-
-    //private int _minY;
-    //private int _maxY;
-    public Vector3Int World2Cell(Vector3 worldPos)
-    {
-        return CellGrid.WorldToCell(worldPos);
-    }
-
-    public Vector3 Cell2World(Vector3Int cellPos)
-    {
-        return CellGrid.CellToWorld(cellPos);
-    }
-
-    #endregion
-
 
 }

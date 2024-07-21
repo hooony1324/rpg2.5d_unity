@@ -1,3 +1,4 @@
+using Cinemachine;
 using NSubstitute;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,16 @@ public class GameScene : BaseScene
         if (base.Init() == false)
             return false;
 
-        
+
+        Managers.Map.LoadMap("BaseMap");
+
         Hero hero = Managers.Object.Spawn<Hero>(Managers.Game.SaveData.LastWorldPos, 201001);
         Managers.Game.PlayerHero = hero;
 
-        for (int i = 0; i < 3; i++)
+        Managers.Game.Cam.Init();
+        Managers.Game.Cam.SetTarget(hero.transform);
+
+        for (int i = 0; i < 1; i++)
         {
             {
                 Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202001);
@@ -37,7 +43,7 @@ public class GameScene : BaseScene
 
 
 
-        Env env = Managers.Object.Spawn<Env>(Vector3.right * 5);
+        //Env env = Managers.Object.Spawn<Env>(Vector3.right * 5);
 
         Managers.UI.CacheAllPopups();
 
@@ -45,10 +51,6 @@ public class GameScene : BaseScene
         Managers.UI.SceneUI = sceneUI;
         sceneUI.GetComponent<Canvas>().sortingOrder = 1;
         sceneUI.SetInfo();
-
-        Managers.Game.Cam.transform.position = hero.transform.position;
-        Managers.Game.Cam.Target = hero;
-
         
         StartCoroutine(CoSaveGame());
         return true;

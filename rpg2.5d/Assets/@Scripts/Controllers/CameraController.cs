@@ -1,65 +1,189 @@
+using Castle.DynamicProxy.Contributors;
+using Cinemachine;
 using DG.Tweening;
+using NSubstitute.Routing.Handlers;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : InitBase
 {
-    private BaseObject _target;
-    private bool isReady = false;
+    private Camera _mainCamera;
+    private CinemachineVirtualCamera _virtualCamera;
+    private Transform _target;
 
-    public BaseObject Target
+    // Fading Near Camera
+    [SerializeField]
+    private LayerMask _fadingMask;
+    private float _fadedAlpha = 0.3f;
+
+    [SerializeField]
+    private Vector3 TargetPositionOffset = Vector3.up;
+    private float _fadeSpeed = 3.0f;
+
+    private List<FadingObject> _fadingObjects = new List<FadingObject>();
+    private Dictionary<FadingObject, Coroutine> _fadingCoroutines = new Dictionary<FadingObject, Coroutine>();
+    private RaycastHit[] Hits = new RaycastHit[10];
+
+    public Transform Target
     {
-        get { return _target; }
-        set
+        get => _target;
+        private set => _target = value;
+    }
+
+    public void Init()
+    {
+        _mainCamera = Camera.main;
+        _virtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
+
+        _fadingMask = LayerMask.GetMask("Wall");
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _virtualCamera.Follow = target;
+        _virtualCamera.LookAt = target;
+        Target = target;
+
+        StartCoroutine(CheckFadingObjects());
+    }
+
+    private IEnumerator CheckFadingObjects()
+    {
+        while (true)
         {
-            _target = value;
-            isReady = true;
+            int hits = Physics.RaycastNonAlloc(transform.position, (Target.transform.position + TargetPositionOffset - transform.position), Hits, Vector3.Distance(transform.position, Target.transform.position), _fadingMask);
+
+            Debug.DrawRay(transform.position, (Target.transform.position + TargetPositionOffset - transform.position));
+
+            if (hits > 0)
+            {
+                for (int i = 0; i < hits; i++)
+                {
+                    FadingObject fadingObject = GetFadingObejct(Hits[i]);
+
+                    if (fadingObject != null && !_fadingObjects.Contains(fadingObject))
+                    {
+                        if (_fadingCoroutines.ContainsKey(fadingObject))
+                        {
+                            if (_fadingCoroutines[fadingObject] != null)
+                            {
+                                StopCoroutine(_fadingCoroutines[fadingObject]);
+                            }
+
+                            _fadingCoroutines.Remove(fadingObject);
+                        }
+
+                        _fadingCoroutines.Add(fadingObject, StartCoroutine(FadeObjectOut(fadingObject)));
+                        _fadingObjects.Add(fadingObject);
+                    }
+                }
+            }
+
+            FadeObjectsNoLongerBeingHit();
+            ClearHits();
+
+            yield return null;
         }
     }
 
-    [SerializeField] public float smoothSpeed = 6f; // 스무딩 속도
-
-    private int _targetOrthographicSize = 18;
-    private Quaternion _angle = Quaternion.Euler(15, 0, 0);
-
-    private void LateUpdate()
+    private FadingObject GetFadingObejct(RaycastHit hit)
     {
-        // Smoothly transition to the target camera size
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, _targetOrthographicSize, smoothSpeed * Time.deltaTime);
-
-        HandleCameraPosition();
+        return hit.collider?.GetComponent<FadingObject>() ?? null;
     }
 
-    private void HandleCameraPosition()
+    private IEnumerator FadeObjectOut(FadingObject fadingObject)
     {
-        if (isReady == false)
-            return;
+        fadingObject.EnableMaterials();
 
-        Vector3 targetPosition = new Vector3(Target.Position.x, Target.Position.y + 4.5f, Target.Position.z - 8.0f);
+        float time = 0;
 
+        while (fadingObject.Alpha > _fadedAlpha)
+        {
+            float alpha = Mathf.Lerp(fadingObject.InitialAlpha, _fadedAlpha, time * _fadeSpeed);
+            fadingObject.SetAlpha(alpha);
 
-        targetPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.fixedDeltaTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
 
-        transform.SetPositionAndRotation(targetPosition, _angle);
+        if (_fadingCoroutines.ContainsKey(fadingObject))
+        {
+            StopCoroutine(_fadingCoroutines[fadingObject]);
+            _fadingCoroutines.Remove(fadingObject);
+        }
     }
 
-    //public void TargetingCamera(InteractionObject dest)
-    //{
-    //    //이미 진행중이면 리턴
-    //    if (State == ECameraState.Targeting)
-    //        return;
+    private IEnumerator FadeObjectIn(FadingObject fadingObject)
+    {
+        float time = 0;
 
-    //    State = ECameraState.Targeting;
-    //    Vector3 targetPosition = new Vector3(Target.CenterPosition.x, Target.CenterPosition.y, -10f);
-    //    Vector3 destPosition = new Vector3(dest.Position.x, dest.Position.y, -10f);
+        while (fadingObject.Alpha < fadingObject.InitialAlpha)
+        {
+            float alpha = Mathf.Lerp(_fadedAlpha, fadingObject.InitialAlpha, time * _fadeSpeed);
+            fadingObject.SetAlpha(alpha);
 
-    //    Sequence seq = DOTween.Sequence();
-    //    seq.Append(transform.DOMove(destPosition, 0.8f).SetEase(Ease.Linear))
-    //        .AppendInterval(2f)
-    //        .Append(transform.DOMove(targetPosition, 0.8f).SetEase(Ease.Linear))
-    //        .OnComplete(() => { State = ECameraState.Following; });
-    //}
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        fadingObject.DisableMaterials();
+
+        if (_fadingCoroutines.ContainsKey(fadingObject))
+        {
+            StopCoroutine(_fadingCoroutines[fadingObject]);
+            _fadingCoroutines.Remove(fadingObject);
+        }
+    }
+
+    private void FadeObjectsNoLongerBeingHit()
+    {
+        List<FadingObject> objectsToRemove = new List<FadingObject>(_fadingObjects.Count);
+
+        foreach (FadingObject fadingObject in _fadingObjects)
+        {
+            bool objectIsBeingHit = false;
+            for (int i = 0; i < Hits.Length; i++)
+            {
+                FadingObject hitFadeingObject = GetFadingObejct(Hits[i]);
+                if (hitFadeingObject != null && fadingObject == hitFadeingObject)
+                {
+                    objectIsBeingHit = true;
+                    break;
+                }
+            }
+
+
+            if (!objectIsBeingHit)
+            {
+                if (_fadingCoroutines.ContainsKey(fadingObject))
+                {
+                    if (_fadingCoroutines[fadingObject] != null)
+                    {
+                        StopCoroutine(_fadingCoroutines[fadingObject]);
+                    }
+                    _fadingCoroutines.Remove(fadingObject);
+                }
+
+                _fadingCoroutines.Add(fadingObject, StartCoroutine(FadeObjectIn(fadingObject)));
+                objectsToRemove.Add(fadingObject);
+            }
+        }
+
+        foreach (FadingObject removeObject in  objectsToRemove)
+        {
+            _fadingObjects.Remove(removeObject);
+        }
+
+    }
+
+    private void ClearHits()
+    {
+        System.Array.Clear(Hits, 0, Hits.Length);
+    }
+
 }

@@ -15,7 +15,6 @@ public class UI_HPBar : UI_Base
 
     InteractionObject _owner;
     Slider _hp;
-    Slider _mp;
     RectTransform _rect;
 
     protected override bool Init()
@@ -38,22 +37,11 @@ public class UI_HPBar : UI_Base
         //..
         _rect.anchoredPosition = new Vector3(0, _owner.OverheadOffset, 0);
         
-        switch (owner.ObjectType)
-        {
-            case EObjectType.Hero:
-            case EObjectType.Monster:
-                break;
-        }
-    }
 
-    //private void Update()
-    //{
-    //    _rect.position = _camera.WorldToScreenPoint(_owner.OverheadPosition);
-    //}
+    }
 
     public void Refresh(float ratio)
     {
-        // StatChangeEvent -> Refresh(need StatComp)
         _hp.value = ratio;
     }
 
