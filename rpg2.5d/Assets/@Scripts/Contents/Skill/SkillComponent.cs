@@ -124,7 +124,7 @@ public class SkillComponent : MonoBehaviour
                 break;
         }
 
-        // Ω∫≈≥ µÓ∑œ X
+        // Ïä§ÌÇ¨ Îì±Î°ù X
         if (skill == null)
             return;
 
@@ -133,6 +133,16 @@ public class SkillComponent : MonoBehaviour
             CurrentSkill = skill;
             _owner.CreatureState = ECreatureState.Skill;
         }
+    }
+
+    public void CancleCurrentSkill()
+    {
+        if (CurrentSkill == null)
+            return;
+
+        CurrentSkill.CancelSkill();
+        CurrentSkill = null;
+        _owner.CreatureState = ECreatureState.Idle;
     }
 
     public void Clear()

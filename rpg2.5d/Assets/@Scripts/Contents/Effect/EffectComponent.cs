@@ -23,6 +23,13 @@ public class EffectComponent : MonoBehaviour
             EffectBase effect = null;
 
             EEffectType type = Managers.Data.EffectDic[id].EffectType;
+
+            if (_owner.IsGuardActivated == true)
+            {// 방어중 이면 Knockback만 허용 (MeleeAttack : Dot, Knockback)
+                if (type != EEffectType.Knockback)
+                    continue;
+            }
+
             GameObject go = Managers.Object.SpawnGameObject(_owner.OverheadPosition, "EffectPrefab");
             go.transform.SetParent(_owner.Effects.transform, false);
             go.transform.localPosition = Vector3.zero;

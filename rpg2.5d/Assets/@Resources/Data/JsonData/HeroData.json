@@ -10,7 +10,7 @@
       "ColliderRadius": 0.0,
       "MaxHp": 413.0,
       "UpMaxHpBonus": 35.0,
-      "Atk": 500.0,
+      "Atk": 60.0,
       "MissChance": 0.0,
       "AtkBonus": 6.0,
       "MoveSpeed": 7.0,

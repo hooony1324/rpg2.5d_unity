@@ -16,7 +16,79 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 68f53eca5ec52cd4c86c29cf25540925
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: efa2306ad64676b479f26c6e74248b71
+    m_Address: gold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3594176f0dc6cc646827364904719795
+    m_Address: hit_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9aff7a67c9b71cb409816b36bfc76f48
+    m_Address: hit_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c0f24e6d4641114b9c9883ab8e3ac78
+    m_Address: hit_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 628eb5ea037e42c479b3ef4b2c89d766
+    m_Address: shield_block
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2f37b6577e581d42b8b2c8cfb53f624
+    m_Address: shield_parry
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2e1f84e85cbc614891db0887898d514
+    m_Address: sound_player_roll
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0124502603ce4004a82a8aa5a092b34a
+    m_Address: sound_player_running_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 051483c98ab8ef84da64a40767459cb9
+    m_Address: sound_player_running_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8eb8c2af8cffc04da62d4c587765ebf
+    m_Address: sound_player_running_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6747b15ae4ddd2d469d83eb854111b56
+    m_Address: sound_player_running_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f60a463f3a6600f4186bf04826f7cd18
+    m_Address: sword_swoosh_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6b7e383d8e2b32440b13d68a15608bde, type: 2}
   m_SchemaSet:

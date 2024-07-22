@@ -22,6 +22,7 @@ public class InteractionObject : BaseObject
     public float OverheadOffset => _collider.height * 1.2f;
     protected CapsuleCollider _collider;
 
+    public bool IsGuardActivated { get; set; }
     protected override bool Init()
     {
         if (base.Init() == false)

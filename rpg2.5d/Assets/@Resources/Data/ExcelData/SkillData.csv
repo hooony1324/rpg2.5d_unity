@@ -1,5 +1,5 @@
 ﻿DataId,Name,NameText,ClassName,Description,DescriptionTextId,ProjectileId,IconLabel,AnimName,CoolTime,SkillDuration,CastingAnimName,CastingSound,SkillRange,TargetCount,Effects,NextLevelId,AoE,EffectSize
-10001,기본공격,,MeleeAttack,근접평타,,,,,,,,,1.2,5,60001,,,
+10001,기본공격,,MeleeAttack,근접평타,,,,,0.1,0.1,,,1.2,5,60001,,,
 ,,,,,,,,,,,,,,,62001,,,
 10002,막기,,Guard,,,,,,,,,,,,62001,,,
 10003,콤보공격,,ComboAttack,,,,,,,,,,1.2,5,60001,,,

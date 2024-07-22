@@ -31,7 +31,7 @@ public class SkillBase : BaseObject
     }
 
     protected float SkillCoolTime = 0;      
-    public float RemainCoolTime { get; set; } // SkillCoolTime + πˆ«¡
+    public float RemainCoolTime { get; set; } // SkillCoolTime + Î≤ÑÌîÑ
     public float SkillAnimDuration = 0;
     public InteractionObject SkillTarget { get; set; }
 
@@ -93,7 +93,8 @@ public class SkillBase : BaseObject
 
     public virtual void DoSkill()
     {
-        //RemainCoolTime = SkillData.CoolTime;
+        
+        RemainCoolTime = SkillData.CoolTime;
         //SkillTarget = Owner.Target;
 
 
@@ -102,13 +103,14 @@ public class SkillBase : BaseObject
         
         // PlayAnimation & Anim Time
         float animDuration = 1.0f;
-        // animDuration / Owner.AttackSpeedRate -> ∞¯º”
+        // animDuration / Owner.AttackSpeedRate -> Í≥µÏÜç
 
         //Owner.StartWait(animDuration, OnSkillAnimEnd);
 
-        
+        Owner.Skills.CurrentSkill = null;
 
         StartCoolDown();
+
     }
 
 
@@ -119,10 +121,9 @@ public class SkillBase : BaseObject
 
     IEnumerator CoCooldown()
     {
-        RemainCoolTime = 3;
         _activated = false;
         
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(RemainCoolTime);
 
         CancelSkill();
         RemainCoolTime = 0;

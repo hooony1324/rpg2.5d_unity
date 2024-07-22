@@ -35,7 +35,7 @@ public class CCBase : EffectBase
             return;
         }
 
-        Owner.CreatureState = ECreatureState.OnDamaged;
+        //Owner.CreatureState = ECreatureState.OnDamaged;
 
         switch (EffectData.EffectType)
         {
@@ -69,6 +69,11 @@ public class CCBase : EffectBase
 
     IEnumerator CoKnockBack()
     {
+        if (Owner.IsGuardActivated)
+        {
+            Owner.Anim.SetTrigger("IsBlocked");
+        }
+
         Vector3 dir = (Owner.Position - Source.Position).normalized;
         Owner.LookAtTarget(Source.Position);
         

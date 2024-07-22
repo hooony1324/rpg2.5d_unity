@@ -58,7 +58,6 @@ public class Creature : InteractionObject
         set => _hp = value;
     }
 
-
     public Rigidbody Rigid => _rigidbody;
 
     private NavMeshAgent _agent;
@@ -112,9 +111,6 @@ public class Creature : InteractionObject
 
         Hp = MaxHp;
 
-        //Test
-        //_tmpDebug = Util.FindChild<TextMeshPro>(gameObject, "DebugText");
-
 
         return true;
     }
@@ -131,8 +127,6 @@ public class Creature : InteractionObject
         else
             CreatureData = Managers.Data.MonsterDic[templateId];
 
-        //Anim.runtimeAnimatorController = 
-        //CreatureData.AnimationControllerName;
         RuntimeAnimatorController rac = Managers.Resource.Load<RuntimeAnimatorController>(CreatureData.AnimationControllerName);
         Anim.runtimeAnimatorController = rac;
 
@@ -220,7 +214,6 @@ public class Creature : InteractionObject
         switch (CreatureState)
         {
             case ECreatureState.Idle:
-                //PlayAnimation(AnimName.IDLE);
                 Anim.SetFloat("MoveSpeed", 0);
                 Anim.Play("Locomotion");
                 
@@ -228,7 +221,6 @@ public class Creature : InteractionObject
             case ECreatureState.Cooltime:
                 break;
             case ECreatureState.Move:
-                //PlayAnimation(AnimName.RUN);
                 Anim.SetFloat("MoveSpeed", 1);
                 Anim.Play("Locomotion");
                 break;

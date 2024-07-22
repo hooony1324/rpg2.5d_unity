@@ -57,6 +57,11 @@ public class InputController : InitBase
             
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
+
         if (Input.GetMouseButtonDown((int)MouseButton.Left))
         {
             //UI Click
@@ -67,6 +72,17 @@ public class InputController : InitBase
 
             _owner.Skills.TrySkill(ESkillSlot.Default);
         }
+
+        if (Input.GetMouseButton((int)MouseButton.Right))
+        {
+            _owner.Skills.TrySkill(ESkillSlot.A);
+        }
+
+        if (Input.GetMouseButtonUp((int)MouseButton.Right))
+        {
+            _owner.Skills.CancleCurrentSkill();
+        }
+
     }
 
     public void HandleMovement()

@@ -7,8 +7,8 @@ using static Define;
 
 public class EffectBase : BaseObject
 {
-    public Creature Owner;      // Effect¸¦ ¹ÞÀ½
-    public Creature Source;     // Effect¸¦ ¹ß»ý½ÃÅ´
+    public Creature Owner;      // Effectë¥¼ ë°›ìŒ
+    public Creature Source;     // Effectë¥¼ ë°œìƒì‹œí‚´
     public EffectData EffectData;
     public EEffectType EffectType;
 
@@ -63,7 +63,9 @@ public class EffectBase : BaseObject
             case EEffectClearType.TriggerOutAoE:
             case EEffectClearType.EndOfCC:
                 if (IsCrowdControl() && Owner.IsValid())
-                    Owner.CreatureState = ECreatureState.Idle;
+                {
+                    Owner.CreatureState = Owner.IsGuardActivated ? ECreatureState.Skill : ECreatureState.Idle;
+                }
                 Owner.Effects.RemoveEffect(this);
                 return true;
 
@@ -106,7 +108,7 @@ public class EffectBase : BaseObject
                 Remains -= Time.deltaTime;
                 tickTimer += Time.deltaTime;
 
-                // Æ½¸¶´Ù ProcessDotTick È£Ãâ
+                // í‹±ë§ˆë‹¤ ProcessDotTick í˜¸ì¶œ
                 if (tickTimer >= EffectData.TickTime)
                 {
                     ProcessDot();

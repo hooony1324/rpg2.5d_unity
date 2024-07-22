@@ -46,25 +46,20 @@ public class MeleeAttack : SkillBase
 
     public override void CancelSkill()
     {
-        base.CancelSkill();
-
-        if (_attack != null)
-        {
-            StopCoroutine(_attack);
-            _attack = null;
-        }
-
+        base.CancelSkill();        
     }
 
     public override void DoSkill()
     {
+        base.DoSkill();
+
         Owner.Anim.SetFloat("MeleeAttackBlend", 0);
         Owner.Anim.SetTrigger(AnimName.MELEEATTACK);
 
-        _attack = StartCoroutine(CoMeleeAttack());
+        StopCoroutine(CoMeleeAttack());
+        StartCoroutine(CoMeleeAttack());
     }
 
-    Coroutine _attack;
     IEnumerator CoMeleeAttack()
     {
 
@@ -72,13 +67,10 @@ public class MeleeAttack : SkillBase
 
         if (Owner.IsValid())
             Owner.CreatureState = ECreatureState.Idle;
-        _attack = null;
     }
 
     void OnAttackEvent()
     {
-        
-
         Vector3 frontPosition = Owner.Position + (Owner.LookLeft ? Vector3.left : Vector3.right) + Vector3.up;
 
         Collider[] hitColliders = Physics.OverlapSphere(frontPosition, 1.5f, _targetMask);
@@ -95,7 +87,10 @@ public class MeleeAttack : SkillBase
             else if (obj.ObjectType == EObjectType.Monster)
             {
                 ApplyEffects(obj);
-                
+            }
+            else if (obj.ObjectType == EObjectType.Hero)
+            {
+                ApplyEffects(obj);
             }
 
         }
