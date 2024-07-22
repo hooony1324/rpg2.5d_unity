@@ -193,5 +193,6 @@ public class ObjectManager
         //{
         //    Managers.Resource.Destroy(obj.gameObject);
         //}
+        
     }
 }

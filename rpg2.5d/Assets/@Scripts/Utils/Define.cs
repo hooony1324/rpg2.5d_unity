@@ -46,7 +46,7 @@ public class Define
     public enum ESound
     {
         Bgm,
-        SubBg,
+        SubBgm,
         Effect,
         Max,
     }

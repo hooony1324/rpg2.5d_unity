@@ -112,7 +112,8 @@ MonoBehaviour:
   _dirty: 0
   <CreatureData>k__BackingField:
     TemplateId: 0
-    DescriptionTextID: 
+    Description: 
+    TextID: 
     AnimationControllerName: 
     ColliderOffsetX: 0
     ColliderOffsetY: 0
@@ -130,10 +131,33 @@ MonoBehaviour:
     EnvSkillId: 0
     SkillAId: 0
     SkillBId: 0
-  _hp: 0
   _creatureState: 0
+  _hp: 0
   _target: {fileID: 0}
   JumpForce: 5
+  MonsterData:
+    TemplateId: 0
+    Description: 
+    TextID: 
+    AnimationControllerName: 
+    ColliderOffsetX: 0
+    ColliderOffsetY: 0
+    ColliderRadius: 0
+    MaxHp: 0
+    UpMaxHpBonus: 0
+    Atk: 0
+    MissChance: 0
+    AtkBonus: 0
+    MoveSpeed: 0
+    CriRate: 0
+    CriDamage: 0
+    IconImage: 
+    DefaultSkillId: 0
+    EnvSkillId: 0
+    SkillAId: 0
+    SkillBId: 0
+    DropItemId: 0
+    MonsterSize: 0
 --- !u!1 &3344470552053618486
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +169,7 @@ GameObject:
   - component: {fileID: 3278647097977376165}
   - component: {fileID: 4888512027437274146}
   - component: {fileID: 8571342072102428397}
+  - component: {fileID: 2788244089414921168}
   m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
@@ -240,3 +265,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2788244089414921168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344470552053618486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85cf93b69f13e94d8d39c605789f4f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runningSounds:
+  - sound_player_running_1
+  - sound_player_running_2
+  - sound_player_running_3
+  - sound_player_running_4

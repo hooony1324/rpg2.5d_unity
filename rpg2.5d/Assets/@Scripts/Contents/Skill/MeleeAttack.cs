@@ -77,9 +77,7 @@ public class MeleeAttack : SkillBase
 
     void OnAttackEvent()
     {
-        // TODO
-        // 1. TargetSelcetion
-        // 2. Effect ╫ц╫╨еш
+        
 
         Vector3 frontPosition = Owner.Position + (Owner.LookLeft ? Vector3.left : Vector3.right) + Vector3.up;
 

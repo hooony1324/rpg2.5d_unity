@@ -64,7 +64,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
             s_instance._quest.Init();
-            //s_instance._sound.Init();
+            s_instance._sound.Init();
         }
     }
 
@@ -118,9 +118,15 @@ public class Managers : MonoBehaviour
     #endregion
     public static void Clear()
     {
-        //Sound.Clear();
-        //Scene.Clear();
-        //UI.Clear();
-        //Pool.Clear();
+        Sound.Clear();
+        Scene.Clear();
+        UI.Clear();
+        Pool.Clear();
+    }
+
+    [NaughtyAttributes.Button("TestSound")]
+    public void TestSound()
+    {
+        Managers.Sound.Play(ESound.Effect, "gold");
     }
 }

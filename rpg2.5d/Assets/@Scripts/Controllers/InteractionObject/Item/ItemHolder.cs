@@ -128,7 +128,7 @@ public class ItemHolder : BaseObject
                 break;
         }
 
-
+        Managers.Sound.Play(ESound.Effect, "gold");
         Managers.Object.Despawn(this);
         Managers.UI.SceneUI.GetComponent<UI_GameScene>().DeActivateInputGuide();
     }
