@@ -260,6 +260,7 @@ namespace Data
     {
         public double Value;
         public int CoolTime;
+        public List<int> EffectIds = new List<int>();
     }
 
     [Serializable]

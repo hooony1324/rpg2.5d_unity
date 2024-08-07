@@ -225,7 +225,6 @@ public class Creature : InteractionObject
                 Anim.Play("Locomotion");
                 break;
             case ECreatureState.OnDamaged:
-                Anim.Play(AnimName.TAKE_HIT);
                 break;
             case ECreatureState.Death:
                 Anim.Play(AnimName.DEATH);
@@ -341,7 +340,11 @@ public class Creature : InteractionObject
         if (attacker.IsValid() == false)
             return;
 
-        _hurtFlash.Flash();
+        if (damage > 0)
+        {
+            Anim.Play(AnimName.TAKE_HIT);
+            _hurtFlash.Flash();
+        }
 
         Creature creatureAttacker = attacker as Creature;
         if (creatureAttacker == null)

@@ -3,6 +3,9 @@
     {
       "Value": 3.5,
       "CoolTime": 2,
+      "EffectIds": [
+        60007
+      ],
       "NameTextId": "Potion_HP_1",
       "ItemGroupType": 2,
       "Type": 2,
@@ -17,6 +20,9 @@
     {
       "Value": 3.5,
       "CoolTime": 2,
+      "EffectIds": [
+        60007
+      ],
       "NameTextId": "Potion_MP_1",
       "ItemGroupType": 2,
       "Type": 2,

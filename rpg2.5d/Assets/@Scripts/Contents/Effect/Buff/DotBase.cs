@@ -57,7 +57,7 @@ public class DotBase : EffectBase
 
         Owner.OnDamage(Source, damage);
 
-        // Effects : [KnockBack][Dot(¿©±â¼­ Á×¾ú´Ù¸é)][Buff1][...]
+        // Effects : [KnockBack][Dot(ì—¬ê¸°ì„œ ì£½ì—ˆë‹¤ë©´)][Buff1][...]
     }
 
     private bool isHeal()

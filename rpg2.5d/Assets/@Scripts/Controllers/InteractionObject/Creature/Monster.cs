@@ -47,7 +47,6 @@ public class Monster : Creature
 
         _targetMask = LayerMask.GetMask("Hero");
 
-
     }
 
     protected override float CalculateFinalStat(float baseValue, ECalcStatType calcStatType)

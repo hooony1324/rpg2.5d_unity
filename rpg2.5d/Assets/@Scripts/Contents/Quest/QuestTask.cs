@@ -43,40 +43,6 @@ public class QuestTask
         return false;
     }
 
-    //public void GiveReward()
-    //{
-    //    if (TaskState == EQuestState.Rewarded)
-    //        return;
-    //    TaskState = EQuestState.Rewarded;
-
-    //    switch (TaskData.RewardType)
-    //    {
-    //        case EQuestRewardType.Gold:
-    //            Managers.Inventory.EarnCurrency(ECurrencyType.Gold, TaskData.RewardCount);
-    //            break;
-    //        case EQuestRewardType.Meat:
-    //            Managers.Inventory.EarnCurrency(ECurrencyType.Meat, TaskData.RewardCount);
-    //            break;
-    //        case EQuestRewardType.Mineral:
-    //            Managers.Inventory.EarnCurrency(ECurrencyType.Mineral, TaskData.RewardCount);
-    //            break;
-    //        case EQuestRewardType.Wood:
-    //            Managers.Inventory.EarnCurrency(ECurrencyType.Wood, TaskData.RewardCount);
-    //            break;
-    //        case EQuestRewardType.Item:
-
-    //            break;
-    //        case EQuestRewardType.DailyScore:
-    //            _owner.DailyScore += TaskData.RewardCount;
-    //            break;
-    //        case EQuestRewardType.WeeklyScore:
-    //            _owner.WeeklyScore += TaskData.RewardCount;
-    //            break;
-    //    }
-
-    //    _owner.UpdateQuest();
-    //}
-
     public void OnHandleBroadcastEvent(EBroadcastEventType eventType, ECurrencyType currencyType, int value)
     {
         int absValue = Mathf.Abs(value);

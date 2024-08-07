@@ -3,7 +3,7 @@
 ,,,2,KillSkeleton,KillMonster,,202002,1,10,
 9,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,1,11,1001
 ,,,2,KillSkeleton,KillMonster,,202002,1,,
-10,MainQuest_2,Once,1,KillGoblin,KillMonster,,202001,1,,1002
+10,MainQuest_3,Once,1,KillGoblin,KillMonster,,202001,1,,1002
 ,,,2,KillSkeleton,KillMonster,,202002,1,,
-11,MainQuest_2,Once,1,EarnWood,EarnWood,,,1,,1002
+11,MainQuest_4,Once,1,EarnWood,EarnWood,,,1,,1002
 ,,,2,EarnMineral,EarnMineral,,,1,,

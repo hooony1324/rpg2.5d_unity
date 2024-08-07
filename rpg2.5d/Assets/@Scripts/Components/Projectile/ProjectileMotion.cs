@@ -22,7 +22,7 @@ public abstract class ProjectileMotion : BaseObject
         return true;
     }
 
-    public virtual void SetInfo(Vector2 startPos, Vector3 endPos, InteractionObject target, Data.ProjectileData projData, float speed = 5f,
+    public virtual void SetInfo(Vector3 startPos, Vector3 endPos, InteractionObject target, Data.ProjectileData projData, float speed = 5f,
         Action endCallback = null)
     {
         _startPos = startPos;

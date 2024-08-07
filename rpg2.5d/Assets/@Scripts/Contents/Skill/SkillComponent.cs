@@ -145,6 +145,17 @@ public class SkillComponent : MonoBehaviour
         _owner.CreatureState = ECreatureState.Idle;
     }
 
+    public void CancelSkill(ESkillSlot skillSlot)
+    {
+        switch (skillSlot)
+        {
+            case ESkillSlot.A:
+                if (ASkill.Activated)
+                    ASkill.CancelSkill();
+                break;
+        }
+    }
+
     public void Clear()
     {
         ReadySkills.Clear();

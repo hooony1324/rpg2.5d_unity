@@ -35,7 +35,8 @@ public class CCBase : EffectBase
             return;
         }
 
-        //Owner.CreatureState = ECreatureState.OnDamaged;
+        if (!Owner.IsGuardActivated)
+            Owner.CreatureState = ECreatureState.OnDamaged;
 
         switch (EffectData.EffectType)
         {

@@ -5,6 +5,7 @@ using static Define;
 using UnityEngine.Rendering;
 using System.Collections;
 using UnityEditorInternal;
+using UnityEngine.ProBuilder;
 
 public class DamageFont : BaseObject
 {
@@ -50,10 +51,12 @@ public class DamageFont : BaseObject
                 _damageText.color = Color.red;
                 break;
             case EDamageResult.Heal:
+                damage = Mathf.Abs(damage);
                 _damageText.SetText(damage.ToString("F0"));
                 _damageText.color = Util.HexToColor("3DA55A");
                 break;
             case EDamageResult.CriticalHeal:
+                damage = Mathf.Abs(damage);
                 _damageText.SetText(damage.ToString("F0"));
                 _damageText.color = Util.HexToColor("3DA55A");
                 break;

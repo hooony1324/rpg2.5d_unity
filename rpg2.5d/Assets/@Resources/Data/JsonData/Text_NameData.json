@@ -55,6 +55,38 @@
     {
       "DataId": "MainQuest_2",
       "KOR": "두 번째 임무!"
+    },
+    {
+      "DataId": "Button_SelectedItem_Equip",
+      "KOR": "장착하기"
+    },
+    {
+      "DataId": "Button_SelectedItem_Use",
+      "KOR": "사용하기"
+    },
+    {
+      "DataId": "Goblin",
+      "KOR": "고블린"
+    },
+    {
+      "DataId": "Skeleton",
+      "KOR": "스켈레톤"
+    },
+    {
+      "DataId": "FlyingEye",
+      "KOR": "플라잉아이"
+    },
+    {
+      "DataId": "Mushroom",
+      "KOR": "머쉬룸"
+    },
+    {
+      "DataId": "MainQuest_3",
+      "KOR": "세 번째 임무!"
+    },
+    {
+      "DataId": "MainQuest_4",
+      "KOR": "네 번째 임무!"
     }
   ]
 }

@@ -1,5 +1,5 @@
-﻿DataId,Description,DescriptionTextID,AnimationControllerName,ColliderOffSetX,ColliderOffsetY,ColliderRadius,MaxHp,UpMaxHp,Atk,MissChance,AtkBonus,MovSpeed,CriRate,Cridamage,IconImage,DefaultSkill,EnvSkill,SkillA,SkillB,DropItemId,MonsterSize
-202001,고블린,,Goblin,,,,120,5,10,0,2,3,0,1.5,,10001,,,,80000,1
-202002,스켈레톤,,Skeleton,,,,200,5,20,0,2,3,0,1.5,,10001,,,,80001,1
-202003,플라잉아이,,FlyingEye,,,,100,5,10,0,2,3,0,1.5,,10001,,,,80002,1
-202004,머쉬룸,,Mushroom,,,,400,5,20,0,2,3,0,1.5,,10001,,,,80003,1
+﻿DataId,Description,NameTextId,AnimationControllerName,ColliderOffSetX,ColliderOffsetY,ColliderRadius,MaxHp,UpMaxHp,Atk,MissChance,AtkBonus,MovSpeed,CriRate,Cridamage,IconImage,DefaultSkill,EnvSkill,SkillA,SkillB,DropItemId,MonsterSize
+202001,고블린,Goblin,Goblin,,,,120,5,10,0,2,3,0,1.5,,10001,,,,80000,1
+202002,스켈레톤,Skeleton,Skeleton,,,,200,5,20,0,2,3,0,1.5,,10001,,,,80001,1
+202003,플라잉아이,FlyingEye,FlyingEye,,,,100,5,10,0,2,3,0,1.5,,10001,,,,80002,1
+202004,머쉬룸,Mushroom,Mushroom,,,,400,5,20,0,2,3,0,1.5,,10001,,,,80003,1

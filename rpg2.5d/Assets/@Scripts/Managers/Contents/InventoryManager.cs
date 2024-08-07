@@ -1,5 +1,4 @@
 using System;
-using System;
 using Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,23 +28,29 @@ public class InventoryManager
         private set { Managers.Game.SaveData.MaxMeat = value; }
     }
 
-    // °¡Áö°í ÀÖ´Â ¸ğµç ¾ÆÀÌÅÛ
+    // ê°€ì§€ê³  ìˆëŠ” ëª¨ë“  ì•„ì´í…œ
     public List<Item> AllItems { get; } = new List<Item>();
 
-    // Cache¿ëµµ
+    // Cacheìš©ë„
     Dictionary<int /*EquipSlot*/, Item> EquippedItems = new Dictionary<int, Item>();
     Dictionary<ECurrencyType, Item> Currencies = new Dictionary<ECurrencyType, Item>(); 
-    List<Item> InventoryItems = new List<Item>(); // °¡¹æ
-    List<Item> WarehouseItems = new List<Item>(); // Ã¢°í
+    List<Item> InventoryItems = new List<Item>(); // ê°€ë°©
+    List<Item> WarehouseItems = new List<Item>(); // ì°½ê³ 
 
     public Item MakeItem(int itemTemplateId, int count = 1)
     {
         if (Managers.Data.ItemDic.TryGetValue(itemTemplateId, out ItemData itemData) == false)
             return null;
 
+        ItemSaveData itemSaveData = MakeItemData(itemTemplateId, count);
+        return AddItem(itemSaveData);
+    }
+
+    public ItemSaveData MakeItemData(int itemTemplateId, int count = 1)
+    {
         int itemDbId = Managers.Game.GenerateItemDbId();
 
-        // Àåºñ¾ÆÀÌÅÛÀÇ °æ¿ì ¿É¼Ç Ãß°¡
+        // ì¥ë¹„ì•„ì´í…œì˜ ê²½ìš° ì˜µì…˜ ì¶”ê°€
         List<int> optionIds = new List<int>();
         if (Managers.Data.EquipmentDic.TryGetValue(itemTemplateId, out EquipmentData equipmentData))
         {
@@ -64,8 +69,9 @@ public class InventoryManager
             OptionIds = optionIds
         };
 
-        return AddItem(saveData);
+        return saveData;
     }
+
 
     public Item AddItem(ItemSaveData itemInfo)
     {
@@ -125,7 +131,7 @@ public class InventoryManager
         Item item = InventoryItems.Find(x => x.SaveData.InstanceId == instanceId);
         if (item == null)
         {
-            Debug.Log("¾ÆÀÌÅÛÁ¸Àç¾ÈÇÔ");
+            Debug.Log("ì•„ì´í…œì¡´ì¬ì•ˆí•¨");
             return;
         }
 
@@ -133,11 +139,11 @@ public class InventoryManager
         if (equipSlotType == EEquipSlotType.None)
             return;
 
-        // ±âÁ¸ ¾ÆÀÌÅÛ ÇØÁ¦
+        // ê¸°ì¡´ ì•„ì´í…œ í•´ì œ
         if (EquippedItems.TryGetValue((int)equipSlotType, out Item prev))
             UnEquipItem(prev.InstanceId);
 
-        // ¾ÆÀÌÅÛ ÀåÂø
+        // ì•„ì´í…œ ì¥ì°©
         item.EquipSlot = (int)equipSlotType;
         EquippedItems[(int)equipSlotType] = item;
         InventoryItems.Remove(item);
@@ -161,34 +167,21 @@ public class InventoryManager
         InventoryItems.Add(item);
         Managers.Game.BroadcastEvent(EBroadcastEventType.ChangeInventory, 0);
     }
-    //public void EnchantItem(int instanceId, int count = 1)
-    //{
-    //    Equipment item = GetItem(instanceId) as Equipment;
 
-    //    if (item == null)
-    //    {
-    //        Debug.Log("¾ÆÀÌÅÛÁ¸Àç¾ÈÇÔ");
-    //        return;
-    //    }
+    public void UseConsumableItem(int templateId)
+    {
+        Consumable item = AllItems.Find(x => x.SaveData.TemplateId == templateId) as Consumable;
 
-    //    item.Enchant(count);
-    //    Managers.Game.BroadcastEvent(EBroadcastEventType.ChangeInventory, 0);
-    //}
+        if (item == null)
+            return;
 
-    //public void DismantleItem(int instanceId)
-    //{
-    //    Equipment item = GetItem(instanceId) as Equipment;
+        item.Count--;
+        if (item.Count == 0)
+            AllItems.Remove(item);
 
-    //    if (item == null)
-    //        return;
-    //    if (item.IsEquippedItem())
-    //        return;
-
-    //    int earn = (int)(item.CalculateRequiredMaterials() * 0.5f);
-
-    //    EarnCurrency(ECurrencyType.Fragments, earn);
-    //    RemoveItem(instanceId);
-    //}
+        Managers.Game.PlayerHero.Effects.GenerateEffects(item.EffectIds, EEffectSpawnType.External, Managers.Game.PlayerHero);
+        Managers.Game.BroadcastEvent(EBroadcastEventType.ChangeInventory, 0);
+    }
 
     #region EquippedItem
     public float GetStatModifier(ECalcStatType calcStatType, EStatModType type)
@@ -291,10 +284,10 @@ public class InventoryManager
     #region RandomOptionGenerator
     private List<int> GenerateOptionIds(EquipmentData equipmentData)
     {
-        // EquipmentÀÇ ItemLevel°ú °°Àº OptionDataÀû¿ë
-        // OptionGrade´Â EquipomentÀÇ EquipmentGrade¿Í °°À» ÇÊ¿ä´Â ¾øÀ½
-        // ex) RareÀåºñ¿¡ Legendary¿É¼Ç ¶ã ¼öµµ ÀÖÀ½
-        // ´Ü, ÇÏ³ªÀÇ Àåºñ¿¡ °°Àº OptionTypeÀÌ 2°³ Á¸ÀçÇÒ ¼ö ¾øÀ½
+        // Equipmentì˜ ItemLevelê³¼ ê°™ì€ OptionDataì ìš©
+        // OptionGradeëŠ” Equipomentì˜ EquipmentGradeì™€ ê°™ì„ í•„ìš”ëŠ” ì—†ìŒ
+        // ex) Rareì¥ë¹„ì— Legendaryì˜µì…˜ ëœ° ìˆ˜ë„ ìˆìŒ
+        // ë‹¨, í•˜ë‚˜ì˜ ì¥ë¹„ì— ê°™ì€ OptionTypeì´ 2ê°œ ì¡´ì¬í•  ìˆ˜ ì—†ìŒ
 
         List<int> optionIds = new List<int>();
         ECalcStatType[] optionTypes = ChooseRandomItemOptions(equipmentData.SubOptionCount);

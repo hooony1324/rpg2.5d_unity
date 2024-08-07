@@ -1,6 +1,7 @@
 using Data;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class UI_InventoryPopup : UI_Popup
     enum Buttons
     {
         CloseButton,
+        SelectedItemButton,
     }
 
     enum Images
@@ -70,13 +72,15 @@ public class UI_InventoryPopup : UI_Popup
         _consumableToggle = GetToggle((int)Toggles.ConsumableToggle);
         _currencyToggle = GetToggle((int)Toggles.CurrencyToggle);
 
-        _equipmentToggle.gameObject.BindEvent(Refresh);
-        _consumableToggle.gameObject.BindEvent(Refresh);
-        _currencyToggle.gameObject.BindEvent(Refresh);
+        _equipmentToggle.gameObject.BindEvent(OnClickTab);
+        _consumableToggle.gameObject.BindEvent(OnClickTab);
+        _currencyToggle.gameObject.BindEvent(OnClickTab);
 
         GetObject((int)GameObjects.Header).gameObject.BindEvent(null, OnDragHeader, Define.UIEvent.Drag);
         GetButton((int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetObject((int)GameObjects.SelectedItemGuide).gameObject.SetActive(false);
+        GetButton((int)Buttons.SelectedItemButton).gameObject.BindEvent(OnClickSelectedItemButton);
+        GetButton((int)Buttons.SelectedItemButton).gameObject.SetActive(false);
 
         Transform parent = GetObject((int)GameObjects.ItemList).transform;
         parent.gameObject.DestroyChilds();
@@ -117,7 +121,11 @@ public class UI_InventoryPopup : UI_Popup
     {
         Refresh();
     }
-
+    private void OnClickTab()
+    {
+        _selectedItem = null;
+        Refresh();
+    }
     void Refresh()
     {
         RefreshCurrency(ECurrencyType.Gold);
@@ -126,7 +134,7 @@ public class UI_InventoryPopup : UI_Popup
         RefreshCurrency(ECurrencyType.Meat);
         RefreshCurrency(ECurrencyType.Dia);
         RefreshInventoryList();
-        RefreshItemInfoData();
+        RefreshSelectedItemInfo();
     }
     void RefreshCurrency(ECurrencyType currencyType)
     {
@@ -153,17 +161,6 @@ public class UI_InventoryPopup : UI_Popup
                 GetText((int)Texts.CurrencyDiaText).text = dia.ToString();
                 break;
         }
-    }
-
-    void RefreshItemInfoData()
-    {
-        if (_selectedItem == null)
-            return;
-
-        //장비이름
-
-        //아이템 잠금
-        //_selectedItem.IsLock
     }
 
     void RefreshInventoryList()
@@ -242,14 +239,18 @@ public class UI_InventoryPopup : UI_Popup
         if (item == null)
             return;
 
-        GetObject((int)GameObjects.SelectedItemGuide).SetActive(true);
-
         _selectedItem = item;
-        Refresh_SelectedItem();
+        RefreshSelectedItemInfo();
     }
 
-    void Refresh_SelectedItem()
+    void RefreshSelectedItemInfo()
     {
+        if (_selectedItem == null)
+        {
+            GetObject((int)GameObjects.SelectedItemGuide).SetActive(false);
+            return;
+        }
+
         string gradeString = "";
         switch (_selectedItem.TemplateData.Grade)
         {
@@ -276,6 +277,25 @@ public class UI_InventoryPopup : UI_Popup
 
         string itemDesc = Managers.GetText(_selectedItem.TemplateData.DescriptionTextID, ETextType.Description); 
         GetText((int)Texts.ItemInfoText).text = itemDesc;
+
+        GameObject button = GetButton((int)Buttons.SelectedItemButton).gameObject;
+        switch (_selectedItem.ItemType)
+        {
+            case EItemType.Equipment:
+                Util.FindChild(button, "SelectedItemButtonText").GetComponent<TMP_Text>().text = Managers.GetText("Button_SelectedItem_Equip", ETextType.Name);
+                button.SetActive(true);
+                break;
+            case EItemType.Potion:
+            case EItemType.Scroll:
+                Util.FindChild(button, "SelectedItemButtonText").GetComponent<TMP_Text>().text = Managers.GetText("Button_SelectedItem_Use", ETextType.Name);
+                button.SetActive(true);
+                break;
+            default:
+                button.SetActive(false);
+                break;
+        }
+
+        GetObject((int)GameObjects.SelectedItemGuide).SetActive(true);
     }
 
     void OnDragHeader(PointerEventData pointerEventData)
@@ -287,6 +307,17 @@ public class UI_InventoryPopup : UI_Popup
         Managers.UI.GetSceneUI<UI_GameScene>().CloseInventoryPopup();
     }
 
+    void OnClickSelectedItemButton()
+    {
+        if (_selectedItem == null)
+            return;
 
+        if (_selectedItem.ItemType == EItemType.Potion || _selectedItem.ItemType == EItemType.Scroll)
+        {
+            Managers.Inventory.UseConsumableItem(_selectedItem.TemplateId);
+            _selectedItem = null;
+            Refresh();
+        }
+    }
 
 }

@@ -243,7 +243,7 @@ public class Equipment : Item
     {
         float score = 0;
 
-        // ÀÓ½Ã °è»ê
+        // ìž„ì‹œ ê³„ì‚°
 
         foreach (var option in Options)
         {
@@ -286,6 +286,8 @@ public class Currency : Item
 public class Consumable : Item
 {
     public double Value { get; private set; }
+    public float CoolTime { get; private set; }
+    public List<int> EffectIds { get; private set; } 
 
     public Consumable(ItemSaveData saveData) : base(saveData)
     {
@@ -308,6 +310,8 @@ public class Consumable : Item
         ConsumableData data = (ConsumableData)TemplateData;
         {
             Value = data.Value;
+            CoolTime = data.CoolTime;
+            EffectIds = data.EffectIds;
         }
 
         return true;

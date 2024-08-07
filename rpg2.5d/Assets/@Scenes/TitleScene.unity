@@ -531,16 +531,44 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
       propertyPath: m_Color.b
-      value: 0.40392157
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
       propertyPath: m_Color.g
-      value: 0.40392157
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2344681665810567286, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
       propertyPath: m_Color.r
-      value: 0.40392157
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554251905363357996, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554251905363357996, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554251905363357996, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554251905363357996, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4669626414351784660, guid: 1c44f1a205be8434ab269842ab2d1261, type: 3}
       propertyPath: m_Pivot.x

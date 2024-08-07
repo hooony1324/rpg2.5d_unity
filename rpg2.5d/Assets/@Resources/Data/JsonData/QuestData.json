@@ -56,7 +56,7 @@
     },
     {
       "TemplateId": 10,
-      "NameTextId": "MainQuest_2",
+      "NameTextId": "MainQuest_3",
       "QuestPeriodType": 0,
       "QuestTasks": [
         {
@@ -83,7 +83,7 @@
     },
     {
       "TemplateId": 11,
-      "NameTextId": "MainQuest_2",
+      "NameTextId": "MainQuest_4",
       "QuestPeriodType": 0,
       "QuestTasks": [
         {

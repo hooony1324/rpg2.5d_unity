@@ -73,14 +73,20 @@ public class InputController : InitBase
             _owner.Skills.TrySkill(ESkillSlot.Default);
         }
 
-        if (Input.GetMouseButton((int)MouseButton.Right))
+        if (Input.GetMouseButtonDown((int)MouseButton.Right))
         {
+            //UI Click
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             _owner.Skills.TrySkill(ESkillSlot.A);
         }
 
         if (Input.GetMouseButtonUp((int)MouseButton.Right))
         {
-            _owner.Skills.CancleCurrentSkill();
+            _owner.Skills.CancelSkill(ESkillSlot.A);
         }
 
     }
