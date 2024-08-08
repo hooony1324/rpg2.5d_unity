@@ -28,7 +28,7 @@ public class MapEditor : MonoBehaviour
         
         GameObject[] gameObjects = Selection.gameObjects;
 
-        // GroundTileÀÇ À§Ä¡ Á¤º¸·Î X by Z Å©±âÀÇ textµ¥ÀÌÅÍ »ı¼º
+        // GroundTileì˜ ìœ„ì¹˜ ì •ë³´ë¡œ X by Z í¬ê¸°ì˜ textë°ì´í„° ìƒì„±
         Tilemap collisionMap = tm.GetComponent<Tilemap>();
         //collisionMap.cellBounds.
 
@@ -51,8 +51,6 @@ public class MapEditor : MonoBehaviour
                     if (child.name.Equals("GroundTile"))
                     {
 
-
-                        //groundTiles[groundTileCellPos.z, groundTileCellPos.x] = Define.MAP_TOOL_WALKABLE;
                     }
                 }
             }

@@ -26,19 +26,6 @@ public class Quest
         get { return SaveData.State; }
         set { SaveData.State = value; }
     }
-
-    //public int DailyScore
-    //{
-    //    get { return SaveData.DailyScore; }
-    //    set { SaveData.DailyScore = value; }
-    //}
-
-    //public int WeeklyScore
-    //{
-    //    get { return SaveData.WeeklyScore; }
-    //    set { SaveData.WeeklyScore = value; }
-    //}
-
     public Quest(QuestSaveData saveData)
     {
         SaveData = saveData;
@@ -72,19 +59,6 @@ public class Quest
         State = EQuestState.Completed;
         return true;
     }
-
-    public bool IsRewarded()
-    {
-        //foreach (var questTask in _questTasks)
-        //{
-        //    if (questTask.TaskState != EQuestState.Rewarded)
-        //        return false;
-        //}
-
-        //return true;
-        return true;
-    }
-
 
     public void StartQuest()
     {

@@ -136,8 +136,4 @@ public class EffectComponent : MonoBehaviour
         }
     }
 
-    //public void CleanDebuff()
-    //{
-    //    _owner.Effects.ClearEffectsByCondition(effect => effect.EffectType == EEffectType.Debuff);
-    //}
 }

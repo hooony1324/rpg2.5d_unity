@@ -79,7 +79,7 @@ public static class Util
         return parsedColor;
     }
 
-    // Animator ÄÄÆ÷³ÍÆ® ³»¿¡ Æ¯Á¤ ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    // Animator ì»´í¬ë„ŒíŠ¸ ë‚´ì— íŠ¹ì • ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
     public static bool HasAnimationClip(Animator animator, string clipName)
     {
         if (animator.runtimeAnimatorController == null)
@@ -98,7 +98,7 @@ public static class Util
         return false;
     }
 
-    //Enum°ªÁß ·£´ı°ª ¹İÈ¯
+    //Enumê°’ì¤‘ ëœë¤ê°’ ë°˜í™˜
     public static T GetRandomEnumValue<T>() where T : struct, Enum
     {
         Type type = typeof(T);
@@ -129,59 +129,12 @@ public static class Util
         return EItemGrade.None;
     }
 
-    //string°ª À¸·Î Enum°ª Ã£±â
+    //stringê°’ ìœ¼ë¡œ Enumê°’ ì°¾ê¸°
     public static T ParseEnum<T>(string value)
     {
         return (T)Enum.Parse(typeof(T), value, true);
     }
 
-
-    //public static EObjectType DetermineTargetType(EObjectType ownerObjectType, bool isAllies)
-    //{
-    //    if (ownerObjectType == Define.EObjectType.Hero)
-    //    {
-    //        return isAllies ? EObjectType.Hero : EObjectType.Monster;
-    //    }
-    //    else if (ownerObjectType == Define.EObjectType.Monster)
-    //    {
-    //        return isAllies ? EObjectType.Monster : EObjectType.Hero;
-    //    }
-
-    //    return EObjectType.None;
-    //}
-
-    //public static float GetEffectRadius(EEffectSize size)
-    //{
-    //    switch (size)
-    //    {
-    //        case EEffectSize.CircleSmall:
-    //            return EFFECT_SMALL_RADIUS;
-    //        case EEffectSize.CircleNormal:
-    //            return EFFECT_NORMAL_RADIUS;
-    //        case EEffectSize.CircleBig:
-    //            return EFFECT_BIG_RADIUS;
-    //        case EEffectSize.ConeSmall:
-    //            return EFFECT_SMALL_RADIUS * 2f;
-    //        case EEffectSize.ConeNormal:
-    //            return EFFECT_NORMAL_RADIUS * 2f;
-    //        case EEffectSize.ConeBig:
-    //            return EFFECT_BIG_RADIUS * 2f;
-    //        default:
-    //            return 0.5f;
-    //    }
-    //}
-
-    //public static int GetAngleRange(EEffectSize size)
-    //{
-    //    if ((int)size <= 2) //0,1,2
-    //    {
-    //        return 360;
-    //    }
-    //    else
-    //    {
-    //        return 90;
-    //    }
-    //}
     #region Math
 
 
@@ -206,45 +159,6 @@ public static class Util
 
     #region ParseText For UI
 
-    //public static string ParseEquipOptionValue(ECalcStatType type, EStatModType modType, float value)
-    //{
-    //    switch (type)
-    //    {
-    //        case ECalcStatType.Critical:
-    //        case ECalcStatType.CriticalDamage:
-    //        case ECalcStatType.LifeStealRate:
-    //        case ECalcStatType.ThornsDamageRate:
-    //        case ECalcStatType.ReduceDamageRate:
-    //            return $"+{value * 100}%";
-    //        case ECalcStatType.AttackSpeedRate:
-    //        case ECalcStatType.MissChance:
-    //        case ECalcStatType.MoveSpeed:
-    //        case ECalcStatType.Thorns:
-    //            return $"+{value}%";
-    //        case ECalcStatType.ReduceDamage:
-    //        case ECalcStatType.CooldownReduction:
-    //            return $"+{value}";
-    //        case ECalcStatType.Atk:
-    //        case ECalcStatType.MaxHp:
-    //            if (modType == EStatModType.Add)
-    //            {
-    //                return $"+{value}";
-    //            }
-    //            else
-    //            {
-    //                return $"+{value}%";
-    //            }
-    //        case ECalcStatType.SourceHp:
-    //        case ECalcStatType.SourceAtk:
-    //        case ECalcStatType.Hp:
-    //        case ECalcStatType.Count:
-    //        case ECalcStatType.Default:
-    //        default:
-    //            return $"+{value}%";
-
-    //    }
-    //}
-
     public static Color GetTextColor(EItemGrade type)
     {
         switch (type)
@@ -263,57 +177,6 @@ public static class Util
         }
     }
 
-    //public static Color GetOutlineColor(EItemGrade type)
-    //{
-    //    switch (type)
-    //    {
-    //        case EItemGrade.None:
-    //        case EItemGrade.Normal:
-    //            return EquipmentUIColors.COMMON_OUTLINE;
-    //        case EItemGrade.Rare:
-    //            return EquipmentUIColors.RARE_OUTLINE;
-    //        case EItemGrade.Epic:
-    //            return EquipmentUIColors.EPIC_OUTLINE;
-    //        case EItemGrade.Legendary:
-    //            return EquipmentUIColors.LEGEND_OUTLINE;
-    //        default:
-    //            return EquipmentUIColors.COMMON_OUTLINE;
-    //    }
-    //}
-
     #endregion
 
-
-    #region Size
-
-    public static long OneGB = 1000000000;
-    public static long OneMB = 1000000;
-    public static long OneKB = 1000;
-
-    /// <summary> ¹ÙÀÌÆ® <paramref name="byteSize"/> »çÀÌÁî¿¡ ¸Â°Ô²û ÀûÀıÇÑ ´ÜÀ§ <see cref="ESizeUnits"/> Å¸ÀÔÀ» °¡Á®¿Â´Ù </summary>
-    public static ESizeUnits GetProperByteUnit(long byteSize)
-    {
-        if (byteSize >= OneGB)
-            return ESizeUnits.GB;
-        else if (byteSize >= OneMB)
-            return ESizeUnits.MB;
-        else if (byteSize >= OneKB)
-            return ESizeUnits.KB;
-        return ESizeUnits.Byte;
-    }
-
-    /// <summary> ¹ÙÀÌÆ®¸¦ <paramref name="byteSize"/> <paramref name="unit"/> ´ÜÀ§¿¡ ¸Â°Ô ¼ıÀÚ¸¦ º¯È¯ÇÑ´Ù </summary>
-    public static long ConvertByteByUnit(long byteSize, ESizeUnits unit)
-    {
-        return (long)((byteSize / (double)System.Math.Pow(1024, (long)unit)));
-    }
-
-    /// <summary> ¹ÙÀÌÆ®¸¦ <paramref name="byteSize"/> ´ÜÀ§¿Í ÇÔ²² Ãâ·ÂÀÌ °¡´ÉÇÑ ¹®ÀÚ¿­ ÇüÅÂ·Î º¯È¯ÇÑ´Ù </summary>
-    public static string GetConvertedByteString(long byteSize, ESizeUnits unit, bool appendUnit = true)
-    {
-        string unitStr = appendUnit ? unit.ToString() : string.Empty;
-        return $"{ConvertByteByUnit(byteSize, unit).ToString("0.00")}{unitStr}";
-    }
-
-    #endregion
 }

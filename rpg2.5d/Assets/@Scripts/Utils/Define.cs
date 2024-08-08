@@ -130,11 +130,8 @@ public class Define
     public enum EHeroMoveState
     {
         None,
-        //TargetMonster,
-        //CollectEnv,
-        //ReturnToCamp,
         ForceMove,
-        //ForcePath,
+
     }
     public enum EEnvState
     {
@@ -156,11 +153,7 @@ public class Define
     {
         None,
         Normal,
-        //AreaSkill,
         ComboSkill,
-        //ProjectileSkill,
-        //SingleTargetSkill,
-        //SupportSkill,
         PassiveSkill
     }
     public enum EObjectType
@@ -206,11 +199,6 @@ public class Define
         public static readonly Color EPIC_OUTLINE = HexToColor("A876C4");
         public static readonly Color LEGEND_OUTLINE = HexToColor("F19451");
         #endregion
-        // #region 배경색상
-        // public static readonly Color EpicBg = HexToColor("D094FF");
-        // public static readonly Color LegendaryBg = HexToColor("F8BE56");
-        // public static readonly Color MythBg = HexToColor("FF7F6E");
-        // #endregion
     }
 
     public static class DirVec
@@ -329,9 +317,6 @@ public class Define
         RedRune,
         YellowRune,
         MintRune,
-
-        //EnchantWeapon,
-        //EnchantArmor,
 
         HealthPotion,
         ManaPotion,

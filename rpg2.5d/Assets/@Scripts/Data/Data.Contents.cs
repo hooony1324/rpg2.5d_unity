@@ -16,8 +16,6 @@ namespace Data
     [Serializable]
     public class TextDataLoader : ILoader<string, TextData>
     {
-        // DataTransformer.cs
-        // ParceExcelDataToJson() > FieldInfo field = loader.GetType().GetFields()[0]부분
         public List<TextData> texts = new List<TextData>(); 
 
         public Dictionary<string, TextData> MakeDict()
@@ -316,8 +314,6 @@ namespace Data
     #endregion
 
     #region ProjectileData
-    //HitSound	ProjRange	ProjSpeed
-
     [Serializable]
     public class ProjectileData
     {
@@ -411,10 +407,6 @@ namespace Data
         public int ObjectiveDataId;
         public int ObjectiveCount;
 
-        //public EQuestRewardType RewardType;
-        //public int RewardDataId;
-        //public int RewardCount;
-        //public string RewardIcon;
         public int NextQuestId;
         public int QuestRewardId;
     }

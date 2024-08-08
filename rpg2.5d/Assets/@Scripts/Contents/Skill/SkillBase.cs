@@ -50,37 +50,14 @@ public class SkillBase : BaseObject
     public virtual void SetInfo(int skillId)
     {
         Owner = transform.parent.GetComponent<Creature>();
-        //Owner.SkeletonAnim.AnimationState.Event -= OnOwnerAnimEventHandler;
-        //Owner.SkeletonAnim.AnimationState.Event += OnOwnerAnimEventHandler;
-        //// Owner.SkeletonAnim.AnimationState.Complete -= OnAnimCompleteHandler;
-        //// Owner.SkeletonAnim.AnimationState.Complete += OnAnimCompleteHandler;
         SkillData = Managers.Data.SkillDic[skillId];
         RemainCoolTime = SkillData.CoolTime - Owner.CooldownReduction;
         _activated = true;
-        
-
-        //foreach (AnimationClip clip in Owner.Anim.runtimeAnimatorController.animationClips)
-        //{
-        //    if (clip.name == "Jump")
-        //        clip.length;
-        //}
-        
+       
     }
     protected override void OnDisable()
     {
         base.OnDisable();
-        //    if (Managers.Game == null)
-        //        return;
-        //    if (Owner.IsValid() == false)
-        //        return;
-        //    if (Owner.SkeletonAnim == null)
-        //        return;
-        //    if (Owner.SkeletonAnim.AnimationState == null)
-        //        return;
-
-        //    Owner.SkeletonAnim.AnimationState.Event -= OnOwnerAnimEventHandler;
-        //    // Owner.SkeletonAnim.AnimationState.Complete -= OnAnimCompleteHandler;
-        //Owner.AEC.ClearEvent();
     }
 
     protected void OnOwnerAnimEventHandler() { }
@@ -95,17 +72,6 @@ public class SkillBase : BaseObject
     {
         
         RemainCoolTime = SkillData.CoolTime;
-        //SkillTarget = Owner.Target;
-
-
-        //SkillAnimDuration = skill.Animation.Duration;
-        //float timeScale = Owner.AttackSpeedRate;
-        
-        // PlayAnimation & Anim Time
-        float animDuration = 1.0f;
-        // animDuration / Owner.AttackSpeedRate -> 공속
-
-        //Owner.StartWait(animDuration, OnSkillAnimEnd);
 
         Owner.Skills.CurrentSkill = null;
 

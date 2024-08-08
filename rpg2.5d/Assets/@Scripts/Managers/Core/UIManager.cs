@@ -68,7 +68,6 @@ public class UIManager
         {
             cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             cs.referenceResolution = new Vector2(1920, 1080);
-            //new Vector2(1440, 2960);
         }
 
         go.GetOrAddComponent<GraphicRaycaster>();

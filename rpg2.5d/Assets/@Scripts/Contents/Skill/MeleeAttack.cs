@@ -79,7 +79,6 @@ public class MeleeAttack : SkillBase
         {
             InteractionObject obj = hitColliders[0].gameObject.GetComponent<InteractionObject>();
 
-            //TODO: Env or Monster
             if (obj.ObjectType == EObjectType.Env)
             {
                 obj.OnDamage(Owner, 10);

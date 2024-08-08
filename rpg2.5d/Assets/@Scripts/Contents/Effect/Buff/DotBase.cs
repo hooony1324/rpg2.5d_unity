@@ -56,8 +56,6 @@ public class DotBase : EffectBase
         }
 
         Owner.OnDamage(Source, damage);
-
-        // Effects : [KnockBack][Dot(여기서 죽었다면)][Buff1][...]
     }
 
     private bool isHeal()

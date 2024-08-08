@@ -171,15 +171,6 @@ public class Creature : InteractionObject
         float prevMaxHp = MaxHp;
         MaxHp = CalculateFinalStat(MaxHpBase, ECalcStatType.MaxHp);
         Atk = CalculateFinalStat(AtkBase, ECalcStatType.Atk);
-        if (ObjectType == EObjectType.Hero)
-        {
-            //HeroInfo heroInfo = Managers.Hero.GetHeroInfo(TemplateId);
-            //if (heroInfo != null)
-            //{
-            //    MaxHp += (heroInfo.Level - 1) * heroInfo.HeroData.UpMaxHpBonus;
-            //    Atk += (heroInfo.Level - 1) * heroInfo.HeroData.AtkBonus;
-            //}
-        }
 
         CriRate = CalculateFinalStat(CriRateBase, ECalcStatType.Critical);
         CriDamage = CalculateFinalStat(CriDamageBase, ECalcStatType.CriticalDamage);

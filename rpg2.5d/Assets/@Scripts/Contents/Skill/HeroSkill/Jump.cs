@@ -23,8 +23,6 @@ public class Jump : SkillBase
     {
         base.SetInfo(skillId);
 
-
-        //TODO: "Jump" -> SkillDataDic[skillId].AnimName
         foreach(AnimationClip clip in Owner.Anim.runtimeAnimatorController.animationClips)
         {
             if ("Jump" == clip.name)

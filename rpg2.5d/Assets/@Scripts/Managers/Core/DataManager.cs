@@ -74,31 +74,4 @@ public class DataManager
         return JsonConvert.DeserializeObject<Loader>(textAsset.text);
     }
 
-
-    #region HeroInfoData
-    //[Serializable]
-    //public class HeroInfoData
-    //{
-    //    public int DataId;
-    //    public string DescriptionTextId;
-    //    public string Rarity;
-    //    public float HireSpawnWeight;
-    //    public float GachaWeight;
-    //    public string IconImage;
-    //}
-
-    //[Serializable]
-    //public class HeroInfoDataLoader : ILoader<int, HeroInfoData>
-    //{
-    //    public List<HeroInfoData> heroInfo = new List<HeroInfoData>();
-    //    public Dictionary<int, HeroInfoData> MakeDict()
-    //    {
-    //        Dictionary<int, HeroInfoData> dict = new Dictionary<int, HeroInfoData>();
-    //        foreach (HeroInfoData info in heroInfo)
-    //            dict.Add(info.DataId, info);
-    //        return dict;
-    //    }
-    //}
-    #endregion
-
 }
