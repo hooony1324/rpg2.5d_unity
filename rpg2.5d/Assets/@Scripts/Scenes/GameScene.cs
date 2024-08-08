@@ -32,19 +32,6 @@ public class GameScene : BaseScene
             }
         }
 
-
-        {
-            //Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202003);
-        }
-
-        {
-            //Monster monster = Managers.Object.Spawn<Monster>(Vector3.right * 10, 202004);
-        }
-
-
-
-        //Env env = Managers.Object.Spawn<Env>(Vector3.right * 5);
-
         Managers.UI.CacheAllPopups();
 
         UI_GameScene sceneUI = Managers.UI.ShowSceneUI<UI_GameScene>();

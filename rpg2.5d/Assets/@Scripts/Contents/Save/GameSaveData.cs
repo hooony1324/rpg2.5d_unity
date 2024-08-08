@@ -18,7 +18,6 @@ public class GameSaveData
 
 
     public List<ItemSaveData> Items = new List<ItemSaveData>();
-    //public List<StorageSaveData> Storages = new List<StorageSaveData>();
     public List<QuestSaveData> AllQuests = new List<QuestSaveData>();
 
     public int CurrentStageIndex = 0;
@@ -47,14 +46,7 @@ public class QuestSaveData
     public List<int> TaskProgressCount = new List<int>();//Task의 Count
     public List<EQuestState> TaskStates = new List<EQuestState>();//Task의 Count
     public DateTime NextResetTime;
-    //public int DailyScore;
-    //public int WeeklyScore;
+
 }
 
-//[Serializable]
-//public class StorageSaveData
-//{
-//    public int TemplateId;
-//    public DateTime LastRewardTime;
-//    public int StoredResources;
-//}
+

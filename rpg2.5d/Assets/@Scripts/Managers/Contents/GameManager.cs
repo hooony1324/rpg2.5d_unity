@@ -66,6 +66,8 @@ public class GameManager
 
     void InitGame()
     {
+        Managers.Game.SaveData.LastWorldPos = new Vector3(-10, 1, -3);
+
         // Quest
         var quests = Managers.Data.QuestDic.Values.ToList();
         foreach (QuestData questData in quests)

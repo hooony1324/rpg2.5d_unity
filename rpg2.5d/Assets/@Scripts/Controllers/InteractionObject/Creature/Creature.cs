@@ -135,6 +135,7 @@ public class Creature : InteractionObject
         SetSkill();
 
         CreatureState = ECreatureState.Idle;
+        Anim.SetBool("IsDead", false);
         OnStateBegin();
     }
 
@@ -227,7 +228,7 @@ public class Creature : InteractionObject
             case ECreatureState.OnDamaged:
                 break;
             case ECreatureState.Death:
-                Anim.Play(AnimName.DEATH);
+                Anim.SetBool("IsDead", true);
                 break;
             case ECreatureState.Skill:
                 break;
